@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>TableParseFeedTest</RootNamespace>
+    <!-- The referenced service projects are executables with their own appsettings.json and,
+         in the case of FilesAutomationTest, ~7.5k fixture files marked CopyToOutputDirectory.
+         None of that belongs in this tool's output. -->
+    <MSBuildCopyContentTransitively>false</MSBuildCopyContentTransitively>
+    <NoWarn>$(NoWarn);NU1603;NU1608;NU1701;CS8618;CS8625</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DiffPlex" Version="1.7.1" />
+    <PackageReference Include="Ude.NetStandard" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- ucpp-files-test-automation: the story parsing and diffing the regression run uses. Linked as source
+         because FilesAutomationTest.csproj itself does not compile with the .NET 8 SDK / C# 12
+         (RegressionTestsComparer.cs: ambiguous Split(['\r', '\n'], ...)). -->
+    <Compile Include="..\ucpp-files-test-automation\FilesAutomationTest\Extensions\Extensions.cs" Link="FilesAutomationTest\Extensions.cs" />
+    <Compile Include="..\ucpp-files-test-automation\FilesAutomationTest\Extensions\GlobalConstants.cs" Link="FilesAutomationTest\GlobalConstants.cs" />
+    <Compile Include="..\ucpp-files-test-automation\FilesAutomationTest\Extensions\StoriesComparison\ComponentsFilter.cs" Link="FilesAutomationTest\ComponentsFilter.cs" />
+    <Compile Include="..\ucpp-files-test-automation\FilesAutomationTest\Extensions\StoriesComparison\IComponentsFilter.cs" Link="FilesAutomationTest\IComponentsFilter.cs" />
+    <Compile Include="..\ucpp-files-test-automation\FilesAutomationTest\Services\Comparers\CommonComparer.cs" Link="FilesAutomationTest\CommonComparer.cs" />
+    <Compile Include="..\ucpp-files-test-automation\FilesAutomationTest\Services\Interfaces\ICommonComparer.cs" Link="FilesAutomationTest\ICommonComparer.cs" />
+    <Compile Include="..\ucpp-files-test-automation\FilesAutomationTest\Models\DiffCheckerResult.cs" Link="FilesAutomationTest\DiffCheckerResult.cs" />
+    <Compile Include="..\ucpp-files-test-automation\FilesAutomationTest\Models\Provider.cs" Link="FilesAutomationTest\Provider.cs" />
+    <Compile Include="..\ucpp-files-test-automation\FilesAutomationTest\Models\StoriesTests\Components.cs" Link="FilesAutomationTest\Components.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The chain under test, as source: enricher -> tableparse -> wrapper -> libTableParser.so -->
+    <ProjectReference Include="..\ucpp-enricher\Com.Dowjones.Ucpp.Mesh.Service\Com.Dowjones.Ucpp.Mesh.Service.csproj" />
+    <ProjectReference Include="..\ucpp-tableparse\Com.Dowjones.Ucpp.TableParse\Com.Dowjones.Ucpp.TableParse.csproj" />
+    <!-- Direct reference wins over ucpp-tableparse's floating Com.Dowjones.Ucpp.Mesh.TableParserWrapper *-* package. -->
+    <ProjectReference Include="..\ucpp-parser-table-parse\Com.Dowjones.Ucpp.Mesh.TableParserWrapper\Com.Dowjones.Ucpp.Mesh.TableParserWrapper.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- HtmlParser reads this relative to the working directory in a static initializer. -->
+    <None Include="..\ucpp-tableparse\Com.Dowjones.Ucpp.TableParse\utf8-character-mappings" Link="utf8-character-mappings" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Fixtures\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

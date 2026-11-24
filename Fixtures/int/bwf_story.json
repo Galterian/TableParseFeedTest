@@ -1,0 +1,32 @@
+{
+    "id": "BusinessWire story",
+    "name": "bwf_story",
+    "description": "AutoPublish story for BusinessWire US (Newswires & Factiva)",
+    "version": "0.8",
+    "schemaType": "story",
+    "schemaVersion": "0.1",
+    "providerSymbol": "bwu",
+    "environment": "int",
+    "rules": [
+      {"if": [
+        {"and": [
+          { "in": ["BWF", {"upper-case": { "var": "205" }}]},
+          { "or":[{ "==": ["", {"var": "59" }]}, { "not":[{ "in": ["\"K\"",  {"upper-case": {"var": "59" }}]}]}]},
+          { "or":[{ "==": ["", {"var": "59" }]}, { "not":[{ "in": ["\"F\"",  {"upper-case": {"var": "59" }}]}]}]},
+          { "or":[{ "==": ["", {"var": "59" }]}, { "not":[{ "in": ["\"S\"",  {"upper-case": {"var": "59" }}]}]}]},
+          {"!=": [{"var": "202"}, ""]}
+        ]},
+        { "story": [
+          { "publisher": "pubs"},
+          { "encoding": "UTF-8"},
+          { "set-value": [ "routing", {"var": "routing"}]},
+          { "set-value": [ "headline", {"var": "headline"}]},
+          { "set-value": [ "body", {"var": "body"}]},
+          { "set-value": [ "codelines", {"var": "codelines"}]},
+          { "set-value": [ "storycontent", 
+              { "parser-feedback-content":[]}]}
+        ]}
+      ]}
+    ]
+  }
+  

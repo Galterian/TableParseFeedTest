@@ -1,0 +1,941 @@
+{
+  "id": "bwf_manifest",
+  "version": "0.45",
+  "schemaType": "manifest",
+  "schemaVersion": "1.0",
+  "description": "Manifest for Business Wire BWF (NewsML 1.2). Port of the parser/gbl hop (RTNS parser_source.BWX via ucpp-parser-rtns -> ucpp-parser-state-engine -> ucpp_parser_library): the Normalizer cleans the document and extracts every field and XHTML component as extraction fields, the Enricher JsonLogic rules compute named properties, map them onto the numbered RTNS components in the 'components' phase (12/13/19/21/30/33/39/46/53/54/57/59/60/61/72/73/75/81/102/201/202/203/205/250/272/301/302/303/402/610) and publish body, routing, headline and codelines in the 'outputs' phase. Rule descriptions cite the parser_source.BWX lines they port. No provider-specific C# is needed: every rule composes general operators.",
+  "environment": "int",
+  "routes": [
+    {
+      "name": "",
+      "type": "Normalizer",
+      "version": "1.0.0",
+      "normalization": {
+        "extractionFields": [
+          {"name": "date-and-time", "type": "string", "location": "/NewsML/NewsEnvelope/DateAndTime"},
+          {
+            "name": "news-item-id",
+            "type": "string",
+            "location": "/NewsML/NewsItem/Identification/NewsIdentifier/NewsItemId"
+          },
+          {
+            "name": "instruction",
+            "type": "string",
+            "location": "/NewsML/NewsItem/NewsManagement/Instruction/@FormalName"
+          },
+          {
+            "name": "source-name",
+            "type": "string",
+            "location": "/NewsML/NewsItem/NewsComponent/AdministrativeMetadata/Source/Party/@FormalName"
+          },
+          {
+            "name": "genre",
+            "type": "string",
+            "location": "/NewsML/NewsItem/NewsComponent/DescriptiveMetadata/Genre/@FormalName"
+          },
+          {
+            "name": "languages",
+            "type": "string",
+            "multiple": true,
+            "location": "/NewsML/NewsItem/NewsComponent/DescriptiveMetadata/Language/@FormalName"
+          },
+          {
+            "name": "copyright",
+            "type": "string",
+            "location": "/NewsML/NewsItem/NewsComponent/NewsLines/CopyrightLine"
+          },
+          {
+            "name": "newslines-headline",
+            "type": "string",
+            "location": "/NewsML/NewsItem/NewsComponent/NewsComponent/NewsLines/HeadLine"
+          },
+          {
+            "name": "dateline",
+            "type": "string",
+            "location": "/NewsML/NewsItem/NewsComponent/NewsComponent/NewsLines/DateLine"
+          },
+          {
+            "name": "body-xhtml",
+            "type": "string",
+            "location": "/NewsML/NewsItem/NewsComponent/NewsComponent/NewsComponent[Role/@FormalName='Body']/ContentItem/DataContent",
+            "description": "RTN BODY_TEMP: the DataContent of the NewsComponent with Role 'Body', a complete XHTML document (inner XML of DataContent, line endings as sent). Not 'encoded': the xmlprocessor's encoded path cannot see past the first embedded </html> (the StyleSheet component) and returns nothing for these components."
+          },
+          {
+            "name": "headline-xhtml",
+            "type": "string",
+            "location": "/NewsML/NewsItem/NewsComponent/NewsComponent/NewsComponent[Role/@FormalName='HeadLine']/ContentItem/DataContent"
+          },
+          {
+            "name": "subheadline-xhtml",
+            "type": "string",
+            "location": "/NewsML/NewsItem/NewsComponent/NewsComponent/NewsComponent[Role/@FormalName='SubHeadLine']/ContentItem/DataContent"
+          },
+          {
+            "name": "contact-xhtml",
+            "type": "string",
+            "location": "/NewsML/NewsItem/NewsComponent/NewsComponent/NewsComponent[Role/@FormalName='Contact']/ContentItem/DataContent"
+          },
+          {
+            "name": "last-ticker",
+            "type": "string",
+            "location": "(/NewsML/NewsItem/NewsComponent/Metadata[MetadataType/@FormalName='Securities Identifier']/Property[@FormalName='Ticker Symbol'])[last()]/@Value",
+            "description": "RTN SetTPOption TKR: the last Ticker Symbol of any Securities Identifier block."
+          },
+          {
+            "name": "security-tickers",
+            "type": "string",
+            "multiple": true,
+            "location": "/NewsML/NewsItem/NewsComponent/Metadata[MetadataType/@FormalName='Securities Identifier'][Property[@FormalName='Ticker Symbol']][Property[@FormalName='Exchange']]/Property[@FormalName='Ticker Symbol'][1]/@Value",
+            "description": "First Ticker Symbol of every Securities Identifier block that has both a Ticker Symbol and an Exchange, in document order; aligned with security-exchanges (RTN lines 880-980)."
+          },
+          {
+            "name": "security-exchanges",
+            "type": "string",
+            "multiple": true,
+            "location": "/NewsML/NewsItem/NewsComponent/Metadata[MetadataType/@FormalName='Securities Identifier'][Property[@FormalName='Ticker Symbol']][Property[@FormalName='Exchange']]/Property[@FormalName='Exchange'][1]/@Value"
+          },
+          {
+            "name": "isins",
+            "type": "string",
+            "multiple": true,
+            "location": "/NewsML/NewsItem/NewsComponent/Metadata[MetadataType/@FormalName='Securities Identifier']/Property[@FormalName='ISIN']/@Value",
+            "description": "Every ISIN of every Securities Identifier block (RTN CC_PLUS_ISIN)."
+          },
+          {
+            "name": "keyword-names",
+            "type": "string",
+            "multiple": true,
+            "location": "/NewsML/NewsItem/NewsComponent/Metadata[MetadataType/@FormalName='BWKeywords']/Property[@FormalName][@Value]/@FormalName",
+            "description": "FormalName of every BWKeywords Property in document order, aligned with keyword-values: the enricher's F/IN rule (54) depends on the interleaving of country, industry and category keywords."
+          },
+          {
+            "name": "keyword-values",
+            "type": "string",
+            "multiple": true,
+            "location": "/NewsML/NewsItem/NewsComponent/Metadata[MetadataType/@FormalName='BWKeywords']/Property[@FormalName][@Value]/@Value"
+          },
+          {
+            "name": "country-keywords",
+            "type": "string",
+            "multiple": true,
+            "location": "/NewsML/NewsItem/NewsComponent/Metadata[MetadataType/@FormalName='BWKeywords']/Property[@FormalName='BWCountryKeywords']/@Value"
+          },
+          {
+            "name": "category-keywords",
+            "type": "string",
+            "multiple": true,
+            "location": "/NewsML/NewsItem/NewsComponent/Metadata[MetadataType/@FormalName='BWKeywords']/Property[@FormalName='BWCategoryKeywords']/@Value"
+          }
+        ],
+        "rules": [
+          {
+            "phaseName": "processingPhase",
+            "description": "Clean the document, then extract. The content rule drops zero-width characters (the tableparse service would turn each into a 3-column ASCII token) and maps the new BW CSS schema class names onto the old ones the native XHtmlBody parser matches with strstr (bwalignc -> bwtextaligncenter, bwpadlN -> bwcellpaddingleftN, ...); without the rewrite centred headings, right-aligned numeric columns and cell padding are lost.",
+            "phaseRules": [
+              {
+                "targetProperty": "content",
+                "rule": { "replace-text-from-content-multiple": [ {"var": "content"},
+                    [ ["[\\u200B\\u200C\\u200D\\u2060\\uFEFF]", ""],
+                      ["\\bbwalignc\\b", "bwtextaligncenter"],
+                      ["\\bbwalignr\\b", "bwtextalignright"],
+                      ["\\bbwpadl(?=\\d|\\b)", "bwcellpaddingleft"],
+                      ["\\bbwsinglebottom\\b", "bwsinglebottomborder"],
+                      ["\\bbwdoublebottom\\b", "bwdoublebottomborder"],
+                      ["\\bbwuline\\b", "bwunderlinestyle"],
+                      ["\\bbwvertalignt\\b", "bwverticalaligntop"],
+                      ["\\bbwvertalignb\\b", "bwverticalalignbottom"] ] ] }
+              },
+              {
+                "targetProperty": "normalizerOutput",
+                "rule": {"normalize-xml": [{"var": "content"}, {"var": "extractionFields"}]}
+              }
+            ]
+          }
+        ]
+      },
+      "routes": [
+        {
+          "name": "",
+          "type": "Enricher",
+          "version": "1.0.0",
+          "enrichment": {
+            "rules": [
+              {
+                "phaseName": "parser-gbl-bwf-envelope",
+                "description": "Components derived from the NewsML envelope and identification: constants, chaining, source, release type, language, GUID and slug.",
+                "phaseRules": [
+                  {
+                    "targetProperty": "routing",
+                    "description": "The NDF routing code of every bwf story, set once here and carried to the outputs phase (it used to be a constant in bwf_story.json).",
+                    "rule": {"const": "PRPRODUCTPUB"}
+                  },
+                  {
+                    "targetProperty": "bwf-template",
+                    "description": "RTN lines 445-554: components that do not depend on the body. 272 is FEED_METADATA_INFO, 60 FN_TEMP, 61 the CIS auto-publish chaining code (CHAINING_PREFIX + 5-digit BWX counter).",
+                    "rule": {"const": "NONE"}
+                  },
+                  {
+                    "targetProperty": "bwf-feed-metadata",
+                    "rule": {"const": "<FMD>\n<XSLT>bw1.7</XSLT>\n<Wrap>False</Wrap>\n</FMD>"}
+                  },
+                  {"targetProperty": "bwf-feed-code", "rule": {"const": "bwx"}},
+                  {"targetProperty": "bwf-provider-code", "rule": {"const": "F/Provider=\"BW\""}},
+                  {"targetProperty": "bwf-abbreviation-codes", "rule": {"const": ""}},
+                  {"targetProperty": "bwf-cis-chaining-code", "rule": {"chaining-code": ["E/ZBW", "BWX"]}},
+                  {
+                    "targetProperty": "bwf-source-name",
+                    "description": "RTN lines 612-647: /NewsML/NewsItem/NewsComponent/AdministrativeMetadata/Source/Party/@FormalName drives 75, 402 (Reap3r doc type), 205 (service code) and 39 (product code).",
+                    "rule": {"trim": [{"cat": [{"var": "source-name"}]}]}
+                  },
+                  {
+                    "targetProperty": "bwf-reaper-doctype",
+                    "rule": { "if": [ { "in": [ "FEDERAL RESERVE BANK OF PHILADELPHIA",
+                            {"cat": [" ", {"upper-case": [{"var": "bwf-source-name"}]}, " "]} ] },
+                        "PHILLYFED",
+                        "" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-service-code",
+                    "rule": { "if": [ {"in": ["Research and Markets", {"var": "bwf-source-name"}]},
+                        "BWF",
+                        "BWX" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-product-codes",
+                    "rule": { "if": [ {"in": ["Research and Markets", {"var": "bwf-source-name"}]},
+                        "P/BWRM",
+                        "" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-instruction",
+                    "description": "RTN lines 672-737: /NewsML/NewsItem/NewsManagement/Instruction/@FormalName wins; only when it maps to nothing is DescriptiveMetadata/Genre consulted (ADVISORY -> A, REMINDER only prefixes the headline). bwf-release-name is RELEASE_TYPE, the upper-cased FormalName put in front of the headline when bwf-prefix-headline (GENRE_IN_FLAG) is set.",
+                    "rule": {"upper-case": [{"trim": [{"cat": [{"var": "instruction"}]}]}]}
+                  },
+                  {
+                    "targetProperty": "bwf-genre",
+                    "rule": {"upper-case": [{"trim": [{"cat": [{"var": "genre"}]}]}]}
+                  },
+                  {
+                    "targetProperty": "bwf-instruction-code",
+                    "rule": { "if": [ {"==": [{"var": "bwf-instruction"}, "ADVANCE"]},
+                        "E",
+                        {"==": [{"var": "bwf-instruction"}, "ADD"]},
+                        "M",
+                        {"==": [{"var": "bwf-instruction"}, "KILL"]},
+                        "K",
+                        {"==": [{"var": "bwf-instruction"}, "SUPPLEMENT"]},
+                        "S",
+                        {"==": [{"var": "bwf-instruction"}, "CORRECTING AND REPLACING"]},
+                        "C",
+                        {"==": [{"var": "bwf-instruction"}, "INSERT"]},
+                        "I",
+                        "" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-release-code",
+                    "rule": { "if": [ {"!=": [{"var": "bwf-instruction-code"}, ""]},
+                        {"var": "bwf-instruction-code"},
+                        {"==": [{"var": "bwf-genre"}, "ADVISORY"]},
+                        "A",
+                        "" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-release-name",
+                    "rule": { "if": [ {"!=": [{"var": "bwf-instruction-code"}, ""]},
+                        {"var": "bwf-instruction"},
+                        {"var": "bwf-genre"} ] }
+                  },
+                  {
+                    "targetProperty": "bwf-prefix-headline",
+                    "rule": { "or": [ {"!=": [{"var": "bwf-instruction-code"}, ""]},
+                        {"in": [{"var": "bwf-genre"}, ["ADVISORY", "REMINDER"]]} ] }
+                  },
+                  {
+                    "targetProperty": "bwf-is-english",
+                    "description": "RTN lines 744-766: 'en' or anything containing 'en-' is English. A non-English item only gets the error headline in 202; every rule below that would call a service or write a body is gated on this flag.",
+                    "rule": { "some": [ {"var": ["languages", ""]},
+                        { "or": [ {"==": [{"trim": [{"cat": [{"var": ""}]}]}, "en"]},
+                            {"in": ["en-", {"cat": [{"var": ""}]}]} ] } ] }
+                  },
+                  {
+                    "targetProperty": "bwf-news-item-id",
+                    "description": "RTN lines 768-878: NewsItemId (14 digits, yyyyMMdd + 6-digit story number) is the slug (53/46) and feeds the GUID. FILEALPHA is everything after the 10th character.",
+                    "rule": {"trim": [{"cat": [{"var": "news-item-id"}]}]}
+                  },
+                  {
+                    "targetProperty": "bwf-input-check",
+                    "rule": { "if": [ {"==": [{"var": "bwf-news-item-id"}, ""]},
+                        {"return-error": ["Missing NewsItemId", "1259200"]},
+                        {"==": [{"trim": [{"cat": [{"var": "date-and-time"}]}]}, ""]},
+                        {"return-error": ["Missing /NewsML/NewsEnvelope/DateAndTime", "1259200"]},
+                        "" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-file-alpha",
+                    "rule": { "if": [ {">": [{"string-length": [{"var": "bwf-news-item-id"}]}, 10]},
+                        {"substr": [{"var": "bwf-news-item-id"}, 10]},
+                        "" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-guid",
+                    "description": "The UCPP outer transaction id (x-dj-transaction-id header) instead of the RTNS state-engine GUID (StateMachineFunctions::GenerateGUID) legacy computed from the NewsItemId and RevisionId; 33 is derived from it.",
+                    "rule": {"get-header": ["x-dj-transaction-id"]}
+                  },
+                  {"targetProperty": "bwf-chaining-code", "rule": {"cat": ["E/", {"var": "bwf-guid"}, "A"]}},
+                  {
+                    "targetProperty": "bwf-slug-index-code",
+                    "rule": {"cat": ["SL/", {"var": "bwf-news-item-id"}]}
+                  }
+                ]
+              },
+              {
+                "phaseName": "parser-gbl-bwf-xhtml",
+                "description": "The HeadLine/SubHeadLine/Contact/Body NewsComponents (normalizer extraction fields) and the tableparse arguments.",
+                "phaseRules": [
+                  {
+                    "targetProperty": "bwf-body-check",
+                    "description": "RTN lines 290-380: the Role of each /NewsML/NewsItem/NewsComponent/NewsComponent/NewsComponent picks BODY/HEADLINE/SUBHEADLINE/CONTACT. The normalizer extraction fields body-xhtml, headline-xhtml, subheadline-xhtml and contact-xhtml deliver each DataContent (a complete XHTML document) from the document the normalization content rule cleaned. A body-less English item is invalid vendor data (alert 1259200, not retriable).",
+                    "rule": { "if": [ { "and": [ {"var": "bwf-is-english"},
+                            {"==": [{"cat": [{"var": "body-xhtml"}]}, ""]} ] },
+                        { "return-error": [ "Missing /NewsML/NewsItem/NewsComponent/NewsComponent/NewsComponent with Role 'Body' (BODY_TEMP is null)",
+                            "1259200" ] },
+                        "" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-body-html",
+                    "description": "The tableparse service wraps its input in its own <html><body>, so only the inner markup of each component's <body> is sent (RTN BodyParse saw the same). The normalizer's xmlprocessor HTML-decodes what it extracts, so the bare '&' and '<' it leaves ('D.F. King & Co.', 'p<0.0001') are escaped again first: the native XHtmlBody parser reads them as a broken entity or a tag and either drops the rest of the paragraph or fails the whole body.",
+                    "rule": { "sequence": [ {"cat": [{"var": "body-xhtml"}]},
+                        { "regex-replace": [ {"var": ""},
+                            "&(?!(?:[A-Za-z][A-Za-z0-9]*|#[0-9]+|#x[0-9A-Fa-f]+);)",
+                            "&amp;",
+                            [] ] },
+                        {"regex-replace": [{"var": ""}, "<(?![A-Za-z/!?])", "&lt;", []]},
+                        { "regex-replace": [ {"var": ""},
+                            "^.*?<body\\b[^>]*>(.*?)</body\\s*>.*$",
+                            "$1",
+                            ["Singleline", "IgnoreCase"] ] } ] }
+                  },
+                  {
+                    "targetProperty": "bwf-headline-html",
+                    "description": "RTN lines 1126-1140: without a HeadLine component the NewsLines/HeadLine text is parsed instead.",
+                    "rule": { "if": [ {"!=": [{"cat": [{"var": "headline-xhtml"}]}, ""]},
+                        { "sequence": [ {"cat": [{"var": "headline-xhtml"}]},
+                            { "regex-replace": [ {"var": ""},
+                                "&(?!(?:[A-Za-z][A-Za-z0-9]*|#[0-9]+|#x[0-9A-Fa-f]+);)",
+                                "&amp;",
+                                [] ] },
+                            {"regex-replace": [{"var": ""}, "<(?![A-Za-z/!?])", "&lt;", []]},
+                            { "regex-replace": [ {"var": ""},
+                                "^.*?<body\\b[^>]*>(.*?)</body\\s*>.*$",
+                                "$1",
+                                ["Singleline", "IgnoreCase"] ] } ] },
+                        {"cat": ["<p>", {"var": "newslines-headline"}, "</p>"]} ] }
+                  },
+                  {
+                    "targetProperty": "bwf-subheadline-html",
+                    "description": "RTN line 1220: the sub headline markup is ScrubContainer'ed before BodyParse.",
+                    "rule": { "if": [ {"!=": [{"cat": [{"var": "subheadline-xhtml"}]}, ""]},
+                        { "sequence": [ {"cat": [{"var": "subheadline-xhtml"}]},
+                            {"regex-replace": [{"var": ""}, "[\\x00-\\x1F\\x7F-\\x9F]", " ", []]},
+                            {"regex-replace": [{"var": ""}, " {2,}", " ", []]},
+                            {"trim": [{"var": ""}]},
+                            { "sequence": [ {"var": ""},
+                                { "regex-replace": [ {"var": ""},
+                                    "&(?!(?:[A-Za-z][A-Za-z0-9]*|#[0-9]+|#x[0-9A-Fa-f]+);)",
+                                    "&amp;",
+                                    [] ] },
+                                {"regex-replace": [{"var": ""}, "<(?![A-Za-z/!?])", "&lt;", []]},
+                                { "regex-replace": [ {"var": ""},
+                                    "^.*?<body\\b[^>]*>(.*?)</body\\s*>.*$",
+                                    "$1",
+                                    ["Singleline", "IgnoreCase"] ] } ] } ] },
+                        "" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-contact-html",
+                    "rule": { "sequence": [ {"cat": [{"var": "contact-xhtml"}]},
+                        { "regex-replace": [ {"var": ""},
+                            "&(?!(?:[A-Za-z][A-Za-z0-9]*|#[0-9]+|#x[0-9A-Fa-f]+);)",
+                            "&amp;",
+                            [] ] },
+                        {"regex-replace": [{"var": ""}, "<(?![A-Za-z/!?])", "&lt;", []]},
+                        { "regex-replace": [ {"var": ""},
+                            "^.*?<body\\b[^>]*>(.*?)</body\\s*>.*$",
+                            "$1",
+                            ["Singleline", "IgnoreCase"] ] } ] }
+                  },
+                  {
+                    "targetProperty": "bwf-last-ticker",
+                    "description": "RTN SetTPOption TKR: the last Ticker Symbol of any Securities Identifier block, mapped or not (normalizer field).",
+                    "rule": {"trim": [{"cat": [{"var": "last-ticker"}]}]}
+                  },
+                  {
+                    "targetProperty": "bwf-tableparse-arguments",
+                    "description": "The options parser_source.BWX sets (SetTPOption NOSPCCMPR / TKR, BodyParse ... 'bwx' -> PARSETYPE/UTFEXT) plus RKWIDTH=80 and PADTHRESH=5.0, the library defaults, passed explicitly because the wrap width and the CSS padding threshold are process-wide globals in libTableParse that the shared ucpp-tableparse pods do not restore between callers. Do NOT add ADVPARAFMT/FNCSPCCMPR/WEBPARA/STRIPLEVEL=1/PADTHRESH=3.0 to match the legacy stories with stretched tables: those came from parser/gbl pods that had just parsed a GML/NWL/NWU item, whose SetTPOption flags stayed in the RTNS state engine's process statics (nothing reset them between items). No input property decides which shape legacy produced, so the shape parser_source.BWX specifies is used for every item. Of the 104 legacy stories of 2026-11-09 with HTML tables, the 56 narrow ones are reproduced byte for byte by these arguments (e.g. 20261108962633r1); the 31 stretched ones come out narrow.",
+                    "rule": { "if": [ {"!=": [{"var": "bwf-last-ticker"}, ""]},
+                        { "cat": [ "NOSPCCMPR=;RKWIDTH=80;PADTHRESH=5.0;PARSETYPE=bwx;UTFEXT=bwx;TKR=",
+                            {"var": "bwf-last-ticker"} ] },
+                        "NOSPCCMPR=;RKWIDTH=80;PADTHRESH=5.0;PARSETYPE=bwx;UTFEXT=bwx" ] }
+                  }
+                ]
+              },
+              {
+                "phaseName": "parser-gbl-bwf-metadata",
+                "description": "Securities Identifier and BWKeywords Metadata blocks: company, exchange, ticker, country, industry and subject codes.",
+                "phaseRules": [
+                  {
+                    "targetProperty": "bwf-securities",
+                    "description": "RTN lines 880-980 + exchgmap.inc: one Securities Identifier Metadata block per listing. The normalizer fields security-tickers and security-exchanges hold the first Ticker Symbol and the first Exchange of every block that has both, in document order, so pairing them by index gives 'TICKER|EXCHANGE' per block. A symbol without an Exchange is dropped ('If EXCHG_TEMP != NULL Then INCLUDE exchgmap.inc'), and so is one whose Exchange is not in the exchange lookup table registered for provider bwu (configs/int/shared/lookups/exchanges_bwf.json), which lookup/lookup-exists resolve through the transaction's provider symbol.",
+                    "rule": { "filter": [ { "for-each": [ {"var": ["security-tickers", ""]},
+                            { "cat": [ {"get-by-index": [{"var": ["security-tickers", ""]}, {"var": "index"}]},
+                                "|",
+                                {"get-by-index": [{"var": ["security-exchanges", ""]}, {"var": "index"}]} ] } ] },
+                        { "and": [ {"!=": [{"string-before": [{"cat": [{"var": ""}]}, "|"]}, ""]},
+                            {"!=": [{"string-after": [{"cat": [{"var": ""}]}, "|"]}, ""]},
+                            { "lookup-exists": [ {"string-after": [{"cat": [{"var": ""}]}, "|"]},
+                                "exchange",
+                                "ilxsuffix" ] } ] } ] }
+                  },
+                  {
+                    "targetProperty": "bwf-security-codes",
+                    "description": "exchgmap.inc: Ticker Symbol + ILX suffix (e.g. ABC + .N -> ABC.N), with doubled dots collapsed.",
+                    "rule": { "map": [ {"var": "bwf-securities"},
+                        { "sequence": [ { "cat": [ {"string-before": [{"cat": [{"var": ""}]}, "|"]},
+                                { "lookup": [ {"string-after": [{"cat": [{"var": ""}]}, "|"]},
+                                    "exchange",
+                                    "ilxsuffix" ] } ] },
+                            {"replace": [{"var": ""}, "..", "."]},
+                            {"replace": [{"var": ""}, "..", "."]},
+                            {"trim": [{"var": ""}]} ] } ] }
+                  },
+                  {
+                    "targetProperty": "bwf-company-codes",
+                    "description": "RTN CC_TEMP, used by 202 and 301.",
+                    "rule": { "sequence": [ {"join": [{"var": "bwf-security-codes"}, " "]},
+                        {"regex-replace": [{"var": ""}, "[\\x00-\\x1F\\x7F-\\x9F]", " ", []]},
+                        {"regex-replace": [{"var": ""}, " {2,}", " ", []]},
+                        {"trim": [{"var": ""}]} ] }
+                  },
+                  {
+                    "targetProperty": "bwf-company-and-isin-codes",
+                    "description": "RTN CC_PLUS_ISIN: company codes followed by every ISIN of every Securities Identifier block, mapped or not.",
+                    "rule": { "sequence": [ { "cat": [ {"var": "bwf-company-codes"},
+                            " ",
+                            {"join": [{"var": ["isins", ""]}, " "]} ] },
+                        {"regex-replace": [{"var": ""}, "[\\x00-\\x1F\\x7F-\\x9F]", " ", []]},
+                        {"regex-replace": [{"var": ""}, " {2,}", " ", []]},
+                        {"trim": [{"var": ""}]} ] }
+                  },
+                  {
+                    "targetProperty": "bwf-exchange-codes",
+                    "description": "ILX suffixes without their dots.",
+                    "rule": { "sequence": [ { "join": [ { "map": [ {"var": "bwf-securities"},
+                                { "replace": [ { "lookup": [ {"string-after": [{"cat": [{"var": ""}]}, "|"]},
+                                        "exchange",
+                                        "ilxsuffix" ] },
+                                    ".",
+                                    "" ] } ] },
+                            " " ] },
+                        {"regex-replace": [{"var": ""}, "[\\x00-\\x1F\\x7F-\\x9F]", " ", []]},
+                        {"regex-replace": [{"var": ""}, " {2,}", " ", []]},
+                        {"trim": [{"var": ""}]} ] }
+                  },
+                  {
+                    "targetProperty": "bwf-dj-exchange-names",
+                    "description": "DJ exchange names.",
+                    "rule": { "sequence": [ { "join": [ { "map": [ {"var": "bwf-securities"},
+                                { "lookup": [ {"string-after": [{"cat": [{"var": ""}]}, "|"]},
+                                    "exchange",
+                                    "djexchange" ] } ] },
+                            " " ] },
+                        {"regex-replace": [{"var": ""}, "[\\x00-\\x1F\\x7F-\\x9F]", " ", []]},
+                        {"regex-replace": [{"var": ""}, " {2,}", " ", []]},
+                        {"trim": [{"var": ""}]} ] }
+                  },
+                  {
+                    "targetProperty": "bwf-ticker-codes",
+                    "description": "RTN CODE_TICKER (lines 1456-1460): one F/TICKER per distinct mapped code. F/RT is added by UCPP itself.",
+                    "rule": { "join": [ { "distinct": [ { "map": [ {"var": "bwf-security-codes"},
+                                { "cat": [ "F/TICKER=\"",
+                                    { "sequence": [ {"cat": [{"var": ""}]},
+                                        {"regex-replace": [{"var": ""}, "[\\x00-\\x1F\\x7F-\\x9F]", " ", []]},
+                                        {"regex-replace": [{"var": ""}, " {2,}", " ", []]},
+                                        {"trim": [{"var": ""}]} ] },
+                                    "\"" ] } ] } ] },
+                        " " ] }
+                  },
+                  {
+                    "targetProperty": "bwf-country-names",
+                    "description": "RTN lines 970-983: BWCountryKeywords joined with '|', upper-cased.",
+                    "rule": { "upper-case": [ { "join": [ { "map": [ {"var": ["country-keywords", ""]},
+                                {"trim": [{"cat": [{"var": ""}]}]} ] },
+                            "|" ] } ] }
+                  },
+                  {
+                    "targetProperty": "bwf-industry-codes",
+                    "description": "RTN lines 984-1020 (FN_KW_TEMP), reproduced quirk for quirk because the stories compare 54 against the legacy output. keyword-names/keyword-values are every BWKeywords Property in document order, paired by index as 'FormalName|Value'. The accumulator's first character is DUPLICATE_CODE, the rest the F/IN list. BWIndustryKeywords: a value already contained in the list (substring test, so 'Health' matches inside an earlier F/IN=\"Mental Health\") trips the flag, and the flag is ONLY reset by a BWCountryKeywords property, so once tripped every later industry keyword of the item is dropped until the next country keyword. BWCategoryKeywords are appended without any check.",
+                    "rule": { "trim-end": [ { "substr": [ { "reduce": [ { "for-each": [ { "var": [ "keyword-names",
+                                        "" ] },
+                                    { "cat": [ { "get-by-index": [ {"var": ["keyword-names", ""]},
+                                            {"var": "index"} ] },
+                                        "|",
+                                        {"get-by-index": [{"var": ["keyword-values", ""]}, {"var": "index"}]} ] } ] },
+                                { "if": [ { "==": [ {"string-before": [{"cat": [{"var": "current"}]}, "|"]},
+                                        "BWCountryKeywords" ] },
+                                    {"cat": ["0", {"substr": [{"var": "accumulator"}, 1]}]},
+                                    { "==": [ {"string-before": [{"cat": [{"var": "current"}]}, "|"]},
+                                        "BWIndustryKeywords" ] },
+                                    { "if": [ { "or": [ { "==": [ {"substr": [{"var": "accumulator"}, 0, 1]},
+                                                "1" ] },
+                                            { "in": [ {"string-after": [{"cat": [{"var": "current"}]}, "|"]},
+                                                {"substr": [{"var": "accumulator"}, 1]} ] } ] },
+                                        {"cat": ["1", {"substr": [{"var": "accumulator"}, 1]}]},
+                                        { "cat": [ "0",
+                                            {"substr": [{"var": "accumulator"}, 1]},
+                                            "F/IN=\"",
+                                            {"string-after": [{"cat": [{"var": "current"}]}, "|"]},
+                                            "\" " ] } ] },
+                                    { "==": [ {"string-before": [{"cat": [{"var": "current"}]}, "|"]},
+                                        "BWCategoryKeywords" ] },
+                                    { "cat": [ {"substr": [{"var": "accumulator"}, 0, 1]},
+                                        {"substr": [{"var": "accumulator"}, 1]},
+                                        "F/IN=\"",
+                                        {"string-after": [{"cat": [{"var": "current"}]}, "|"]},
+                                        "\" " ] },
+                                    {"var": "accumulator"} ] },
+                                "0" ] },
+                            1 ] },
+                        " " ] }
+                  },
+                  {
+                    "targetProperty": "bwf-subject-codes",
+                    "description": "RTN lines 1006-1020: subject codes from the category keywords. Not read by any bwf story.",
+                    "rule": { "join": [ { "distinct": [ { "filter": [ { "map": [ { "var": [ "category-keywords",
+                                        "" ] },
+                                    { "if": [ {"==": [{"lower-case": [{"cat": [{"var": ""}]}]}, "earnings"]},
+                                        "N/ERN",
+                                        { "==": [ {"lower-case": [{"cat": [{"var": ""}]}]},
+                                            "merger/acquisition" ] },
+                                        "N/TNM",
+                                        "" ] } ] },
+                                {"!=": [{"var": ""}, ""]} ] } ] },
+                        " " ] }
+                  }
+                ]
+              },
+              {
+                "phaseName": "parser-gbl-bwf-text",
+                "description": "XHTML to text through tableparse, then the three body components and the release type.",
+                "phaseRules": [
+                  {
+                    "targetProperty": "bwf-body-parsed",
+                    "description": "RTN BodyParse(BODY_TEMP, ..., 'bwx') through the ucpp-tableparse service, the same native XHtmlBody parser with PARSETYPE=bwx; sflag (is-body) is 0 on every BodyParse call in parser_source.BWX. The service lets every character in its utf8-character-mappings reach the native parser, so the UTFEXT=bwx substitutions ('(TM)', straight quotes, '--' bullets) happen in the same place of the 72-column wrap as before.",
+                    "rule": { "if": [ {"var": "bwf-is-english"},
+                        { "tableparse": [ {"body": {"var": "bwf-body-html"}},
+                            {"content-type": {"const": "html"}},
+                            {"is-body": {"const": "false"}},
+                            {"arguments": {"var": "bwf-tableparse-arguments"}},
+                            {"response-types": {"const": "text"}} ] },
+                        "" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-body-text",
+                    "description": "Characters the native table round-trips unchanged are mapped here (map-non-iso-symbols, as the PRX manifest does), plus the ones it does not know: Turkish g-breve (U+011F/U+011E -> g/G), the superscript i footnote marker (U+2071) and the superscript parentheses tableparse puts around <sup> text (U+207D/U+207E), removed.",
+                    "rule": { "sequence": [ {"var": "bwf-body-parsed"},
+                        {"map-non-iso-symbols": [{"var": ""}]},
+                        {"replace": [{"var": ""}, "ğ", "g"]},
+                        {"replace": [{"var": ""}, "Ğ", "G"]},
+                        {"replace": [{"var": ""}, "\n\b   -- ", "\n\b   --  "]},
+                        {"regex-replace": [{"var": ""}, "[\\u2071\\u207D\\u207E]", "", []]} ] }
+                  },
+                  {
+                    "targetProperty": "bwf-headline-parsed",
+                    "description": "RTN lines 1126-1215.",
+                    "rule": { "if": [ {"var": "bwf-is-english"},
+                        { "tableparse": [ {"body": {"var": "bwf-headline-html"}},
+                            {"content-type": {"const": "html"}},
+                            {"is-body": {"const": "false"}},
+                            {"arguments": {"var": "bwf-tableparse-arguments"}},
+                            {"response-types": {"const": "text"}} ] },
+                        "" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-headline-clean",
+                    "rule": { "sequence": [ {"var": "bwf-headline-parsed"},
+                        {"map-non-iso-symbols": [{"var": ""}]},
+                        {"replace": [{"var": ""}, "ğ", "g"]},
+                        {"replace": [{"var": ""}, "Ğ", "G"]},
+                        {"regex-replace": [{"var": ""}, "[\\u2071\\u207D\\u207E]", "", []]} ] }
+                  },
+                  {
+                    "targetProperty": "bwf-headline-text",
+                    "description": "GENRE_IN_FLAG: 'ADVANCE/', 'CORRECTING AND REPLACING/', 'ADVISORY/' ... is put in front unless the headline already contains the word; leading spaces are trimmed, newlines kept.",
+                    "rule": { "trim-start": [ { "if": [ { "and": [ {"var": "bwf-prefix-headline"},
+                                { "!": [ { "in": [ {"var": "bwf-release-name"},
+                                        {"upper-case": [{"var": "bwf-headline-clean"}]} ] } ] } ] },
+                            { "cat": [ {"var": "bwf-release-name"},
+                                "/",
+                                {"trim-start": [{"var": "bwf-headline-clean"}, " "]} ] },
+                            {"var": "bwf-headline-clean"} ] },
+                        " " ] }
+                  },
+                  {
+                    "targetProperty": "bwf-headline-scrubbed",
+                    "rule": { "sequence": [ {"var": "bwf-headline-text"},
+                        {"regex-replace": [{"var": ""}, "[\\x00-\\x1F\\x7F-\\x9F]", " ", []]},
+                        {"regex-replace": [{"var": ""}, " {2,}", " ", []]},
+                        {"trim": [{"var": ""}]} ] }
+                  },
+                  {
+                    "targetProperty": "bwf-subheadline-parsed",
+                    "description": "RTN lines 1218-1237.",
+                    "rule": { "if": [ { "and": [ {"var": "bwf-is-english"},
+                            {"!=": [{"var": "bwf-subheadline-html"}, ""]} ] },
+                        { "tableparse": [ {"body": {"var": "bwf-subheadline-html"}},
+                            {"content-type": {"const": "html"}},
+                            {"is-body": {"const": "false"}},
+                            {"arguments": {"var": "bwf-tableparse-arguments"}},
+                            {"response-types": {"const": "text"}} ] },
+                        "" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-subheadline-clean",
+                    "rule": { "sequence": [ {"var": "bwf-subheadline-parsed"},
+                        {"map-non-iso-symbols": [{"var": ""}]},
+                        {"replace": [{"var": ""}, "ğ", "g"]},
+                        {"replace": [{"var": ""}, "Ğ", "G"]},
+                        {"regex-replace": [{"var": ""}, "[\\u2071\\u207D\\u207E]", "", []]} ] }
+                  },
+                  {
+                    "targetProperty": "bwf-subheadline-text",
+                    "description": "RTN: a sub headline whose first line break comes within the first 10 characters (or that has none) gets a leading line break.",
+                    "rule": { "if": [ {"==": [{"var": "bwf-subheadline-html"}, ""]},
+                        "",
+                        { "or": [ {"!": [{"in": ["\n", {"var": "bwf-subheadline-clean"}]}]},
+                            {"in": ["\n", {"substr": [{"var": "bwf-subheadline-clean"}, 0, 10]}]} ] },
+                        {"cat": ["\n", {"var": "bwf-subheadline-clean"}]},
+                        {"var": "bwf-subheadline-clean"} ] }
+                  },
+                  {
+                    "targetProperty": "bwf-contact-parsed",
+                    "description": "RTN lines 1334-1345.",
+                    "rule": { "if": [ { "and": [ {"var": "bwf-is-english"},
+                            {"!=": [{"var": "bwf-contact-html"}, ""]} ] },
+                        { "tableparse": [ {"body": {"var": "bwf-contact-html"}},
+                            {"content-type": {"const": "html"}},
+                            {"is-body": {"const": "false"}},
+                            {"arguments": {"var": "bwf-tableparse-arguments"}},
+                            {"response-types": {"const": "text"}} ] },
+                        "" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-contact-text",
+                    "description": "Continuation lines of the contact block are indented under 'CONTACT: '.",
+                    "rule": { "sequence": [ {"var": "bwf-contact-parsed"},
+                        {"map-non-iso-symbols": [{"var": ""}]},
+                        {"replace": [{"var": ""}, "ğ", "g"]},
+                        {"replace": [{"var": ""}, "Ğ", "G"]},
+                        {"regex-replace": [{"var": ""}, "[\\u2071\\u207D\\u207E]", "", []]},
+                        {"trim-start": [{"var": ""}, " "]},
+                        {"replace": [{"var": ""}, "\n", "\n             "]} ] }
+                  },
+                  {
+                    "targetProperty": "bwf-dateline",
+                    "description": "RTN lines 1240-1265: DATELINE--(BUSINESS WIRE)--Month DD, YYYY-- from /NewsML/NewsEnvelope/DateAndTime ('20250509T122100+0000', GMT). RTN applied CONVERT_GMT_TO_LOCAL, which is the C localtime() of the process; the parser/gbl pods set no TZ, so the legacy dateline carried the GMT date and no zone conversion is applied here.",
+                    "rule": { "cat": [ {"var": "dateline"},
+                        "--(BUSINESS WIRE)--",
+                        { "format-datetime": [ {"substr": [{"cat": [{"var": "date-and-time"}]}, 0, 15]},
+                            "MMMM dd, yyyy",
+                            "yyyyMMdd'T'HHmmss" ] },
+                        "--\n" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-body-parse-error",
+                    "description": "RTN lines 1300-1329: when the native parser gives up the bodies carry only its upper-cased error text and the item must never auto-publish (59 becomes F/RelType=\"K\" unless a release type is already set).",
+                    "rule": {"in": ["CANNOT PARSE STORY:", {"upper-case": [{"var": "bwf-body-text"}]}]}
+                  },
+                  {
+                    "targetProperty": "bwf-footer",
+                    "description": "RTN lines 1334-1369: CONTACT_LINE, SOURCE_LINE, COPYRIGHT_LINE and the -0- end marker (\\b is TILLI, the NDF pre-formatted block marker).",
+                    "rule": { "cat": [ { "if": [ {"!=": [{"var": "bwf-contact-html"}, ""]},
+                            {"cat": ["\b\n\b    CONTACT: ", {"var": "bwf-contact-text"}, "\n\b\n"]},
+                            "" ] },
+                        "\n\b    SOURCE: ",
+                        {"var": "bwf-source-name"},
+                        { "if": [ {"!=": [{"trim": [{"cat": [{"var": "copyright"}]}]}, ""]},
+                            {"cat": ["\n\b", {"trim": [{"cat": [{"var": "copyright"}]}]}]},
+                            "" ] },
+                        "\n\b\n-0-" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-body-with-headline",
+                    "description": "C_IC_BODY_TEXT: headline, sub headline, TILLI + dateline, body, footer.",
+                    "rule": { "if": [ {"!": [{"var": "bwf-is-english"}]},
+                        "",
+                        {"var": "bwf-body-parse-error"},
+                        {"upper-case": [{"var": "bwf-body-text"}]},
+                        { "cat": [ {"var": "bwf-headline-text"},
+                            {"var": "bwf-subheadline-text"},
+                            "\b",
+                            {"var": "bwf-dateline"},
+                            {"var": "bwf-body-text"},
+                            {"var": "bwf-footer"} ] } ] }
+                  },
+                  {
+                    "targetProperty": "bwf-ai-body",
+                    "description": "C_IC_AI_BODY_TEXT: as 12 but a space instead of TILLI before the dateline.",
+                    "rule": { "if": [ {"!": [{"var": "bwf-is-english"}]},
+                        "",
+                        {"var": "bwf-body-parse-error"},
+                        {"upper-case": [{"var": "bwf-body-text"}]},
+                        { "cat": [ {"var": "bwf-headline-text"},
+                            {"var": "bwf-subheadline-text"},
+                            " ",
+                            {"var": "bwf-dateline"},
+                            {"var": "bwf-body-text"},
+                            {"var": "bwf-footer"} ] } ] }
+                  },
+                  {
+                    "targetProperty": "body",
+                    "description": "C_IC_AUTO_BODY_TEXT: as 12 without the headline. This is the body the bwf story publishes.",
+                    "rule": { "if": [ {"!": [{"var": "bwf-is-english"}]},
+                        "",
+                        {"var": "bwf-body-parse-error"},
+                        {"upper-case": [{"var": "bwf-body-text"}]},
+                        { "cat": [ {"var": "bwf-subheadline-text"},
+                            "\b",
+                            {"var": "bwf-dateline"},
+                            {"var": "bwf-body-text"},
+                            {"var": "bwf-footer"} ] } ] }
+                  },
+                  {
+                    "targetProperty": "bwf-release-type-code",
+                    "description": "RTN RELTYPE_TEMP as F/RelType=\"X\"; K is forced for an unparseable body.",
+                    "rule": { "if": [ {"!=": [{"var": "bwf-release-code"}, ""]},
+                        {"cat": ["F/RelType=\"", {"var": "bwf-release-code"}, "\""]},
+                        {"var": "bwf-body-parse-error"},
+                        "F/RelType=\"K\"",
+                        "" ] }
+                  }
+                ]
+              },
+              {
+                "phaseName": "parser-gbl-bwf-ids",
+                "description": "File alpha (shared counter for corrections), source and associated ids, headlines and the story codelines.",
+                "phaseRules": [
+                  {
+                    "targetProperty": "bwf-file-alpha-code",
+                    "description": "RTN lines 831-859 (C_IC_FILE_ALPHA, consumed only by the source id 13 and REFSL 57). A CORRECTING AND REPLACING item keeps the NewsItemId of the item it replaces, so legacy gave it a fresh number, LAST_BW_FILEALPHA + 1, from a per-pod persistent container (the previous non-correction's FILEALPHA on that pod): per pod and arbitrary, only its uniqueness mattered. Here the correction draws from the shared counter BWC through chaining-code (BW00001, 5 digits), and every other item is BW + its own FILEALPHA, as legacy.",
+                    "rule": { "if": [ {"!": [{"var": "bwf-is-english"}]},
+                        "",
+                        {"==": [{"var": "bwf-release-code"}, "C"]},
+                        {"chaining-code": ["BW", "BWC"]},
+                        {"cat": ["BW", {"var": "bwf-file-alpha"}]} ] }
+                  },
+                  {
+                    "targetProperty": "bwf-source-id",
+                    "description": "Source id.",
+                    "rule": { "if": [ {"var": "bwf-is-english"},
+                        {"cat": ["F/SL=\"", {"var": "bwf-file-alpha-code"}, "\""]},
+                        "" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-associated-id",
+                    "description": "Associated id: a correction references the item it replaces.",
+                    "rule": { "if": [ { "and": [ {"var": "bwf-is-english"},
+                            {"==": [{"var": "bwf-release-code"}, "C"]} ] },
+                        {"cat": ["F/REFSL=\"BW", {"var": "bwf-file-alpha"}, "\""]},
+                        "" ] }
+                  },
+                  {
+                    "targetProperty": "bwf-headline-with-company-codes",
+                    "description": "RTN lines 1196-1215: HEADLINE1 is '(company codes) headline' or, for a non-English item, the error text with the last Language FormalName.",
+                    "rule": { "if": [ {"!": [{"var": "bwf-is-english"}]},
+                        { "cat": [ "This is not an English language document.  The language is ",
+                            { "if": [ {"!!": [{"var": ["languages", ""]}]},
+                                { "cat": [ { "get-by-index": [ {"var": "languages"},
+                                        {"-": [{"count": [{"var": "languages"}]}, 1]} ] } ] },
+                                "" ] } ] },
+                        {"!=": [{"var": "bwf-company-codes"}, ""]},
+                        {"cat": ["(", {"var": "bwf-company-codes"}, ") ", {"var": "bwf-headline-scrubbed"}]},
+                        {"var": "bwf-headline-scrubbed"} ] }
+                  },
+                  {
+                    "targetProperty": "headline",
+                    "description": "HEADLINE2, the headline the bwf story publishes.",
+                    "rule": {"if": [{"var": "bwf-is-english"}, {"var": "bwf-headline-scrubbed"}, ""]}
+                  },
+                  {
+                    "targetProperty": "codelines",
+                    "description": "The story codelines: company + ISIN codes, F/IN, F/REFSL, F/SL, F/RelType, F/Provider, CIS chaining, F/TICKER and product codes, then the fixed Business Wire codes. The company codes always lead, even when empty, so such an item's codes start with a space exactly as legacy published them (173 of the 456 stories of 2026-11-09). The story producer (parser-feedback-content) appends the NRS codes it collects from the numbered components (subject codes, chaining E/..A, slug) after these.",
+                    "rule": { "cat": [ {"var": "bwf-company-and-isin-codes"},
+                        " ",
+                        { "join": [ { "filter": [ [ {"var": "bwf-industry-codes"},
+                                  {"var": "bwf-associated-id"},
+                                  {"var": "bwf-source-id"},
+                                  {"var": "bwf-release-type-code"},
+                                  {"var": "bwf-provider-code"},
+                                  {"var": "bwf-cis-chaining-code"},
+                                  {"var": "bwf-ticker-codes"},
+                                  {"var": "bwf-product-codes"},
+                                  "O/BW N/BW N/PREL P/TAP" ],
+                                {"!=": [{"var": ""}, ""]} ] },
+                            " " ] } ] }
+                  }
+                ]
+              },
+              {
+                "phaseName": "components",
+                "description": "The numbered RTNS components, each mapped from the named property that computes it: bwf_story.json and bwf_kill_interchange.json filter on 59/202/205, parser-feedback-content and parser-interchange-content read headlines, service code and NRS codes from them, and the kill interchange serializes every one.",
+                "phaseRules": [
+                  {
+                    "targetProperty": "12",
+                    "description": "C_IC_BODY_TEXT",
+                    "rule": {"var": "bwf-body-with-headline"}
+                  },
+                  {"targetProperty": "13", "description": "C_IC_SOURCE_ID", "rule": {"var": "bwf-source-id"}},
+                  {"targetProperty": "19", "description": "C_IC_AI_BODY_TEXT", "rule": {"var": "bwf-ai-body"}},
+                  {"targetProperty": "21", "description": "C_IC_AUTO_BODY_TEXT", "rule": {"var": "body"}},
+                  {
+                    "targetProperty": "30",
+                    "description": "C_IC_FUNCTION",
+                    "rule": {"var": "bwf-ticker-codes"}
+                  },
+                  {
+                    "targetProperty": "33",
+                    "description": "C_IC_CHAINING",
+                    "rule": {"var": "bwf-chaining-code"}
+                  },
+                  {
+                    "targetProperty": "39",
+                    "description": "C_IC_PRODUCT_CODES",
+                    "rule": {"var": "bwf-product-codes"}
+                  },
+                  {
+                    "targetProperty": "46",
+                    "description": "C_IC_SLUG_IDX_CODE",
+                    "rule": {"var": "bwf-slug-index-code"}
+                  },
+                  {
+                    "targetProperty": "53",
+                    "description": "C_IC_SLUG_CODE",
+                    "rule": {"var": "bwf-news-item-id"}
+                  },
+                  {
+                    "targetProperty": "54",
+                    "description": "C_IC_FNINDUSTRY_CODES",
+                    "rule": {"var": "bwf-industry-codes"}
+                  },
+                  {
+                    "targetProperty": "57",
+                    "description": "C_IC_ASSOCIATED_ID",
+                    "rule": {"var": "bwf-associated-id"}
+                  },
+                  {
+                    "targetProperty": "59",
+                    "description": "C_IC_FNRELTYPE_CODE",
+                    "rule": {"var": "bwf-release-type-code"}
+                  },
+                  {
+                    "targetProperty": "60",
+                    "description": "C_IC_FNPROVIDER_CODE",
+                    "rule": {"var": "bwf-provider-code"}
+                  },
+                  {
+                    "targetProperty": "61",
+                    "description": "C_IC_FNCHAINING_CODE",
+                    "rule": {"var": "bwf-cis-chaining-code"}
+                  },
+                  {
+                    "targetProperty": "72",
+                    "description": "C_IC_EXCHANGE_CODE",
+                    "rule": {"var": "bwf-exchange-codes"}
+                  },
+                  {
+                    "targetProperty": "73",
+                    "description": "C_IC_DJ_EXCHANGE_NAME",
+                    "rule": {"var": "bwf-dj-exchange-names"}
+                  },
+                  {
+                    "targetProperty": "75",
+                    "description": "C_IC_SOURCE_NAME",
+                    "rule": {"var": "bwf-source-name"}
+                  },
+                  {
+                    "targetProperty": "81",
+                    "description": "C_IC_COUNTRY_NAME",
+                    "rule": {"var": "bwf-country-names"}
+                  },
+                  {"targetProperty": "102", "description": "C_IC_FEED_CODE", "rule": {"var": "bwf-feed-code"}},
+                  {
+                    "targetProperty": "201",
+                    "description": "C_IC_FILE_ALPHA",
+                    "rule": {"var": "bwf-file-alpha-code"}
+                  },
+                  {
+                    "targetProperty": "202",
+                    "description": "C_IC_HEADLINE1",
+                    "rule": {"var": "bwf-headline-with-company-codes"}
+                  },
+                  {"targetProperty": "203", "description": "C_IC_HEADLINE2", "rule": {"var": "headline"}},
+                  {
+                    "targetProperty": "205",
+                    "description": "C_IC_SERVICE_CODE",
+                    "rule": {"var": "bwf-service-code"}
+                  },
+                  {"targetProperty": "250", "description": "C_IC_TEMPLATE", "rule": {"var": "bwf-template"}},
+                  {
+                    "targetProperty": "272",
+                    "description": "C_IC_FEED_METADATA",
+                    "rule": {"var": "bwf-feed-metadata"}
+                  },
+                  {
+                    "targetProperty": "301",
+                    "description": "C_IC_COMPANY_CODES",
+                    "rule": {"var": "bwf-company-and-isin-codes"}
+                  },
+                  {
+                    "targetProperty": "302",
+                    "description": "C_IC_SUBJECT_CODES",
+                    "rule": {"var": "bwf-subject-codes"}
+                  },
+                  {
+                    "targetProperty": "303",
+                    "description": "C_IC_ABBREV_CODE",
+                    "rule": {"var": "bwf-abbreviation-codes"}
+                  },
+                  {
+                    "targetProperty": "402",
+                    "description": "C_IC_REAP3R_DOCTYPE",
+                    "rule": {"var": "bwf-reaper-doctype"}
+                  },
+                  {"targetProperty": "610", "description": "C_IC_GUID", "rule": {"var": "bwf-guid"}}
+                ]
+              },
+              {
+                "phaseName": "outputs",
+                "description": "What the bwf story publishes.",
+                "phaseRules": [
+                  {
+                    "targetProperty": "body",
+                    "description": "C_IC_AUTO_BODY_TEXT (21): sub headline, TILLI + dateline, body, footer.",
+                    "rule": {"var": "body"}
+                  },
+                  {"targetProperty": "routing", "rule": {"var": "routing"}},
+                  {
+                    "targetProperty": "headline",
+                    "description": "C_IC_HEADLINE2 (203).",
+                    "rule": {"var": "headline"}
+                  },
+                  {"targetProperty": "codelines", "rule": {"var": "codelines"}}
+                ]
+              }
+            ]
+          },
+          "routes": [{"name": "story", "type": "producer", "version": "1.0.0"}]
+        }
+      ]
+    }
+  ],
+  "date_modified": ""
+}

@@ -1,0 +1,6 @@
+{
+  "exchange": {
+    "NYSE": { "ilxsuffix": "" },
+    "NASDAQ": { "ilxsuffix": "" }
+  }
+}
