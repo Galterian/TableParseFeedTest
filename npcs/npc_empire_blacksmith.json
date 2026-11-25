@@ -1,0 +1,110 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_empire_blacksmith",
+  "name": "Blacksmith",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "smith",
+  "home": "bld_empire_blacksmith",
+  "persona": "Arms like oak beams, a voice like a dropped anvil; forges the garrison's pikes and judges a hero by their gear.",
+  "lines": {
+    "greet": [
+      "Mind the sparks.",
+      "Steel or nothing, stranger. What do you carry?"
+    ],
+    "quest": [
+      "Bring me {need} and I will forge you something worth the walk.",
+      "My forge wants {need}. Find it out there and come back."
+    ],
+    "thanks": [
+      "{need}! Now we are talking. {reward}",
+      "Good. Here — {reward}"
+    ],
+    "warn": [
+      "Hands off my anvil."
+    ]
+  },
+  "talk": [
+    {
+      "id": "forge",
+      "ask": "What do you forge?",
+      "say": [
+        "Pikes for the garrison, nails for the palisade, and a fine blade now and then for those who earn it.",
+        "Whatever the Lion Throne pays for. Mostly pikes. Always pikes."
+      ]
+    },
+    {
+      "id": "gear",
+      "ask": "What do you make of my gear?",
+      "say": [
+        "Light. Too light. You will want a shield before the next Nacatl pride finds you.",
+        "It has seen battle. Good — I trust a dented blade over a shiny one."
+      ]
+    }
+  ],
+  "agenda": {
+    "uses": "villager",
+    "params": {},
+    "rules": []
+  },
+  "quests": [
+    "quest_empire_smith_golem"
+  ],
+  "unit": {
+    "stats": {
+      "vitality": 14,
+      "world": 8,
+      "matter": 18,
+      "will": 10
+    },
+    "life": 5,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_shield",
+      "effect_super_force",
+      "effect_throw"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Blacksmith",
+    "tags": [
+      "npc",
+      "smith"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Pikeman",
+      "wbc3_code": "Ahix",
+      "wbc3_race": "Empire",
+      "match_reason": "Blacksmith of the Empire",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/Empire/Pikeman/Pikeman - attack [Ahixa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Empire/Pikeman/Pikeman - death [Ahixd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Empire/Pikeman/Pikeman - fidget [Ahixf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Empire/Pikeman/Pikeman - idle [Ahix].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Empire/Pikeman/Pikeman - info [Ahixi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Empire/Pikeman/Pikeman - walk [Ahixw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

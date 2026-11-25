@@ -1,0 +1,32 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_empire_tower",
+  "name": "Watchtower",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "tower",
+  "bank": {
+    "stat": "matter",
+    "value": 35
+  },
+  "blocks": true,
+  "produces": null,
+  "text": "A stone watchtower of the Empire: whoever holds it holds the road.",
+  "card": {
+    "name": "Watchtower",
+    "tags": [
+      "building",
+      "tower"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Tower (Empire)",
+      "wbc3_race": "Empire",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/Shared/Tower (Empire)/Tower (Empire) - base [BWTH].png",
+        "construction": "assets/Sprites/Buildings/Shared/Tower (Empire)/Tower (Empire) - construction [BWTHz].png",
+        "info": "assets/Sprites/Buildings/Shared/Tower (Empire)/Tower (Empire) - info [BWTHi].png"
+      }
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_high_elves_lorekeeper",
+  "name": "Lorekeeper",
+  "version": "1.1.0",
+  "race": "race_high_elves",
+  "role": "storyteller",
+  "home": "bld_high_elves_dragonstone",
+  "persona": "A wisp as old as the Dragonstone; it remembers every road of the Dimension.",
+  "lines": {
+    "greet": [
+      "Listen, the stone remembers."
+    ],
+    "lore": [
+      "{lore}",
+      "The runes say: {lore}",
+      "Hear this, traveller — {lore}"
+    ]
+  },
+  "talk": [
+    {
+      "id": "legend",
+      "ask": "Tell me a legend.",
+      "say": [
+        "When the first Dimension cracked, the Dragonstone caught the shards. Every gate you walk through is one of them.",
+        "King Lunarion once crossed the Void on a bridge of starlight. The bridge is still there, they say — for those who can see it."
+      ]
+    }
+  ],
+  "agenda": {
+    "uses": "storyteller",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 8,
+      "world": 18,
+      "matter": 6,
+      "will": 14
+    },
+    "life": 5,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_vision",
+      "effect_super_sense",
+      "effect_light_darkness",
+      "effect_mists"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Lorekeeper",
+    "tags": [
+      "npc",
+      "storyteller"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Ancient Wisp",
+      "wbc3_code": "AEAX",
+      "wbc3_race": "High Elves",
+      "match_reason": "Lorekeeper of the High Elves",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/High Elves/Ancient Wisp/Ancient Wisp - attack [AEAXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/High Elves/Ancient Wisp/Ancient Wisp - death [AEAXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/High Elves/Ancient Wisp/Ancient Wisp - fidget [AEAXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/High Elves/Ancient Wisp/Ancient Wisp - idle [AEAX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/High Elves/Ancient Wisp/Ancient Wisp - info [AEAXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/High Elves/Ancient Wisp/Ancient Wisp - walk [AEAXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

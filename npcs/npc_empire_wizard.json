@@ -1,0 +1,114 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_empire_wizard",
+  "name": "Court Wizard",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "wizard",
+  "home": "bld_empire_library",
+  "persona": "A red-robed scholar of the Lion Throne's court; collects spells the way misers collect coins.",
+  "lines": {
+    "greet": [
+      "Ah. You smell of the wilds — and of magic.",
+      "Speak, but quickly; my candle is short."
+    ],
+    "quest": [
+      "I seek {need}. Bring it to me and I will share what I know.",
+      "There is a spell I lack: {need}. The map hides it — find it."
+    ],
+    "thanks": [
+      "{need}, at last! {reward}",
+      "Marvellous. A trade is a trade: {reward}"
+    ],
+    "warn": [
+      "Do not touch the scrolls."
+    ]
+  },
+  "talk": [
+    {
+      "id": "elements",
+      "ask": "How does magic work here?",
+      "say": [
+        "Every spell is a chain of elements, one emitted each action — break the chain and the spell is gone. Posture, stranger: stand still and let it flow.",
+        "Fire into Earth, Earth into Water — a spell joins the next when its last element is the other's first. The wise chain them."
+      ]
+    },
+    {
+      "id": "warning",
+      "ask": "Any spell I should fear?",
+      "say": [
+        "Oblivion. It locks a mind for as long as its permanent stands. Break the permanent, free the mind.",
+        "Meteor Shower falls on everyone within ten hexes — friend and foe alike. Run, then."
+      ]
+    }
+  ],
+  "agenda": {
+    "uses": "villager",
+    "params": {},
+    "rules": []
+  },
+  "quests": [
+    "quest_empire_wizard_lightning"
+  ],
+  "unit": {
+    "stats": {
+      "vitality": 10,
+      "world": 14,
+      "matter": 8,
+      "will": 18
+    },
+    "life": 5,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_fireball",
+      "effect_lightning",
+      "effect_shield"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Court Wizard",
+    "tags": [
+      "npc",
+      "wizard"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Red Mage",
+      "wbc3_code": "AHGR",
+      "wbc3_race": "Empire",
+      "match_reason": "Court Wizard of the Empire",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/Empire/Red Mage/Red Mage - attack [AHGRa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "cast": {
+          "path": "assets/Sprites/Units/Empire/Red Mage/Red Mage - cast [AHGRc].png",
+          "usage": "8-direction cast, play on Posture emissions"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Empire/Red Mage/Red Mage - death [AHGRd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Empire/Red Mage/Red Mage - fidget [AHGRf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Empire/Red Mage/Red Mage - idle [AHGR].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Empire/Red Mage/Red Mage - info [AHGRi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Empire/Red Mage/Red Mage - walk [AHGRw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

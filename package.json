@@ -1,0 +1,8 @@
+{
+  "name": "chaosd6-gamemodels",
+  "private": true,
+  "type": "module",
+  "description": "chaosD6 races, village buildings, NPCs, monsters, villages and quests as data (JsonLogic agendas)",
+  "scripts": { "check": "node tools/check.mjs", "manifest": "node tools/manifest.mjs" },
+  "dependencies": { "json-logic-js": "^2.0.5" }
+}

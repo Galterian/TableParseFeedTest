@@ -1,0 +1,80 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_high_elves_healer",
+  "name": "Healer",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "healer",
+  "home": "bld_high_elves_healer",
+  "persona": "A calm mystic who mends villagers first and strangers second.",
+  "lines": {
+    "greet": [
+      "Hold still, you are bleeding light.",
+      "Peace on you, wanderer."
+    ]
+  },
+  "agenda": {
+    "uses": "healer",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 16,
+      "world": 10,
+      "matter": 8,
+      "will": 14
+    },
+    "life": 5,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_turn_life",
+      "effect_nature_embrace",
+      "effect_shield",
+      "effect_blessing_curse"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Healer",
+    "tags": [
+      "npc",
+      "healer"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Mystic",
+      "wbc3_code": "AENX",
+      "wbc3_race": "High Elves",
+      "match_reason": "Healer of the High Elves",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/High Elves/Mystic/Mystic - attack [AENXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/High Elves/Mystic/Mystic - death [AENXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/High Elves/Mystic/Mystic - fidget [AENXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/High Elves/Mystic/Mystic - idle [AENX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/High Elves/Mystic/Mystic - info [AENXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/High Elves/Mystic/Mystic - walk [AENXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

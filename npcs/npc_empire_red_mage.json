@@ -1,0 +1,87 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_empire_red_mage",
+  "name": "Red Mage Pilgrim",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "wanderer",
+  "home": null,
+  "persona": "A pilgrim mage walking the wide circle around the village.",
+  "lines": {
+    "greet": [
+      "Fire and road, friend."
+    ],
+    "lore": [
+      "{village} lies {village_dir}, {village_dist} hexes. Tell the reeve I sent you.",
+      "{lore}"
+    ]
+  },
+  "agenda": {
+    "uses": "wanderer",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 10,
+      "world": 16,
+      "matter": 14,
+      "will": 12
+    },
+    "life": 5,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_fireball",
+      "effect_combustion",
+      "effect_inner_fire",
+      "effect_shield"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Red Mage Pilgrim",
+    "tags": [
+      "npc",
+      "wanderer"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Red Mage",
+      "wbc3_code": "AHGR",
+      "wbc3_race": "Empire",
+      "match_reason": "Red Mage Pilgrim of the Empire",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/Empire/Red Mage/Red Mage - attack [AHGRa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "cast": {
+          "path": "assets/Sprites/Units/Empire/Red Mage/Red Mage - cast [AHGRc].png",
+          "usage": "8-direction cast, play on Posture emissions"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Empire/Red Mage/Red Mage - death [AHGRd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Empire/Red Mage/Red Mage - fidget [AHGRf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Empire/Red Mage/Red Mage - idle [AHGR].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Empire/Red Mage/Red Mage - info [AHGRi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Empire/Red Mage/Red Mage - walk [AHGRw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

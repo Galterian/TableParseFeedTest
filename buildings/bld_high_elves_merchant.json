@@ -1,0 +1,32 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_high_elves_merchant",
+  "name": "Merchant",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "shop",
+  "bank": {
+    "stat": "world",
+    "value": 35
+  },
+  "blocks": true,
+  "produces": null,
+  "text": "The merchant trades in favours: she has work for strangers.",
+  "card": {
+    "name": "Merchant",
+    "tags": [
+      "building",
+      "shop"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Merchant",
+      "wbc3_race": "High Elves",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/High Elves/Merchant/Merchant - base [BPME].png",
+        "construction": "assets/Sprites/Buildings/High Elves/Merchant/Merchant - construction [BPMEz].png",
+        "info": "assets/Sprites/Buildings/High Elves/Merchant/Merchant - info [BPMEi].png"
+      }
+    }
+  }
+}

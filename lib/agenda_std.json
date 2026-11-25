@@ -1,0 +1,1195 @@
+{
+  "schema": "chaosd6.agenda-lib/1",
+  "id": "agenda_std",
+  "name": "Standard agendas",
+  "description": "Named JsonLogic conditions ({\"cond\": id}) and the role agendas villagers, wanderers and monsters extend. An agenda is an ordered rule list: the first rule whose `when` holds gives the unit its goal for this action.",
+  "conditions": {
+    "hurt": {
+      "<=": [
+        {
+          "*": [
+            {
+              "var": "me.life"
+            },
+            2
+          ]
+        },
+        {
+          "var": "me.life_max"
+        }
+      ]
+    },
+    "foe_seen": {
+      "!!": [
+        {
+          "var": "foe"
+        }
+      ]
+    },
+    "foe_near": {
+      "and": [
+        {
+          "!!": [
+            {
+              "var": "foe"
+            }
+          ]
+        },
+        {
+          "<=": [
+            {
+              "var": "foe.dist"
+            },
+            {
+              "var": "params.alert"
+            }
+          ]
+        }
+      ]
+    },
+    "foe_adjacent": {
+      "and": [
+        {
+          "!!": [
+            {
+              "var": "foe"
+            }
+          ]
+        },
+        {
+          "<=": [
+            {
+              "var": "foe.dist"
+            },
+            1
+          ]
+        }
+      ]
+    },
+    "stranger_seen": {
+      "!!": [
+        {
+          "var": "stranger"
+        }
+      ]
+    },
+    "stranger_close": {
+      "and": [
+        {
+          "!!": [
+            {
+              "var": "stranger"
+            }
+          ]
+        },
+        {
+          "<=": [
+            {
+              "var": "stranger.dist"
+            },
+            {
+              "var": "params.talk"
+            }
+          ]
+        }
+      ]
+    },
+    "stranger_hostile": {
+      "and": [
+        {
+          "!!": [
+            {
+              "var": "stranger"
+            }
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "stranger.rep"
+            },
+            {
+              "var": "village.rep.hostile"
+            }
+          ]
+        }
+      ]
+    },
+    "stranger_friend": {
+      "and": [
+        {
+          "!!": [
+            {
+              "var": "stranger"
+            }
+          ]
+        },
+        {
+          ">=": [
+            {
+              "var": "stranger.rep"
+            },
+            {
+              "var": "village.rep.ally_all"
+            }
+          ]
+        }
+      ]
+    },
+    "stranger_welcome": {
+      "and": [
+        {
+          "!!": [
+            {
+              "var": "stranger"
+            }
+          ]
+        },
+        {
+          ">=": [
+            {
+              "var": "stranger.rep"
+            },
+            {
+              "var": "village.rep.enter"
+            }
+          ]
+        }
+      ]
+    },
+    "trespasser": {
+      "and": [
+        {
+          "!!": [
+            {
+              "var": "stranger"
+            }
+          ]
+        },
+        {
+          "<=": [
+            {
+              "var": "stranger.dist_village"
+            },
+            {
+              "var": "village.radius"
+            }
+          ]
+        },
+        {
+          "<": [
+            {
+              "var": "stranger.rep"
+            },
+            {
+              "var": "village.rep.enter"
+            }
+          ]
+        }
+      ]
+    },
+    "quest_open": {
+      "and": [
+        {
+          "!!": [
+            {
+              "var": "stranger"
+            }
+          ]
+        },
+        {
+          ">": [
+            {
+              "var": "stranger.quests_open"
+            },
+            0
+          ]
+        }
+      ]
+    },
+    "quest_ready": {
+      "and": [
+        {
+          "!!": [
+            {
+              "var": "stranger"
+            }
+          ]
+        },
+        {
+          ">": [
+            {
+              "var": "stranger.quests_ready"
+            },
+            0
+          ]
+        }
+      ]
+    },
+    "far_from_home": {
+      ">": [
+        {
+          "var": "me.dist_home"
+        },
+        {
+          "var": "params.leash"
+        }
+      ]
+    },
+    "alarm": {
+      "!!": [
+        {
+          "var": "village.alarm"
+        }
+      ]
+    },
+    "friend_hurt": {
+      "and": [
+        {
+          "!!": [
+            {
+              "var": "friend"
+            }
+          ]
+        },
+        {
+          "<=": [
+            {
+              "*": [
+                {
+                  "var": "friend.life"
+                },
+                2
+              ]
+            },
+            {
+              "var": "friend.life_max"
+            }
+          ]
+        },
+        {
+          "<=": [
+            {
+              "var": "friend.dist"
+            },
+            3
+          ]
+        }
+      ]
+    },
+    "village_at_cap": {
+      ">=": [
+        {
+          "var": "village.units"
+        },
+        {
+          "var": "village.cap"
+        }
+      ]
+    }
+  },
+  "agendas": {
+    "villager": {
+      "description": "Lives in the village: answers an attack, keeps close to home, greets visitors.",
+      "params": {
+        "alert": 3,
+        "leash": 4,
+        "talk": 2
+      },
+      "rules": [
+        {
+          "id": "flee_hurt",
+          "when": {
+            "and": [
+              {
+                "cond": "hurt"
+              },
+              {
+                "cond": "foe_near"
+              }
+            ]
+          },
+          "goal": {
+            "do": "flee",
+            "from": "foe"
+          }
+        },
+        {
+          "id": "fight_back",
+          "when": {
+            "and": [
+              {
+                "cond": "foe_adjacent"
+              },
+              {
+                "or": [
+                  {
+                    "cond": "alarm"
+                  },
+                  {
+                    "cond": "stranger_hostile"
+                  }
+                ]
+              }
+            ]
+          },
+          "goal": {
+            "do": "attack",
+            "target": "foe"
+          }
+        },
+        {
+          "id": "go_home",
+          "when": {
+            "cond": "far_from_home"
+          },
+          "goal": {
+            "do": "return"
+          }
+        },
+        {
+          "id": "greet",
+          "when": {
+            "and": [
+              {
+                "cond": "stranger_close"
+              },
+              {
+                "!": {
+                  "cond": "stranger_hostile"
+                }
+              }
+            ]
+          },
+          "goal": {
+            "do": "talk",
+            "say": "greet",
+            "target": "stranger"
+          }
+        },
+        {
+          "id": "idle",
+          "when": true,
+          "goal": {
+            "do": "wander",
+            "radius": 2
+          }
+        }
+      ]
+    },
+    "guard": {
+      "description": "Village soldier: turns out against trespassers and raiders, never leaves the village for long.",
+      "params": {
+        "alert": 5,
+        "leash": 7,
+        "talk": 2
+      },
+      "rules": [
+        {
+          "id": "alarm",
+          "when": {
+            "and": [
+              {
+                "cond": "alarm"
+              },
+              {
+                "cond": "foe_seen"
+              }
+            ]
+          },
+          "goal": {
+            "do": "attack",
+            "target": "foe"
+          }
+        },
+        {
+          "id": "raider",
+          "when": {
+            "and": [
+              {
+                "cond": "foe_near"
+              },
+              {
+                "cond": "stranger_hostile"
+              }
+            ]
+          },
+          "goal": {
+            "do": "attack",
+            "target": "foe"
+          }
+        },
+        {
+          "id": "warn",
+          "when": {
+            "cond": "trespasser"
+          },
+          "goal": {
+            "do": "approach",
+            "target": "stranger",
+            "say": "warn"
+          }
+        },
+        {
+          "id": "go_home",
+          "when": {
+            "cond": "far_from_home"
+          },
+          "goal": {
+            "do": "return"
+          }
+        },
+        {
+          "id": "patrol",
+          "when": true,
+          "goal": {
+            "do": "patrol",
+            "radius": 5
+          }
+        }
+      ]
+    },
+    "quest_giver": {
+      "description": "Has work for strangers: tells the open quest, thanks and rewards when the stranger carries what was asked.",
+      "params": {
+        "alert": 3,
+        "leash": 3,
+        "talk": 2,
+        "beckon": 12
+      },
+      "rules": [
+        {
+          "id": "flee_hurt",
+          "when": {
+            "and": [
+              {
+                "cond": "hurt"
+              },
+              {
+                "cond": "foe_near"
+              }
+            ]
+          },
+          "goal": {
+            "do": "flee",
+            "from": "foe"
+          }
+        },
+        {
+          "id": "reward",
+          "when": {
+            "and": [
+              {
+                "cond": "stranger_close"
+              },
+              {
+                "cond": "quest_ready"
+              }
+            ]
+          },
+          "goal": {
+            "do": "talk",
+            "say": "thanks",
+            "target": "stranger",
+            "complete": true
+          }
+        },
+        {
+          "id": "ask",
+          "when": {
+            "and": [
+              {
+                "cond": "stranger_close"
+              },
+              {
+                "cond": "quest_open"
+              },
+              {
+                "!": {
+                  "cond": "stranger_hostile"
+                }
+              }
+            ]
+          },
+          "goal": {
+            "do": "talk",
+            "say": "quest",
+            "target": "stranger"
+          }
+        },
+        {
+          "id": "beckon",
+          "when": {
+            "and": [
+              {
+                "cond": "stranger_seen"
+              },
+              {
+                "cond": "quest_open"
+              },
+              {
+                "<=": [
+                  {
+                    "var": "stranger.dist"
+                  },
+                  {
+                    "var": "params.beckon"
+                  }
+                ]
+              },
+              {
+                "!": {
+                  "cond": "stranger_hostile"
+                }
+              }
+            ]
+          },
+          "goal": {
+            "do": "approach",
+            "target": "stranger",
+            "stop": 2
+          }
+        },
+        {
+          "id": "go_home",
+          "when": {
+            "cond": "far_from_home"
+          },
+          "goal": {
+            "do": "return"
+          }
+        },
+        {
+          "id": "idle",
+          "when": true,
+          "goal": {
+            "do": "wander",
+            "radius": 1
+          }
+        }
+      ]
+    },
+    "storyteller": {
+      "description": "Knows the Dimension: tells a visitor about other villages, buildings and monsters near by.",
+      "params": {
+        "alert": 3,
+        "leash": 3,
+        "talk": 2,
+        "beckon": 12
+      },
+      "rules": [
+        {
+          "id": "flee_hurt",
+          "when": {
+            "and": [
+              {
+                "cond": "hurt"
+              },
+              {
+                "cond": "foe_near"
+              }
+            ]
+          },
+          "goal": {
+            "do": "flee",
+            "from": "foe"
+          }
+        },
+        {
+          "id": "tell",
+          "when": {
+            "and": [
+              {
+                "cond": "stranger_close"
+              },
+              {
+                "!": {
+                  "cond": "stranger_hostile"
+                }
+              }
+            ]
+          },
+          "goal": {
+            "do": "talk",
+            "say": "lore",
+            "target": "stranger"
+          }
+        },
+        {
+          "id": "meet",
+          "when": {
+            "and": [
+              {
+                "cond": "stranger_seen"
+              },
+              {
+                "<=": [
+                  {
+                    "var": "stranger.dist"
+                  },
+                  {
+                    "var": "params.beckon"
+                  }
+                ]
+              },
+              {
+                "!": {
+                  "cond": "stranger_hostile"
+                }
+              }
+            ]
+          },
+          "goal": {
+            "do": "approach",
+            "target": "stranger",
+            "stop": 2
+          }
+        },
+        {
+          "id": "go_home",
+          "when": {
+            "cond": "far_from_home"
+          },
+          "goal": {
+            "do": "return"
+          }
+        },
+        {
+          "id": "idle",
+          "when": true,
+          "goal": {
+            "do": "wander",
+            "radius": 1
+          }
+        }
+      ]
+    },
+    "builder": {
+      "description": "Raises walls around the village centre — inside a walled village it tends the wall; talks while working, runs from a fight.",
+      "params": {
+        "alert": 3,
+        "leash": 9,
+        "talk": 2,
+        "ring": 8
+      },
+      "rules": [
+        {
+          "id": "flee",
+          "when": {
+            "cond": "foe_near"
+          },
+          "goal": {
+            "do": "flee",
+            "from": "foe"
+          }
+        },
+        {
+          "id": "chat",
+          "when": {
+            "and": [
+              {
+                "cond": "stranger_close"
+              },
+              {
+                "cond": "stranger_welcome"
+              }
+            ]
+          },
+          "goal": {
+            "do": "talk",
+            "say": "greet",
+            "target": "stranger"
+          }
+        },
+        {
+          "id": "build",
+          "when": true,
+          "goal": {
+            "do": "build",
+            "ring": 8
+          }
+        }
+      ]
+    },
+    "healer": {
+      "description": "Mends hurt villagers first, then answers a visitor.",
+      "params": {
+        "alert": 3,
+        "leash": 4,
+        "talk": 2
+      },
+      "rules": [
+        {
+          "id": "flee_hurt",
+          "when": {
+            "and": [
+              {
+                "cond": "hurt"
+              },
+              {
+                "cond": "foe_adjacent"
+              }
+            ]
+          },
+          "goal": {
+            "do": "flee",
+            "from": "foe"
+          }
+        },
+        {
+          "id": "heal",
+          "when": {
+            "cond": "friend_hurt"
+          },
+          "goal": {
+            "do": "heal",
+            "target": "friend"
+          }
+        },
+        {
+          "id": "greet",
+          "when": {
+            "and": [
+              {
+                "cond": "stranger_close"
+              },
+              {
+                "!": {
+                  "cond": "stranger_hostile"
+                }
+              }
+            ]
+          },
+          "goal": {
+            "do": "talk",
+            "say": "greet",
+            "target": "stranger"
+          }
+        },
+        {
+          "id": "go_home",
+          "when": {
+            "cond": "far_from_home"
+          },
+          "goal": {
+            "do": "return"
+          }
+        },
+        {
+          "id": "idle",
+          "when": true,
+          "goal": {
+            "do": "wander",
+            "radius": 2
+          }
+        }
+      ]
+    },
+    "wanderer": {
+      "description": "Roams 50–100 hexes from its village centre: trades a word with travellers, points them home to the village.",
+      "params": {
+        "alert": 4,
+        "leash": 100,
+        "talk": 2,
+        "roam_min": 50,
+        "roam_max": 100
+      },
+      "rules": [
+        {
+          "id": "flee_hurt",
+          "when": {
+            "and": [
+              {
+                "cond": "hurt"
+              },
+              {
+                "cond": "foe_near"
+              }
+            ]
+          },
+          "goal": {
+            "do": "flee",
+            "from": "foe"
+          }
+        },
+        {
+          "id": "fight",
+          "when": {
+            "and": [
+              {
+                "cond": "foe_adjacent"
+              },
+              {
+                "!": {
+                  "cond": "hurt"
+                }
+              }
+            ]
+          },
+          "goal": {
+            "do": "attack",
+            "target": "foe"
+          }
+        },
+        {
+          "id": "tell",
+          "when": {
+            "and": [
+              {
+                "cond": "stranger_close"
+              },
+              {
+                "!": {
+                  "cond": "stranger_hostile"
+                }
+              }
+            ]
+          },
+          "goal": {
+            "do": "talk",
+            "say": "lore",
+            "target": "stranger"
+          }
+        },
+        {
+          "id": "roam",
+          "when": true,
+          "goal": {
+            "do": "roam",
+            "min": 50,
+            "max": 100
+          }
+        }
+      ]
+    },
+    "follower": {
+      "description": "A villager who joined a hero: stays next to its leader and fights the leader's foes.",
+      "params": {
+        "alert": 4,
+        "leash": 3,
+        "talk": 2
+      },
+      "rules": [
+        {
+          "id": "flee_hurt",
+          "when": {
+            "and": [
+              {
+                "cond": "hurt"
+              },
+              {
+                "cond": "foe_adjacent"
+              }
+            ]
+          },
+          "goal": {
+            "do": "flee",
+            "from": "foe"
+          }
+        },
+        {
+          "id": "fight",
+          "when": {
+            "cond": "foe_near"
+          },
+          "goal": {
+            "do": "attack",
+            "target": "foe"
+          }
+        },
+        {
+          "id": "follow",
+          "when": true,
+          "goal": {
+            "do": "follow",
+            "target": "leader",
+            "stop": 1
+          }
+        }
+      ]
+    },
+    "monster_hunter": {
+      "description": "Hunts the nearest prey it sees; retreats only when nearly dead.",
+      "params": {
+        "alert": 8,
+        "leash": 30
+      },
+      "rules": [
+        {
+          "id": "flee_dying",
+          "when": {
+            "<=": [
+              {
+                "var": "me.life"
+              },
+              1
+            ]
+          },
+          "goal": {
+            "do": "flee",
+            "from": "foe"
+          }
+        },
+        {
+          "id": "hunt",
+          "when": {
+            "cond": "foe_seen"
+          },
+          "goal": {
+            "do": "attack",
+            "target": "foe"
+          }
+        },
+        {
+          "id": "prowl",
+          "when": true,
+          "goal": {
+            "do": "wander",
+            "radius": 6
+          }
+        }
+      ]
+    },
+    "monster_guard": {
+      "description": "Holds its lair: attacks whatever comes close, returns when lured away.",
+      "params": {
+        "alert": 3,
+        "leash": 5
+      },
+      "rules": [
+        {
+          "id": "go_home",
+          "when": {
+            "and": [
+              {
+                "cond": "far_from_home"
+              },
+              {
+                "!": {
+                  "cond": "foe_adjacent"
+                }
+              }
+            ]
+          },
+          "goal": {
+            "do": "return"
+          }
+        },
+        {
+          "id": "defend",
+          "when": {
+            "cond": "foe_near"
+          },
+          "goal": {
+            "do": "attack",
+            "target": "foe"
+          }
+        },
+        {
+          "id": "rest",
+          "when": true,
+          "goal": {
+            "do": "idle"
+          }
+        }
+      ]
+    },
+    "monster_skirmisher": {
+      "description": "Casts from range and keeps its distance; flees when hurt.",
+      "params": {
+        "alert": 6,
+        "leash": 20,
+        "keep": 2
+      },
+      "rules": [
+        {
+          "id": "flee_hurt",
+          "when": {
+            "and": [
+              {
+                "cond": "hurt"
+              },
+              {
+                "cond": "foe_near"
+              }
+            ]
+          },
+          "goal": {
+            "do": "flee",
+            "from": "foe"
+          }
+        },
+        {
+          "id": "back_off",
+          "when": {
+            "cond": "foe_adjacent"
+          },
+          "goal": {
+            "do": "flee",
+            "from": "foe"
+          }
+        },
+        {
+          "id": "cast",
+          "when": {
+            "cond": "foe_near"
+          },
+          "goal": {
+            "do": "cast",
+            "target": "foe"
+          }
+        },
+        {
+          "id": "prowl",
+          "when": true,
+          "goal": {
+            "do": "wander",
+            "radius": 5
+          }
+        }
+      ]
+    },
+    "monster_pack": {
+      "description": "Runs with its pack: attacks a foe one of its kind already fights, else hunts the nearest.",
+      "params": {
+        "alert": 7,
+        "leash": 25
+      },
+      "rules": [
+        {
+          "id": "flee_dying",
+          "when": {
+            "<=": [
+              {
+                "var": "me.life"
+              },
+              1
+            ]
+          },
+          "goal": {
+            "do": "flee",
+            "from": "foe"
+          }
+        },
+        {
+          "id": "hunt",
+          "when": {
+            "cond": "foe_seen"
+          },
+          "goal": {
+            "do": "attack",
+            "target": "foe"
+          }
+        },
+        {
+          "id": "prowl",
+          "when": true,
+          "goal": {
+            "do": "wander",
+            "radius": 4
+          }
+        }
+      ]
+    },
+    "gate_guard": {
+      "description": "Holds the village gate: stands right outside it, steps onto the gate to bar a stranger the village does not welcome yet, and steps back for a welcome one. Fights raiders like any guard.",
+      "params": {
+        "alert": 8,
+        "leash": 3,
+        "talk": 2
+      },
+      "rules": [
+        {
+          "id": "alarm",
+          "when": {
+            "and": [
+              {
+                "cond": "alarm"
+              },
+              {
+                "cond": "foe_seen"
+              }
+            ]
+          },
+          "goal": {
+            "do": "attack",
+            "target": "foe"
+          }
+        },
+        {
+          "id": "raider",
+          "when": {
+            "and": [
+              {
+                "cond": "foe_near"
+              },
+              {
+                "cond": "stranger_hostile"
+              }
+            ]
+          },
+          "goal": {
+            "do": "attack",
+            "target": "foe"
+          }
+        },
+        {
+          "id": "bar",
+          "when": {
+            "and": [
+              {
+                "cond": "stranger_seen"
+              },
+              {
+                "!": {
+                  "cond": "stranger_welcome"
+                }
+              },
+              {
+                "<=": [
+                  {
+                    "var": "stranger.dist"
+                  },
+                  {
+                    "var": "params.alert"
+                  }
+                ]
+              }
+            ]
+          },
+          "goal": {
+            "do": "post",
+            "at": "gate",
+            "say": "warn"
+          }
+        },
+        {
+          "id": "let_in",
+          "when": {
+            "and": [
+              {
+                "cond": "stranger_close"
+              },
+              {
+                "cond": "stranger_welcome"
+              }
+            ]
+          },
+          "goal": {
+            "do": "post",
+            "at": "home",
+            "say": "greet"
+          }
+        },
+        {
+          "id": "watch",
+          "when": true,
+          "goal": {
+            "do": "post",
+            "at": "home"
+          }
+        }
+      ]
+    }
+  }
+}

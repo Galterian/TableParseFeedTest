@@ -1,0 +1,179 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_empire_builder",
+  "name": "Builder",
+  "version": "1.2.0",
+  "race": "race_empire",
+  "role": "builder",
+  "home": "bld_empire_barn",
+  "persona": "A mason with a cart of stones and opinions about walls.",
+  "lines": {
+    "greet": [
+      "Walls don't build themselves, friend.",
+      "Mind the mortar!"
+    ],
+    "quest": [
+      "For {need} I put my trowel to work for you — wherever you stand.",
+      "Pay me {need} and I build what you ask."
+    ],
+    "thanks": [
+      "A deal! Lead on — I build where you stand.",
+      "Done. Show me the ground and I raise it."
+    ]
+  },
+  "agenda": {
+    "uses": "builder",
+    "params": {
+      "beckon": 6
+    },
+    "rules": [
+      {
+        "id": "offer",
+        "when": {
+          "and": [
+            {
+              "cond": "stranger_seen"
+            },
+            {
+              "!": {
+                "cond": "stranger_hostile"
+              }
+            },
+            {
+              "!": {
+                "cond": "foe_near"
+              }
+            },
+            {
+              "<=": [
+                {
+                  "var": "stranger.dist"
+                },
+                {
+                  "var": "params.beckon"
+                }
+              ]
+            },
+            {
+              ">": [
+                {
+                  "var": "stranger.dist"
+                },
+                2
+              ]
+            }
+          ]
+        },
+        "goal": {
+          "do": "approach",
+          "target": "stranger",
+          "stop": 2
+        }
+      }
+    ]
+  },
+  "quests": [
+    "quest_empire_hire_builder"
+  ],
+  "unit": {
+    "stats": {
+      "vitality": 12,
+      "world": 8,
+      "matter": 10,
+      "will": 4
+    },
+    "life": 3,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_creation",
+      "effect_shield",
+      "effect_artifice",
+      "effect_throw"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Builder",
+    "tags": [
+      "npc",
+      "builder"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Peasant",
+      "wbc3_code": "Ahbx",
+      "wbc3_race": "Knights",
+      "match_reason": "Builder of the Empire",
+      "confidence": "medium",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/Knights/Peasant/Peasant - attack [Ahbxa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Knights/Peasant/Peasant - death [Ahbxd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Knights/Peasant/Peasant - fidget [Ahbxf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Knights/Peasant/Peasant - idle [Ahbx].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Knights/Peasant/Peasant - info [Ahbxi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Knights/Peasant/Peasant - walk [Ahbxw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  },
+  "builds": [
+    {
+      "id": "tower",
+      "building": "bld_empire_tower",
+      "ask": "Build a Watchtower here.",
+      "power": {
+        "kind": "stance",
+        "code": "B"
+      }
+    },
+    {
+      "id": "granary",
+      "building": "bld_empire_granary",
+      "ask": "Build a Granary here.",
+      "power": {
+        "kind": "mend"
+      }
+    },
+    {
+      "id": "library",
+      "building": "bld_empire_library",
+      "ask": "Build a Library here.",
+      "power": {
+        "kind": "draw"
+      }
+    },
+    {
+      "id": "barricade",
+      "wall": true,
+      "ask": "Raise a Barricade here."
+    }
+  ],
+  "build_max": 4,
+  "talk": [
+    {
+      "id": "craft",
+      "ask": "What can you build?",
+      "say": [
+        "Watchtowers, granaries, a library if you have the patience — and barricades, always barricades.",
+        "Give me stone and a free hex next to you and I will raise it."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_high_elves_merchant",
+  "name": "Merchant",
+  "version": "1.2.0",
+  "race": "race_high_elves",
+  "role": "quest_giver",
+  "home": "bld_high_elves_merchant",
+  "persona": "A sharp-eyed trader who prices everything in favours.",
+  "lines": {
+    "greet": [
+      "Looking or buying? Favours only.",
+      "Frost-silk, moonwater, rumours — all for a favour."
+    ],
+    "quest": [
+      "I pay well for {need}. You know where to find me.",
+      "Find me {need} and you will have a friend in {village}."
+    ],
+    "thanks": [
+      "A fair trade. {reward}"
+    ],
+    "warn": [
+      "No credit for thieves."
+    ]
+  },
+  "talk": [
+    {
+      "id": "trade",
+      "ask": "What do the Elves trade?",
+      "say": [
+        "Frost and starlight, mostly. Ask the Barterer inside if you want to swap cards."
+      ]
+    }
+  ],
+  "agenda": {
+    "uses": "quest_giver",
+    "params": {},
+    "rules": []
+  },
+  "quests": [
+    "quest_high_elves_frost",
+    "quest_high_elves_moonsight"
+  ],
+  "unit": {
+    "stats": {
+      "vitality": 10,
+      "world": 14,
+      "matter": 12,
+      "will": 10
+    },
+    "life": 5,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_ice_blast",
+      "effect_blizzard",
+      "effect_mists",
+      "effect_shield"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Merchant",
+    "tags": [
+      "npc",
+      "quest_giver"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Ice Maiden",
+      "wbc3_code": "AEOX",
+      "wbc3_race": "High Elves",
+      "match_reason": "Merchant of the High Elves",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/High Elves/Ice Maiden/Ice Maiden - attack [AEOXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/High Elves/Ice Maiden/Ice Maiden - death [AEOXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/High Elves/Ice Maiden/Ice Maiden - fidget [AEOXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/High Elves/Ice Maiden/Ice Maiden - idle [AEOX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/High Elves/Ice Maiden/Ice Maiden - info [AEOXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/High Elves/Ice Maiden/Ice Maiden - walk [AEOXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

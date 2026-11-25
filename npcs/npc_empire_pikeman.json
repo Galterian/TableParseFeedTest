@@ -1,0 +1,83 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_empire_pikeman",
+  "name": "Pikeman",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "guard",
+  "home": "bld_empire_barracks",
+  "persona": "A pikeman of the village watch.",
+  "lines": {
+    "greet": [
+      "Halt — who goes there?"
+    ],
+    "warn": [
+      "Back, or taste the pike!",
+      "This is {village}. Move along."
+    ]
+  },
+  "agenda": {
+    "uses": "guard",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 14,
+      "world": 8,
+      "matter": 16,
+      "will": 8
+    },
+    "life": 5,
+    "actions_per_round": 3,
+    "deck_effects": [
+      "effect_shield",
+      "effect_super_force",
+      "effect_throw",
+      "effect_haste"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Pikeman",
+    "tags": [
+      "npc",
+      "guard"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Pikeman",
+      "wbc3_code": "Ahix",
+      "wbc3_race": "Empire",
+      "match_reason": "Pikeman of the Empire",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/Empire/Pikeman/Pikeman - attack [Ahixa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Empire/Pikeman/Pikeman - death [Ahixd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Empire/Pikeman/Pikeman - fidget [Ahixf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Empire/Pikeman/Pikeman - idle [Ahix].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Empire/Pikeman/Pikeman - info [Ahixi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Empire/Pikeman/Pikeman - walk [Ahixw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

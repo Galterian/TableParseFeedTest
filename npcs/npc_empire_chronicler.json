@@ -1,0 +1,98 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_empire_chronicler",
+  "name": "Chronicler",
+  "version": "1.1.0",
+  "race": "race_empire",
+  "role": "storyteller",
+  "home": "bld_empire_library",
+  "persona": "Keeps the records of the Dimension in the Library and loves a listener.",
+  "lines": {
+    "greet": [
+      "Ah, a new entry for the chronicle!"
+    ],
+    "lore": [
+      "{lore}",
+      "The chronicle says: {lore}",
+      "Write this down, traveller — {lore}"
+    ]
+  },
+  "talk": [
+    {
+      "id": "legend",
+      "ask": "Tell me a legend.",
+      "say": [
+        "The Lion Throne was carved from a single stone that fell from the sky. The chronicle does not say who carried it.",
+        "Long ago a hero of the Empire walked into the Void and came back with a new Dimension in her pocket."
+      ]
+    }
+  ],
+  "agenda": {
+    "uses": "storyteller",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 8,
+      "world": 16,
+      "matter": 8,
+      "will": 16
+    },
+    "life": 5,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_vision",
+      "effect_mind_blast",
+      "effect_super_sense",
+      "effect_delay_time"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Chronicler",
+    "tags": [
+      "npc",
+      "storyteller"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Black Mage",
+      "wbc3_code": "AHGB",
+      "wbc3_race": "Empire",
+      "match_reason": "Chronicler of the Empire",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/Empire/Black Mage/Black Mage - attack [AHGBa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "cast": {
+          "path": "assets/Sprites/Units/Empire/Black Mage/Black Mage - cast [AHGBc].png",
+          "usage": "8-direction cast, play on Posture emissions"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Empire/Black Mage/Black Mage - death [AHGBd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Empire/Black Mage/Black Mage - fidget [AHGBf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Empire/Black Mage/Black Mage - idle [AHGB].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Empire/Black Mage/Black Mage - info [AHGBi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Empire/Black Mage/Black Mage - walk [AHGBw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

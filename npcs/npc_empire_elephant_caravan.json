@@ -1,0 +1,84 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_empire_elephant_caravan",
+  "name": "Caravan Elephant",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "wanderer",
+  "home": null,
+  "persona": "A trade caravan on its slow round between the villages.",
+  "lines": {
+    "greet": [
+      "*the elephant trumpets*",
+      "Caravan coming through!"
+    ],
+    "lore": [
+      "We trade at {village}, {village_dir} of here.",
+      "{lore}"
+    ]
+  },
+  "agenda": {
+    "uses": "wanderer",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 20,
+      "world": 12,
+      "matter": 16,
+      "will": 8
+    },
+    "life": 6,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_earthquake",
+      "effect_shield",
+      "effect_super_force",
+      "effect_potion_brew"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Caravan Elephant",
+    "tags": [
+      "npc",
+      "wanderer"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Elephant",
+      "wbc3_code": "APDX",
+      "wbc3_race": "Empire",
+      "match_reason": "Caravan Elephant of the Empire",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/Empire/Elephant/Elephant - attack [APDXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Empire/Elephant/Elephant - death [APDXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Empire/Elephant/Elephant - fidget [APDXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Empire/Elephant/Elephant - idle [APDX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Empire/Elephant/Elephant - info [APDXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Empire/Elephant/Elephant - walk [APDXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

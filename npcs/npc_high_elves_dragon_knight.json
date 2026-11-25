@@ -1,0 +1,83 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_high_elves_dragon_knight",
+  "name": "Dragon Knight",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "wanderer",
+  "home": null,
+  "persona": "A patrol of one, keeping the wilds clear around the village.",
+  "lines": {
+    "greet": [
+      "Stand aside, I hunt."
+    ],
+    "lore": [
+      "Monsters walk the land {lore_dir}. {village} lies {village_dir}.",
+      "{lore}"
+    ]
+  },
+  "agenda": {
+    "uses": "wanderer",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 18,
+      "world": 14,
+      "matter": 18,
+      "will": 12
+    },
+    "life": 6,
+    "actions_per_round": 3,
+    "deck_effects": [
+      "effect_fireball",
+      "effect_shield",
+      "effect_lightning",
+      "effect_haste"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Dragon Knight",
+    "tags": [
+      "npc",
+      "wanderer"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Dragon Knight",
+      "wbc3_code": "AECX",
+      "wbc3_race": "High Elves",
+      "match_reason": "Dragon Knight of the High Elves",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/High Elves/Dragon Knight/Dragon Knight - attack [AECXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/High Elves/Dragon Knight/Dragon Knight - death [AECXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/High Elves/Dragon Knight/Dragon Knight - fidget [AECXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/High Elves/Dragon Knight/Dragon Knight - idle [AECX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/High Elves/Dragon Knight/Dragon Knight - info [Aecxi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/High Elves/Dragon Knight/Dragon Knight - walk [AECXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

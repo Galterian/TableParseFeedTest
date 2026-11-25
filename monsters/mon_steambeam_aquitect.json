@@ -1,0 +1,784 @@
+{
+  "schema": "chaosd6.monster/2",
+  "id": "mon_steambeam_aquitect",
+  "name": "Steambeam Aquitect",
+  "version": "2.0.0",
+  "race": "Dark Dwarves",
+  "temper": "Steambeam Aquitect: brute.",
+  "agenda": {
+    "uses": "monster_hunter",
+    "params": {},
+    "rules": []
+  },
+  "card": {
+    "name": "Steambeam Aquitect",
+    "tags": [
+      "brute"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Engineer",
+      "wbc3_code": "AABX",
+      "wbc3_race": "Dark Dwarves",
+      "wbc3_internal_name": "Engineer",
+      "match_reason": "steam/artifice architect -> Dark Dwarf Engineer",
+      "confidence": "medium",
+      "sprites": {
+        "idle": {
+          "path": "assets/Sprites/Units/Dark Dwarves/Engineer/Engineer - idle [AABX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)",
+          "size": "128x432"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Dark Dwarves/Engineer/Engineer - info [AABXi].png",
+          "usage": "info panel image: portrait on top, team-coloured UI icons below",
+          "size": "144x374"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Dark Dwarves/Engineer/Engineer - fidget [AABXf].png",
+          "usage": "8-direction idle variation, play randomly while idle",
+          "size": "1664x696"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Dark Dwarves/Engineer/Engineer - death [AABXd].png",
+          "usage": "death strip, play once when life reaches 0",
+          "size": "3328x1240"
+        },
+        "attack": {
+          "path": "assets/Sprites/Units/Dark Dwarves/Engineer/Engineer - attack [AABXa].png",
+          "usage": "8-direction attack, play on action A / skill",
+          "size": "1280x536"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Dark Dwarves/Engineer/Engineer - walk [AABXw].png",
+          "usage": "8-direction walk cycle, play while moving along the hex path",
+          "size": "1280x528"
+        }
+      },
+      "sounds": {
+        "fx": [
+          {
+            "path": "assets/Sounds/Units/Dark Dwarves/Engineer/Engineer - Build - Done. Now build more!.wav",
+            "usage": "misc voice line (build / cannot build)",
+            "quote": "Done. Now build more!"
+          },
+          {
+            "path": "assets/Sounds/Units/Dark Dwarves/Engineer/Engineer - CantBuild.wav",
+            "usage": "misc voice line (build / cannot build)"
+          }
+        ],
+        "deathblow": [
+          {
+            "path": "assets/Sounds/Units/Dark Dwarves/Engineer/Engineer - Deathblow - Hammer them down!.wav",
+            "usage": "play when the entity kills a target",
+            "quote": "Hammer them down!"
+          }
+        ],
+        "order": [
+          {
+            "path": "assets/Sounds/Units/Dark Dwarves/Engineer/Engineer - Order 1 - To the mines!.wav",
+            "usage": "play when an action is queued / a target is set",
+            "quote": "To the mines!"
+          },
+          {
+            "path": "assets/Sounds/Units/Dark Dwarves/Engineer/Engineer - Order 2 - Clear the way.wav",
+            "usage": "play when an action is queued / a target is set",
+            "quote": "Clear the way."
+          },
+          {
+            "path": "assets/Sounds/Units/Dark Dwarves/Engineer/Engineer - Order 3 - In the name of progress!.wav",
+            "usage": "play when an action is queued / a target is set",
+            "quote": "In the name of progress!"
+          }
+        ],
+        "ready": [
+          {
+            "path": "assets/Sounds/Units/Dark Dwarves/Engineer/Engineer - Ready - Pillage, burn, mine and dig!.wav",
+            "usage": "play when the entity spawns / is recruited",
+            "quote": "Pillage, burn, mine and dig!"
+          }
+        ],
+        "select": [
+          {
+            "path": "assets/Sounds/Units/Dark Dwarves/Engineer/Engineer - Select 1 - Burn the forests.wav",
+            "usage": "play on click-select, pick randomly",
+            "quote": "Burn the forests."
+          },
+          {
+            "path": "assets/Sounds/Units/Dark Dwarves/Engineer/Engineer - Select 2 - Strip the land.wav",
+            "usage": "play on click-select, pick randomly",
+            "quote": "Strip the land."
+          },
+          {
+            "path": "assets/Sounds/Units/Dark Dwarves/Engineer/Engineer - Select 3 - Excavate or perish!.wav",
+            "usage": "play on click-select, pick randomly",
+            "quote": "Excavate or perish!"
+          }
+        ]
+      },
+      "wbc3_wiki": "https://etheria.fandom.com/wiki/Engineer/1.03"
+    },
+    "version": "1.1.0",
+    "data": {
+      "stats": {
+        "vitality": 18,
+        "world": 12,
+        "matter": 14,
+        "will": 14
+      },
+      "life": 6,
+      "actions_per_round": 2,
+      "dice_pattern": null,
+      "innate_effect": null,
+      "on_action_rider": {
+        "action": "M",
+        "bonus_damage": 1
+      },
+      "deck_effects": [
+        "effect_harm",
+        "effect_ice_blast",
+        "effect_potion_brew",
+        "effect_blizzard"
+      ]
+    },
+    "rebalance_links": [
+      "mon_harbor_serpent"
+    ],
+    "logic": {
+      "description": "Steambeam Aquitect (brute) — stats V18/W12/M14/Wi14, Σ 58, life 6 = round(Σ/10). Vitality (elem_vitality) is its highest stat (18), so under Rule 21 casts of those elements lose most of their delta against it (max(caster − 18, 0) per element, Σ/10 rounded half up); World (Souls, Time, Space) is weakest (12) and hurts it most. A Summoning / Resurrect must bank 58 stat points to take it (stat_buy_paid). 2 action(s) per round. dice_pattern null = default BMAP 4d6 (Rule 5: one green Block, one blue/white Move, one red Attack, one black Posture die; the highest face is the action; the engine deals it an 11-card 6A/3M/1P/1B action deck in that spirit). When Posture wins it may pick an effect from its hand and skips the dice until every element is emitted. No innate effect: its hand holds only the effects that were lying on its tile (Rule 3). Rider: +1 damage whenever its revealed action is Move (blue/white) (M), on top of the resolution-matrix damage (rps_edge). Rule 3: once awakened it defends its tile, never leaves it, attacks any character in contact, regenerates to full when no enemy is in contact, and the next enemy player (after the one in contact) controls it. If a Summoning (∀ bind) or Resurrect takes it, it becomes the owner's ally (its alliance flips to the owner's side), follows the owner (closes the gap, fights only what is in reach) and when the permanent that holds it falls it vanishes (companion), falls again (raised) or returns to its own side (bound). Deck effects (user rulings 2026-11-15, rule_monster_deck_effects): its deck holds the 4 thematic effect cards Harm (effect_harm), Ice blast (effect_ice_blast), Potion brew (effect_potion_brew), Blizzard (effect_blizzard) (data.deck_effects, picked by game/monster-deck.mjs pickThematicEffects: AI-castable, affordable for its stats under monster_effect_affordable, 2 damage + 1 defensive + the best remaining, scored by stats, tags, name and innate effect) plus data.monster_deck.random random playable effects fixed per monster instance (seed: map seed, peer label, creature id) — 11 actions + 4 skills + 6 effects = 21 cards. Once awake npcPlan casts the affordable ones on Posture / Empty Posture (game/monster-deck.mjs npcCastChoice: damage on an enemy in reach, defence with an enemy within 2, control on an enemy in contact), continues a cast without moving (Rule 19) and recycles an unusable effect card to its discard pile when no action card is left in hand. Summons keep the 15-card deck.",
+      "prerequisites": [
+        {
+          "id": "awake",
+          "description": "Rule 2/3: the creature acts only after its tile was attacked or moved towards (awakened).",
+          "when": {
+            "!!": {
+              "var": "unit.awake"
+            }
+          }
+        },
+        {
+          "id": "target_in_contact",
+          "description": "Rule 3: it attacks only a character in contact (hex distance ≤ 1) — it never leaves its tile to chase.",
+          "when": {
+            "rule": [
+              "in_contact",
+              {
+                "dist": {
+                  "var": "dist"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "effects": [
+        {
+          "id": "life_from_stats",
+          "description": "Life = round_half_up(Σstats / 10) from the canonical stats.",
+          "target": "caster",
+          "unit": "life",
+          "value": {
+            "rule": [
+              "life_from_stats",
+              {
+                "stats": {
+                  "var": "entry.data.stats"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "summon_cost_stat_sum",
+          "description": "What a Summoning / Resurrect must bank to take this creature: its stat sum.",
+          "target": "caster",
+          "unit": "stat",
+          "value": {
+            "rule": [
+              "stat_sum_of",
+              {
+                "stats": {
+                  "var": "entry.data.stats"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "actions_per_round",
+          "description": "Actions the monster plays each round (Rule 1).",
+          "target": "caster",
+          "unit": "actions",
+          "value": {
+            "var": "entry.data.actions_per_round"
+          }
+        },
+        {
+          "id": "dice_thrown",
+          "description": "D6 thrown per action: the pattern length, or 4 for the default BMAP set (Rule 5).",
+          "target": "caster",
+          "unit": "die",
+          "value": {
+            "if": [
+              {
+                "==": [
+                  {
+                    "var": "entry.data.dice_pattern"
+                  },
+                  null
+                ]
+              },
+              4,
+              {
+                "len": [
+                  {
+                    "var": "entry.data.dice_pattern"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "dice_face_A",
+          "description": "Number of Attack (red) faces among the dice thrown (default BMAP); a literal because JsonLogic cannot count letters in a string.",
+          "target": "caster",
+          "unit": "die",
+          "value": 1
+        },
+        {
+          "id": "dice_face_B",
+          "description": "Number of Block (green) faces among the dice thrown (default BMAP); a literal because JsonLogic cannot count letters in a string.",
+          "target": "caster",
+          "unit": "die",
+          "value": 1
+        },
+        {
+          "id": "dice_face_M",
+          "description": "Number of Move (blue/white) faces among the dice thrown (default BMAP); a literal because JsonLogic cannot count letters in a string.",
+          "target": "caster",
+          "unit": "die",
+          "value": 1
+        },
+        {
+          "id": "dice_face_P",
+          "description": "Number of Posture (black) faces among the dice thrown (default BMAP); a literal because JsonLogic cannot count letters in a string.",
+          "target": "caster",
+          "unit": "die",
+          "value": 1
+        },
+        {
+          "id": "rider_bonus_damage",
+          "description": "+1 damage when the revealed action is M (on_action_rider), else 0.",
+          "target": "target",
+          "unit": "damage",
+          "value": {
+            "if": [
+              {
+                "==": [
+                  {
+                    "var": "unit.action"
+                  },
+                  {
+                    "var": "entry.data.on_action_rider.action"
+                  }
+                ]
+              },
+              {
+                "var": "entry.data.on_action_rider.bonus_damage"
+              },
+              0
+            ]
+          }
+        },
+        {
+          "id": "base_attack_damage",
+          "description": "Resolution-matrix damage of the monster's revealed action against the defender's (1 for Attack, +1 on a winning edge, Attack vs Posture = 2).",
+          "target": "target",
+          "unit": "damage",
+          "value": {
+            "rule": [
+              "rps_edge",
+              {
+                "actor": {
+                  "var": "unit.action"
+                },
+                "defender": {
+                  "var": "defender.action"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "damage_taken_from_cast",
+          "description": "Rule 21: damage a completed cast by `caster` with `elements` does to this creature with its canonical stats (its high stat shrugs those elements off).",
+          "target": "caster",
+          "unit": "damage",
+          "value": {
+            "rule": [
+              "rule_21_delta_damage",
+              {
+                "caster": {
+                  "root": "caster"
+                },
+                "defender": {
+                  "root": "entry.data"
+                },
+                "elements": {
+                  "root": "elements"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "regeneration",
+          "description": "Rule 3: with no enemy in contact the monster regenerates to full — life restored this turn; 0 while engaged.",
+          "target": "caster",
+          "unit": "life",
+          "value": {
+            "if": [
+              {
+                "rule": [
+                  "in_contact",
+                  {
+                    "dist": {
+                      "var": "dist"
+                    }
+                  }
+                ]
+              },
+              0,
+              {
+                "max0": [
+                  {
+                    "-": [
+                      {
+                        "var": "unit.life_max"
+                      },
+                      {
+                        "var": "unit.life"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "deck_effect_cards",
+          "description": "Effect cards in a monster deck of this creature: its deck_effects plus the random ones (rule_monster_deck_effects data.monster_deck.random).",
+          "target": "caster",
+          "unit": "cards",
+          "value": {
+            "+": [
+              {
+                "len": [
+                  {
+                    "var": "entry.data.deck_effects"
+                  }
+                ]
+              },
+              {
+                "entry": [
+                  "rule_monster_deck_effects",
+                  "monster_deck.random"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "validation": [
+        {
+          "id": "stats_within_5_each",
+          "description": "Each of the four stats may move at most ±5 from the canonical value.",
+          "assert": {
+            "and": [
+              {
+                "<=": [
+                  {
+                    "abs": [
+                      {
+                        "-": [
+                          {
+                            "var": "proposal.data.stats.vitality"
+                          },
+                          {
+                            "var": "entry.data.stats.vitality"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  5
+                ]
+              },
+              {
+                "<=": [
+                  {
+                    "abs": [
+                      {
+                        "-": [
+                          {
+                            "var": "proposal.data.stats.world"
+                          },
+                          {
+                            "var": "entry.data.stats.world"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  5
+                ]
+              },
+              {
+                "<=": [
+                  {
+                    "abs": [
+                      {
+                        "-": [
+                          {
+                            "var": "proposal.data.stats.matter"
+                          },
+                          {
+                            "var": "entry.data.stats.matter"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  5
+                ]
+              },
+              {
+                "<=": [
+                  {
+                    "abs": [
+                      {
+                        "-": [
+                          {
+                            "var": "proposal.data.stats.will"
+                          },
+                          {
+                            "var": "entry.data.stats.will"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  5
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "life_matches_proposal_stats",
+          "description": "life equals round_half_up(Σ proposal stats / 10).",
+          "assert": {
+            "==": [
+              {
+                "var": "proposal.data.life"
+              },
+              {
+                "rule": [
+                  "life_from_stats",
+                  {
+                    "stats": {
+                      "var": "proposal.data.stats"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "actions_per_round_unchanged_1_4",
+          "description": "actions_per_round stays 1..4 and is not changed by a rebalance.",
+          "assert": {
+            "and": [
+              {
+                ">=": [
+                  {
+                    "var": "proposal.data.actions_per_round"
+                  },
+                  1
+                ]
+              },
+              {
+                "<=": [
+                  {
+                    "var": "proposal.data.actions_per_round"
+                  },
+                  4
+                ]
+              },
+              {
+                "==": [
+                  {
+                    "var": "proposal.data.actions_per_round"
+                  },
+                  {
+                    "var": "entry.data.actions_per_round"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "dice_pattern_valid",
+          "description": "dice_pattern is null (default BMAP) or 3–6 face letters out of A B M P.",
+          "assert": {
+            "or": [
+              {
+                "==": [
+                  {
+                    "var": "proposal.data.dice_pattern"
+                  },
+                  null
+                ]
+              },
+              {
+                "matches": [
+                  {
+                    "var": "proposal.data.dice_pattern"
+                  },
+                  "^[ABMP]{3,6}$"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "innate_effect_exists",
+          "description": "innate_effect is null or the id of an existing effect (catalog lookup of its element_cost).",
+          "assert": {
+            "or": [
+              {
+                "==": [
+                  {
+                    "var": "proposal.data.innate_effect"
+                  },
+                  null
+                ]
+              },
+              {
+                "!=": [
+                  {
+                    "entry": [
+                      {
+                        "var": "proposal.data.innate_effect"
+                      },
+                      "element_cost"
+                    ]
+                  },
+                  null
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "rider_shape_valid",
+          "description": "on_action_rider is null or { action ∈ action codes, bonus_damage 1..3 }.",
+          "assert": {
+            "or": [
+              {
+                "==": [
+                  {
+                    "var": "proposal.data.on_action_rider"
+                  },
+                  null
+                ]
+              },
+              {
+                "and": [
+                  {
+                    "in": [
+                      {
+                        "var": "proposal.data.on_action_rider.action"
+                      },
+                      {
+                        "rule": [
+                          "valid_action_codes",
+                          {}
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    ">=": [
+                      {
+                        "var": "proposal.data.on_action_rider.bonus_damage"
+                      },
+                      1
+                    ]
+                  },
+                  {
+                    "<=": [
+                      {
+                        "var": "proposal.data.on_action_rider.bonus_damage"
+                      },
+                      3
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "deck_effects_valid",
+          "description": "deck_effects is absent or exactly data.monster_deck.thematic distinct effect ids (monster_deck_effects_valid).",
+          "assert": {
+            "rule": [
+              "monster_deck_effects_valid",
+              {
+                "deck_effects": {
+                  "var": "proposal.data.deck_effects"
+                },
+                "count": {
+                  "entry": [
+                    "rule_monster_deck_effects",
+                    "monster_deck.thematic"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "deck_effects_affordable",
+          "description": "Every deck effect exists and is affordable for the proposal stats (monster_effect_affordable over the stat behind each element; delta = a damage effect without point_buy).",
+          "assert": {
+            "all": [
+              {
+                "if": [
+                  {
+                    "var": "proposal.data.deck_effects"
+                  },
+                  {
+                    "var": "proposal.data.deck_effects"
+                  },
+                  []
+                ]
+              },
+              {
+                "and": [
+                  {
+                    "!=": [
+                      {
+                        "entry": [
+                          {
+                            "var": ""
+                          },
+                          "element_cost"
+                        ]
+                      },
+                      null
+                    ]
+                  },
+                  {
+                    "rule": [
+                      "monster_effect_affordable",
+                      {
+                        "element_stats": {
+                          "map": [
+                            {
+                              "entry": [
+                                {
+                                  "var": ""
+                                },
+                                "element_cost"
+                              ]
+                            },
+                            {
+                              "stat_of": [
+                                {
+                                  "root": "proposal.data"
+                                },
+                                {
+                                  "var": ""
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "delta": {
+                          "and": [
+                            {
+                              "in": [
+                                "damage",
+                                {
+                                  "entry": [
+                                    {
+                                      "var": ""
+                                    },
+                                    "effect_types"
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "!": {
+                                "in": [
+                                  "point_buy",
+                                  {
+                                    "entry": [
+                                      {
+                                        "var": ""
+                                      },
+                                      "effect_types"
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        },
+                        "max_len": {
+                          "entry": [
+                            "rule_monster_deck_effects",
+                            "monster_deck.max_len"
+                          ]
+                        },
+                        "min_stat": {
+                          "entry": [
+                            "rule_monster_deck_effects",
+                            "monster_deck.min_stat"
+                          ]
+                        },
+                        "min_stat_delta": {
+                          "entry": [
+                            "rule_monster_deck_effects",
+                            "monster_deck.min_stat_delta"
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "references": [
+        "in_contact",
+        "life_from_stats",
+        "monster_deck_effects_valid",
+        "monster_effect_affordable",
+        "rps_edge",
+        "rule_21_delta_damage",
+        "stat_sum_of",
+        "valid_action_codes"
+      ]
+    }
+  }
+}

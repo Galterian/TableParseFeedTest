@@ -1,0 +1,101 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_empire_quartermaster",
+  "name": "Quartermaster",
+  "version": "1.2.0",
+  "race": "race_empire",
+  "role": "quest_giver",
+  "home": "bld_empire_quartermaster",
+  "persona": "An old soldier who counts every arrow twice.",
+  "lines": {
+    "greet": [
+      "Supplies are for the garrison. Unless…"
+    ],
+    "quest": [
+      "Bring me {need} and I will open the stores.",
+      "The garrison needs {need}. Hunt one down."
+    ],
+    "thanks": [
+      "That will do nicely. {reward}"
+    ],
+    "warn": [
+      "Hands off the stores."
+    ]
+  },
+  "talk": [
+    {
+      "id": "garrison",
+      "ask": "How is the garrison?",
+      "say": [
+        "Hungry. Always hungry. Bring me meat and I will remember you."
+      ]
+    }
+  ],
+  "agenda": {
+    "uses": "quest_giver",
+    "params": {},
+    "rules": []
+  },
+  "quests": [
+    "quest_empire_supply",
+    "quest_empire_couriers"
+  ],
+  "unit": {
+    "stats": {
+      "vitality": 12,
+      "world": 12,
+      "matter": 14,
+      "will": 10
+    },
+    "life": 5,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_potion_brew",
+      "effect_shield",
+      "effect_throw",
+      "effect_artifice"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Quartermaster",
+    "tags": [
+      "npc",
+      "quest_giver"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Mercenary",
+      "wbc3_code": "Ahcx",
+      "wbc3_race": "Empire",
+      "match_reason": "Quartermaster of the Empire",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/Empire/Mercenary/Mercenary - attack [Ahcxa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Empire/Mercenary/Mercenary - death [Ahcxd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Empire/Mercenary/Mercenary - fidget [Ahcxf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Empire/Mercenary/Mercenary - idle [Ahcx].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Empire/Mercenary/Mercenary - info [Ahcxi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Empire/Mercenary/Mercenary - walk [Ahcxw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

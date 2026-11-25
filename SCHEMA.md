@@ -1,0 +1,136 @@
+# chaosD6-GameModels — definitions
+
+One definition per file, `<kind dir>/<id>.json`, `id` = file name. A definition's identity is the sha256 of its
+canonical JSON (`index.json`). Everything is set in the Warlords Battlecry 3 world; sprites are paths into
+chaosD6-Resources (`assets/Sprites/...`).
+
+| dir | schema | id | what |
+|---|---|---|---|
+| `races/` | `chaosd6.race/1` | `race_*` | a people: temper, village + person name parts, its buildings and NPCs, its village template |
+| `buildings/` | `chaosd6.building/1` | `bld_<race>_*` | a race building: role, **bank** threshold (stat-buy, like the Dwarven Citadel), what it produces |
+| `npcs/` | `chaosd6.npc/1` | `npc_<race>_*` | a villager / wanderer: role, home building, persona + lines, **agenda**, quests it gives, unit stats + deck |
+| `monsters/` | `chaosd6.monster/2` | `mon_*` | a monster: its creature **card** (stats, life, deck, sprites) and its **agenda** |
+| `villages/` | `chaosd6.village/1` | `vil_*` | a race's village template: layout, residents, cap, wanderers, reputation thresholds, quests |
+| `quests/` | `chaosd6.quest/1` | `quest_*` | what a quest giver asks for (JsonLogic over the hero's archive) and what it gives |
+| `lib/` | `chaosd6.agenda-lib/1` | `agenda_*` | named conditions + the role agendas definitions extend |
+
+## Race
+
+`{ schema, id, name, version, alignment, temper, village, village_names: { prefix[], suffix[] }, person_names[],
+buildings[], npcs[], card: { name, tags, resources } }` — a village is named prefix + suffix ("Silverleaf",
+"Ashford"), its team is `"<Name> Village"`, its people are called "Aelindra, Elder of Silverleaf".
+
+## Building
+
+`{ schema, id, name, version, race, role, bank: { stat, value }, blocks, produces: { npc, every_turns } | null, text,
+card: { resources: { sprites: { base, construction?, info } } } }`
+
+- `role`: `tower` (a watchtower / spire a hired builder raises), `centre` (the **relationship building** — exactly one per village, at the village centre: its card shows
+  your reputation, the thresholds and the open quests), `keep`, `producer`, `temple`, `shop`, `lore`, `house`.
+- `bank`: the building is a fortress of that stat and value — stand within 1 hex and stat-buy it (a `stat` emission
+  banks your stat once per action); at bank ≥ value it breaks (and costs you reputation with the village).
+- `produces`: one unit of that NPC every `every_turns` turns while the village is below its cap (20 at most).
+
+## NPC
+
+`{ schema, id, name, version, race, role, home, persona, lines: { greet[], quest[], thanks[], lore[], warn[] },
+agenda, quests[], unit: { stats: { vitality, world, matter, will }, life, actions_per_round, deck_effects[],
+innate_effect }, card: { name, tags, resources: { wbc3_*, sprites: { idle, walk, attack, death, fidget, info } } } }`
+
+- `role`: `quest_giver`, `storyteller` (tells you about the Dimension), `builder`, `healer`, `guard`, `villager`,
+  `wanderer` (roams 50–100 hexes from its village centre), `smith`, `wizard`, `mercenary` (follows a hero the village
+  welcomes, when asked), `trader` (barters: its quests with `consume: true`).
+- `talk` (optional): `[ { id, ask, say[] } ]` — the NPC's own questions in its card, next to the ones its role gives
+  (who are you · a storyteller's news, dangers and villages · a guard's gate and roads · a wizard reading your cards ·
+  a smith's arms · a mercenary's hire · a trader's wares · its quests / barters · your standing · farewell). `say` is
+  rotated; `{village}`, `{name}` are filled. Ids `who news danger villages enter standing magic arms hire wares bye` are
+  the engine's.
+- `builds` (a builder only): `[ { id, ask, building, power: { kind: stance (code P|B) | mend | draw | explore } } | { id, ask, wall: true } ]`
+  — what a hero who hired it can order ("Build a Watchtower here."): the race building's look on a free hex next to the
+  hero (never inside a village), walkable, with that power for whoever stands on it; `wall` raises a Barricade.
+  `build_max` (1..10): how many of its buildings stand at once (the oldest comes down). Its price is one of its
+  `quests`: a `consume` quest whose `allies` reward names the builder itself ("Hire me — pay one effect card").
+- `life` = round(Σstats / 10) (ruling 2026-10-28). `deck_effects` are effect ids the unit casts.
+- Line placeholders: `{need}`, `{reward}`, `{village}`, `{village_dir}`, `{village_dist}`, `{lore}`, `{lore_dir}`.
+- A villager's team is its village's `"<Name> Village"`.
+
+## Agenda (JsonLogic)
+
+`agenda: { uses: <lib agenda name>, params: { ... }, rules: [ { id, when, goal } ] }` — the unit's own `rules` are
+tried before the library agenda's, its `params` override the library's. Each action the unit takes the goal of the
+**first** rule whose `when` holds (the last rule must be `when: true`). `{"cond": "<name>"}` inside a `when` is
+replaced by the library's named condition.
+
+The context a `when` reads (missing → null):
+
+| var | fields |
+|---|---|
+| `me` | `life, life_max, q, r, dist_home, role` |
+| `home` | `q, r` |
+| `foe` | nearest hostile unit: `id, dist, life, life_max` |
+| `friend` | nearest friendly unit: `id, dist, life, life_max` |
+| `stranger` | nearest human hero not of my side: `id, dist, dist_village, rep, quests_open, quests_ready` |
+| `leader` | the hero a follower follows: `id, dist` |
+| `village` | `id, name, radius, cap, units, alarm, rep: { hostile, enter, ally_all }` |
+| `turn`, `params` | the turn, the agenda params |
+
+Goals (`goal.do`): `flee`, `attack`, `cast`, `defend`, `approach`, `talk` (`say`: greet / quest / thanks / lore /
+warn; `complete: true` hands out a ready quest), `return`, `patrol`, `wander`, `roam` (`min`, `max`), `build`
+(`ring`; inside a walled village: tend the wall), `heal`, `follow`, `post` (`at`: `gate` / `gate_inner` / `home` — go
+there and hold it), `idle`. A quest giver or storyteller inside a walled village meets a stranger outside at the gate's
+inner hex.
+
+## Quest
+
+`{ schema, id, name, version, race, giver, need_text, need, consume, rewards[], repeatable }`
+
+- `need`: JsonLogic over `{ player: { archive: [ { kind: 'effect'|'skill'|'creature', id, tags } ] } }` — e.g.
+  "has a Fireball": `{"some": [{"var": "player.archive"}, {"and": [{"==": [{"var": "kind"}, "effect"]}, {"==": [{"var": "id"}, "effect_fireball"]}]}]}`.
+  The hero may have to find the effect / skill / monster on the map first; the giver checks when the hero is within 2
+  (next to it, or across the village gate).
+- `consume: true` (a trader's barter): handing it in gives up the first archive card that meets `need` on its own;
+  only by asking ("Trade … → …"), never by walking past. `repeatable: true`: it can be done again.
+- `rewards[]`: `{ kind: 'reputation', value }`, `{ kind: 'allies', count, units[] }` (villagers join the hero and follow
+  it), `{ kind: 'effect', id }`, `{ kind: 'skill', id }` (a card into the archive), `{ kind: 'enter' }`.
+
+## Village
+
+`{ schema, id, version, race, size?, team: "{name} Village", radius, clear_radius, cap, layout: [ { building, at: [dq, dr] } ],
+residents: [ { npc, at, post? } ], wanderers: { ring: [50, 100], npcs[] }, reputation: { unit: "percent", start,
+start_same_race, hostile, enter, ally_all, building_broken, villager_attacked, trespass, threat_radius }, quests[], wall? }`
+
+- `wall: { radius, gate: [dq, dr], name, text, sprites: { joint, horizontal, vertical } }` — an unpassable ring of
+  `radius` (between `radius` and `clear_radius`) around the centre; the one gap is `gate`, a corner hex of the ring
+  (on an axis: `[0, R]`, `[R, 0]`, `[R, -R]`, …). Corners draw `joint`, the two flat sides `horizontal`, the rest
+  `vertical`. A walled village has exactly one resident with `post: "gate"`, standing right outside the gate
+  (`gate × (R+1)/R`); give it the `gate_guard` agenda: it steps onto the gate to bar a stranger the village does not
+  welcome yet and steps back for a welcome one. A resident with `post: "outside"` (the quest givers, the storyteller)
+  waits between the wall and the cleared edge, never next to the gate, so a stranger gets quests and news there.
+
+- `size: "hamlet"`: a smaller village (no wall, a few buildings and people). The map picks a full template for a cell
+  as always, then turns 40 % of the cells away from the spawn into the hamlet of the same race (`HAMLET_RATE`).
+  A race needs a full village before it may have a hamlet.
+- Offsets are axial hex offsets from the centre. The map (chaosD6 `game/js/villages.js`) puts one village per 200×200
+  hex cell, ≥ 100 hexes from any other, and one near every spawn; its race is a hash pick among the templates.
+- Relationship, in percent (0..100): a hero starts at `start` (50), or `start_same_race` (70) when its character art
+  (picture, sounds) is of the village's race (the race's `wbc3_race`). Each quest done adds its `reputation` reward
+  (+5); hurting a villager (`villager_attacked`, −5, once per villager — a kill of the same one adds nothing), breaking
+  one of its buildings (`building_broken`, −5) and each walk inside the wall below `enter` (`trespass`, −5) lower it.
+  Under `hostile` (40) the village attacks the hero within `threat_radius` of its centre (a wanderer also within 6 of
+  itself); at `enter` (70) the gate opens; at `ally_all` (90) every villager fights at the hero's side.
+- Each village wears its own team colour (a hash of the map seed and the village, never green or red); the people of
+  a village that counts you an ally (and its villagers following you) show the ally green.
+
+## Monster
+
+`chaosd6.monster/2` (since 2026-11-25 — the creature cards moved here from chaosD6 `data/creatures.json`):
+`{ schema, id, name, version, race, temper, agenda, card: { name, tags[], resources, version, data, logic?, rebalance_links? } }`
+
+- `card` IS the creature the game plays: `version` = the card's semver, `data` = { stats { vitality, world, matter,
+  will }, life = round(Σstats/10) (ruling 2026-10-28), actions_per_round 1..4, dice_pattern, innate_effect,
+  on_action_rider, behavior, deck_effects[] … }, `resources` = its WBC3 unit (wbc3_*, sprites, sounds), `logic` its
+  JsonLogic block, `rebalance_links` the monsters / effects it is balanced against.
+- chaosD6 compiles the cards into its catalog's `creatures` collection (served as `/data/creatures.json`); the
+  card's version history before the move stays in chaosD6 git (`data/creatures.json`, a frozen record).
+- `chaosd6.monster/1` (`{ …, creature, agenda }`, an agenda only) still loads: `creature` must be a /2 monster of this
+  repo or a built-in chaosD6 creature — another body for the same card.

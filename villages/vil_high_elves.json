@@ -1,0 +1,210 @@
+{
+  "schema": "chaosd6.village/1",
+  "id": "vil_high_elves",
+  "version": "1.3.0",
+  "race": "race_high_elves",
+  "team": "{name} Village",
+  "radius": 6,
+  "clear_radius": 9,
+  "cap": 20,
+  "layout": [
+    {
+      "building": "bld_high_elves_tree_of_gold",
+      "at": [
+        0,
+        0
+      ]
+    },
+    {
+      "building": "bld_high_elves_white_tower",
+      "at": [
+        0,
+        -3
+      ]
+    },
+    {
+      "building": "bld_high_elves_shooting_range",
+      "at": [
+        3,
+        -3
+      ]
+    },
+    {
+      "building": "bld_high_elves_dragon_shrine",
+      "at": [
+        3,
+        0
+      ]
+    },
+    {
+      "building": "bld_high_elves_tower_of_the_moon",
+      "at": [
+        0,
+        3
+      ]
+    },
+    {
+      "building": "bld_high_elves_healer",
+      "at": [
+        -3,
+        3
+      ]
+    },
+    {
+      "building": "bld_high_elves_merchant",
+      "at": [
+        -3,
+        0
+      ]
+    },
+    {
+      "building": "bld_high_elves_dragonstone",
+      "at": [
+        -2,
+        -2
+      ]
+    }
+  ],
+  "residents": [
+    {
+      "npc": "npc_high_elves_elder",
+      "at": [
+        -9,
+        6
+      ],
+      "post": "outside"
+    },
+    {
+      "npc": "npc_high_elves_merchant",
+      "at": [
+        -6,
+        9
+      ],
+      "post": "outside"
+    },
+    {
+      "npc": "npc_high_elves_lorekeeper",
+      "at": [
+        -9,
+        5
+      ],
+      "post": "outside"
+    },
+    {
+      "npc": "npc_high_elves_healer",
+      "at": [
+        1,
+        2
+      ]
+    },
+    {
+      "npc": "npc_high_elves_builder",
+      "at": [
+        -1,
+        1
+      ]
+    },
+    {
+      "npc": "npc_high_elves_longbow",
+      "at": [
+        2,
+        -1
+      ]
+    },
+    {
+      "npc": "npc_high_elves_longbow",
+      "at": [
+        -1,
+        -2
+      ]
+    },
+    {
+      "npc": "npc_high_elves_moonguard",
+      "at": [
+        0,
+        -2
+      ]
+    },
+    {
+      "npc": "npc_high_elves_blacksmith",
+      "at": [
+        3,
+        -2
+      ]
+    },
+    {
+      "npc": "npc_high_elves_wizard",
+      "at": [
+        -1,
+        3
+      ]
+    },
+    {
+      "npc": "npc_high_elves_mercenary",
+      "at": [
+        2,
+        1
+      ]
+    },
+    {
+      "npc": "npc_high_elves_trader",
+      "at": [
+        -3,
+        1
+      ]
+    },
+    {
+      "npc": "npc_high_elves_gatekeeper",
+      "at": [
+        -9,
+        9
+      ],
+      "post": "gate"
+    }
+  ],
+  "wanderers": {
+    "ring": [
+      50,
+      100
+    ],
+    "npcs": [
+      "npc_high_elves_unicorn_rider",
+      "npc_high_elves_dragon_knight",
+      "npc_high_elves_unicorn_rider"
+    ]
+  },
+  "reputation": {
+    "unit": "percent",
+    "start": 50,
+    "start_same_race": 70,
+    "hostile": 40,
+    "enter": 70,
+    "ally_all": 90,
+    "building_broken": -5,
+    "villager_attacked": -5,
+    "trespass": -5,
+    "threat_radius": 9
+  },
+  "quests": [
+    "quest_high_elves_starfire",
+    "quest_high_elves_counterspell",
+    "quest_high_elves_frost",
+    "quest_high_elves_moonsight",
+    "quest_high_elves_smith_earth",
+    "quest_high_elves_wizard_light"
+  ],
+  "wall": {
+    "radius": 8,
+    "gate": [
+      -8,
+      8
+    ],
+    "name": "Moonwall",
+    "text": "The moonwall of white stone: no way in but its one gate, and the Gatekeeper opens it only to friends of the village.",
+    "sprites": {
+      "joint": "assets/Sprites/Buildings/Shared/Walls (good, 2x2 joint)/Walls (good, 2x2 joint) - base [BWG0].png",
+      "horizontal": "assets/Sprites/Buildings/Shared/Walls (good, 2x1 horizontal)/Walls (good, 2x1 horizontal) - base [BWG1].png",
+      "vertical": "assets/Sprites/Buildings/Shared/Walls (good, 1x2 vertical)/Walls (good, 1x2 vertical) - base [BWG2].png"
+    }
+  }
+}

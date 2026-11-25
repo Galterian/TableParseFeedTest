@@ -1,0 +1,83 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_high_elves_longbow",
+  "name": "Longbow",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "guard",
+  "home": "bld_high_elves_shooting_range",
+  "persona": "A silent archer of the watch.",
+  "lines": {
+    "greet": [
+      "Keep your hands where I can see them."
+    ],
+    "warn": [
+      "One more step and I loose.",
+      "Turn back, this is {village}."
+    ]
+  },
+  "agenda": {
+    "uses": "guard",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 12,
+      "world": 10,
+      "matter": 16,
+      "will": 10
+    },
+    "life": 5,
+    "actions_per_round": 3,
+    "deck_effects": [
+      "effect_lightning",
+      "effect_ice_blast",
+      "effect_shield",
+      "effect_haste"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Longbow",
+    "tags": [
+      "npc",
+      "guard"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Longbow",
+      "wbc3_code": "AEMX",
+      "wbc3_race": "High Elves",
+      "match_reason": "Longbow of the High Elves",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/High Elves/Longbow/Longbow - attack [AEMXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/High Elves/Longbow/Longbow - death [AEMXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/High Elves/Longbow/Longbow - fidget [AEMXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/High Elves/Longbow/Longbow - idle [AEMX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/High Elves/Longbow/Longbow - info [AEMXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/High Elves/Longbow/Longbow - walk [AEMXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

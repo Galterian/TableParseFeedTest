@@ -1,0 +1,32 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_high_elves_tower",
+  "name": "Elven Spire",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "tower",
+  "bank": {
+    "stat": "matter",
+    "value": 35
+  },
+  "blocks": true,
+  "produces": null,
+  "text": "A slender spire of white stone; from its top the elves see the whole Dimension.",
+  "card": {
+    "name": "Elven Spire",
+    "tags": [
+      "building",
+      "tower"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Tower (High Elf)",
+      "wbc3_race": "High Elves",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/Shared/Tower (High Elf)/Tower (High Elf) - base [BWTM].png",
+        "construction": "assets/Sprites/Buildings/Shared/Tower (High Elf)/Tower (High Elf) - construction [BWTMz].png",
+        "info": "assets/Sprites/Buildings/Shared/Tower (High Elf)/Tower (High Elf) - info [BWTMi].png"
+      }
+    }
+  }
+}

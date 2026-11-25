@@ -1,0 +1,24 @@
+{
+  "format": "chaosd6-gamemodels-pins/1",
+  "files": {
+    "tools/engine/gamemodels.mjs": {
+      "source": "game/gamemodels.mjs",
+      "sha256": "34e36b93dc10977d2f76da185637391fdf676c63d9db02f277a3cd32cd3bb8b8"
+    },
+    "tools/engine/agenda.mjs": {
+      "source": "game/agenda.mjs",
+      "sha256": "210dd77a7cf772063a95d4fcbbd49924a04031b013d5e951e185cb6af8fb6442"
+    },
+    "tools/check.mjs": {
+      "source": "game/tools/gamemodels-repo-template/tools/check.mjs",
+      "sha256": "9ab3eb3e057d41a7a7c659632296a2006a4cb0953b82f655fd952107d9623e4a"
+    },
+    "tools/manifest.mjs": {
+      "source": "game/tools/gamemodels-repo-template/tools/manifest.mjs",
+      "sha256": "4fc4ef890f237940f4b993b0a3e869dfbbdc2bbf8b5ae82523314d8d3d06fec4"
+    }
+  },
+  "npm": {
+    "json-logic-js": "^2.0.5"
+  }
+}

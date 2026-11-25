@@ -1,0 +1,86 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_high_elves_moonguard",
+  "name": "Moonguard",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "guard",
+  "home": "bld_high_elves_white_tower",
+  "persona": "A moonlit knight sworn to the keep.",
+  "lines": {
+    "greet": [
+      "The moon sees you."
+    ],
+    "warn": [
+      "You stand on sworn ground, stranger."
+    ]
+  },
+  "agenda": {
+    "uses": "guard",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 14,
+      "world": 12,
+      "matter": 14,
+      "will": 14
+    },
+    "life": 5,
+    "actions_per_round": 3,
+    "deck_effects": [
+      "effect_shield",
+      "effect_lightning",
+      "effect_light_darkness",
+      "effect_haste"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Moonguard",
+    "tags": [
+      "npc",
+      "guard"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Moonguard",
+      "wbc3_code": "AEGX",
+      "wbc3_race": "High Elves",
+      "match_reason": "Moonguard of the High Elves",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/High Elves/Moonguard/Moonguard - attack [AEGXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "cast": {
+          "path": "assets/Sprites/Units/High Elves/Moonguard/Moonguard - cast [AEGXc].png",
+          "usage": "8-direction cast, play on Posture emissions"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/High Elves/Moonguard/Moonguard - death [AEGXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/High Elves/Moonguard/Moonguard - fidget [AEGXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/High Elves/Moonguard/Moonguard - idle [AEGX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/High Elves/Moonguard/Moonguard - info [AEGXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/High Elves/Moonguard/Moonguard - walk [AEGXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

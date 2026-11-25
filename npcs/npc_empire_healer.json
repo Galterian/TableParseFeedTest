@@ -1,0 +1,83 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_empire_healer",
+  "name": "White Mage",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "healer",
+  "home": "bld_empire_palace",
+  "persona": "Tends the sick of the village.",
+  "lines": {
+    "greet": [
+      "Sit, sit. Let me look at that."
+    ]
+  },
+  "agenda": {
+    "uses": "healer",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 16,
+      "world": 10,
+      "matter": 8,
+      "will": 14
+    },
+    "life": 5,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_turn_life",
+      "effect_shield",
+      "effect_blessing_curse",
+      "effect_potion_brew"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "White Mage",
+    "tags": [
+      "npc",
+      "healer"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "White Mage",
+      "wbc3_code": "AHGW",
+      "wbc3_race": "Empire",
+      "match_reason": "White Mage of the Empire",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/Empire/White Mage/White Mage - attack [AHGWa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "cast": {
+          "path": "assets/Sprites/Units/Empire/White Mage/White Mage - cast [AHGWc].png",
+          "usage": "8-direction cast, play on Posture emissions"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Empire/White Mage/White Mage - death [AHGWd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Empire/White Mage/White Mage - fidget [AHGWf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Empire/White Mage/White Mage - idle [AHGW].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Empire/White Mage/White Mage - info [AHGWi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Empire/White Mage/White Mage - walk [AHGWw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

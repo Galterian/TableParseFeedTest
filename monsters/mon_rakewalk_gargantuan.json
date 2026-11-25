@@ -1,0 +1,801 @@
+{
+  "schema": "chaosd6.monster/2",
+  "id": "mon_rakewalk_gargantuan",
+  "name": "Rakewalk Gargantuan",
+  "version": "2.0.0",
+  "race": "Wood Elves",
+  "temper": "Rakewalk Gargantuan: bruiser.",
+  "agenda": {
+    "uses": "monster_hunter",
+    "params": {},
+    "rules": []
+  },
+  "card": {
+    "name": "Rakewalk Gargantuan",
+    "tags": [
+      "bruiser"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Ironbark",
+      "wbc3_code": "ATWX",
+      "wbc3_race": "Wood Elves",
+      "wbc3_internal_name": "Titan (Wood Elf)",
+      "match_reason": "gargantuan bruiser (Anger) -> giant tree titan Ironbark",
+      "confidence": "medium",
+      "sprites": {
+        "walk": {
+          "path": "assets/Sprites/Units/Wood Elves/Ironbark/Ironbark - walk [ATWXw].png",
+          "usage": "8-direction walk cycle, play while moving along the hex path",
+          "size": "3072x1680"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Wood Elves/Ironbark/Ironbark - info [ATWXi].png",
+          "usage": "info panel image: portrait on top, team-coloured UI icons below",
+          "size": "144x374"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Wood Elves/Ironbark/Ironbark - fidget [ATWXf].png",
+          "usage": "8-direction idle variation, play randomly while idle",
+          "size": "4224x2024"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Wood Elves/Ironbark/Ironbark - death [ATWXd].png",
+          "usage": "death strip, play once when life reaches 0",
+          "size": "2364x184"
+        },
+        "attack": {
+          "path": "assets/Sprites/Units/Wood Elves/Ironbark/Ironbark - attack [ATWXa].png",
+          "usage": "8-direction attack, play on action A / skill",
+          "size": "1408x1560"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Wood Elves/Ironbark/Ironbark - idle [ATWX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)",
+          "size": "352x1544"
+        }
+      },
+      "sounds": {
+        "deathblow": [
+          {
+            "path": "assets/Sounds/Units/Wood Elves/Ironbark/Ironbark - Deathblow - Tree killer!.wav",
+            "usage": "play when the entity kills a target",
+            "quote": "Tree killer!"
+          }
+        ],
+        "order": [
+          {
+            "path": "assets/Sounds/Units/Wood Elves/Ironbark/Ironbark - Order 1 - Ironbark is here!.wav",
+            "usage": "play when an action is queued / a target is set",
+            "quote": "Ironbark is here!"
+          },
+          {
+            "path": "assets/Sounds/Units/Wood Elves/Ironbark/Ironbark - Order 2 - For the Elves.wav",
+            "usage": "play when an action is queued / a target is set",
+            "quote": "For the Elves."
+          },
+          {
+            "path": "assets/Sounds/Units/Wood Elves/Ironbark/Ironbark - Order 3 - Let vines twist.wav",
+            "usage": "play when an action is queued / a target is set",
+            "quote": "Let vines twist."
+          },
+          {
+            "path": "assets/Sounds/Units/Wood Elves/Ironbark/Ironbark - Order 4 - Let orchids bloom.wav",
+            "usage": "play when an action is queued / a target is set",
+            "quote": "Let orchids bloom."
+          }
+        ],
+        "ready": [
+          {
+            "path": "assets/Sounds/Units/Wood Elves/Ironbark/Ironbark - Ready - Enemies of the forest, beware!.wav",
+            "usage": "play when the entity spawns / is recruited",
+            "quote": "Enemies of the forest, beware!"
+          }
+        ],
+        "select": [
+          {
+            "path": "assets/Sounds/Units/Wood Elves/Ironbark/Ironbark - Select 1 - I call the Oaks.wav",
+            "usage": "play on click-select, pick randomly",
+            "quote": "I call the Oaks."
+          },
+          {
+            "path": "assets/Sounds/Units/Wood Elves/Ironbark/Ironbark - Select 2 - Cedar and Maple.wav",
+            "usage": "play on click-select, pick randomly",
+            "quote": "Cedar and Maple"
+          },
+          {
+            "path": "assets/Sounds/Units/Wood Elves/Ironbark/Ironbark - Select 3 - I summon the Ash.wav",
+            "usage": "play on click-select, pick randomly",
+            "quote": "I summon the Ash."
+          },
+          {
+            "path": "assets/Sounds/Units/Wood Elves/Ironbark/Ironbark - Select 4 - Bend like the Willow.wav",
+            "usage": "play on click-select, pick randomly",
+            "quote": "Bend like the Willow."
+          }
+        ]
+      },
+      "wbc3_wiki": "https://etheria.fandom.com/wiki/Ironbark/1.03"
+    },
+    "version": "1.1.0",
+    "data": {
+      "stats": {
+        "vitality": 15,
+        "world": 20,
+        "matter": 12,
+        "will": 10
+      },
+      "life": 6,
+      "actions_per_round": 3,
+      "dice_pattern": null,
+      "innate_effect": "effect_anger",
+      "innate_effect_text": "Anger (Fire, Harmony): target can only deal damage to you until they visit their tower.",
+      "on_action_rider": null,
+      "deck_effects": [
+        "effect_harm",
+        "effect_super_force",
+        "effect_inner_fire",
+        "effect_delay_time"
+      ]
+    },
+    "rebalance_links": [
+      "mon_summit_apes"
+    ],
+    "logic": {
+      "description": "Rakewalk Gargantuan (bruiser) — stats V15/W20/M12/Wi10, Σ 57, life 6 = round(Σ/10). World (Souls, Time, Space) is its highest stat (20), so under Rule 21 casts of those elements lose most of their delta against it (max(caster − 20, 0) per element, Σ/10 rounded half up); Will (Concentration, Harmony) is weakest (10) and hurts it most. A Summoning / Resurrect must bank 57 stat points to take it (stat_buy_paid). 3 action(s) per round. dice_pattern null = default BMAP 4d6 (Rule 5: one green Block, one blue/white Move, one red Attack, one black Posture die; the highest face is the action; the engine deals it an 11-card 6A/3M/1P/1B action deck in that spirit). When Posture wins it may pick an effect from its hand and skips the dice until every element is emitted. Innate effect effect_anger (elem_fire + elem_harmony; permanent): \"The target cannot deal damage to anyone other than you until they visit their tower.\" It sits in the monster's hand once awakened and is cast on Posture / Empty Posture (Rule 20); it can only go out while none of its elements is Disabled. No on-action rider: damage is the plain resolution-matrix edge (rps_edge). Rule 3: once awakened it defends its tile, never leaves it, attacks any character in contact, regenerates to full when no enemy is in contact, and the next enemy player (after the one in contact) controls it. If a Summoning (∀ bind) or Resurrect takes it, it becomes the owner's ally (its alliance flips to the owner's side), follows the owner (closes the gap, fights only what is in reach) and when the permanent that holds it falls it vanishes (companion), falls again (raised) or returns to its own side (bound). Deck effects (user rulings 2026-11-15, rule_monster_deck_effects): its deck holds the 4 thematic effect cards Harm (effect_harm), Super force (effect_super_force), Inner Fire (effect_inner_fire), Delay time (effect_delay_time) (data.deck_effects, picked by game/monster-deck.mjs pickThematicEffects: AI-castable, affordable for its stats under monster_effect_affordable, 2 damage + 1 defensive + the best remaining, scored by stats, tags, name and innate effect) plus data.monster_deck.random random playable effects fixed per monster instance (seed: map seed, peer label, creature id) — 11 actions + 4 skills + 6 effects = 21 cards. Once awake npcPlan casts the affordable ones on Posture / Empty Posture (game/monster-deck.mjs npcCastChoice: damage on an enemy in reach, defence with an enemy within 2, control on an enemy in contact), continues a cast without moving (Rule 19) and recycles an unusable effect card to its discard pile when no action card is left in hand. Summons keep the 15-card deck.",
+      "prerequisites": [
+        {
+          "id": "awake",
+          "description": "Rule 2/3: the creature acts only after its tile was attacked or moved towards (awakened).",
+          "when": {
+            "!!": {
+              "var": "unit.awake"
+            }
+          }
+        },
+        {
+          "id": "target_in_contact",
+          "description": "Rule 3: it attacks only a character in contact (hex distance ≤ 1) — it never leaves its tile to chase.",
+          "when": {
+            "rule": [
+              "in_contact",
+              {
+                "dist": {
+                  "var": "dist"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "innate_castable",
+          "description": "effect_anger may go out: only Posture / Empty Posture emit elements (Rule 20) and none of its elements is Disabled for the monster.",
+          "when": {
+            "and": [
+              {
+                "rule": [
+                  "action_can_cast_non_instant",
+                  {
+                    "action": {
+                      "var": "unit.action"
+                    },
+                    "is_instant": false
+                  }
+                ]
+              },
+              {
+                "rule": [
+                  "elements_not_disabled",
+                  {
+                    "elements": {
+                      "entry": [
+                        "effect_anger",
+                        "element_cost"
+                      ]
+                    },
+                    "disabled": {
+                      "root": "unit.disabled_elems"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "effects": [
+        {
+          "id": "life_from_stats",
+          "description": "Life = round_half_up(Σstats / 10) from the canonical stats.",
+          "target": "caster",
+          "unit": "life",
+          "value": {
+            "rule": [
+              "life_from_stats",
+              {
+                "stats": {
+                  "var": "entry.data.stats"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "summon_cost_stat_sum",
+          "description": "What a Summoning / Resurrect must bank to take this creature: its stat sum.",
+          "target": "caster",
+          "unit": "stat",
+          "value": {
+            "rule": [
+              "stat_sum_of",
+              {
+                "stats": {
+                  "var": "entry.data.stats"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "actions_per_round",
+          "description": "Actions the monster plays each round (Rule 1).",
+          "target": "caster",
+          "unit": "actions",
+          "value": {
+            "var": "entry.data.actions_per_round"
+          }
+        },
+        {
+          "id": "dice_thrown",
+          "description": "D6 thrown per action: the pattern length, or 4 for the default BMAP set (Rule 5).",
+          "target": "caster",
+          "unit": "die",
+          "value": {
+            "if": [
+              {
+                "==": [
+                  {
+                    "var": "entry.data.dice_pattern"
+                  },
+                  null
+                ]
+              },
+              4,
+              {
+                "len": [
+                  {
+                    "var": "entry.data.dice_pattern"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "dice_face_A",
+          "description": "Number of Attack (red) faces among the dice thrown (default BMAP); a literal because JsonLogic cannot count letters in a string.",
+          "target": "caster",
+          "unit": "die",
+          "value": 1
+        },
+        {
+          "id": "dice_face_B",
+          "description": "Number of Block (green) faces among the dice thrown (default BMAP); a literal because JsonLogic cannot count letters in a string.",
+          "target": "caster",
+          "unit": "die",
+          "value": 1
+        },
+        {
+          "id": "dice_face_M",
+          "description": "Number of Move (blue/white) faces among the dice thrown (default BMAP); a literal because JsonLogic cannot count letters in a string.",
+          "target": "caster",
+          "unit": "die",
+          "value": 1
+        },
+        {
+          "id": "dice_face_P",
+          "description": "Number of Posture (black) faces among the dice thrown (default BMAP); a literal because JsonLogic cannot count letters in a string.",
+          "target": "caster",
+          "unit": "die",
+          "value": 1
+        },
+        {
+          "id": "rider_bonus_damage",
+          "description": "No on-action rider — always 0.",
+          "target": "target",
+          "unit": "damage",
+          "value": 0
+        },
+        {
+          "id": "base_attack_damage",
+          "description": "Resolution-matrix damage of the monster's revealed action against the defender's (1 for Attack, +1 on a winning edge, Attack vs Posture = 2).",
+          "target": "target",
+          "unit": "damage",
+          "value": {
+            "rule": [
+              "rps_edge",
+              {
+                "actor": {
+                  "var": "unit.action"
+                },
+                "defender": {
+                  "var": "defender.action"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "damage_taken_from_cast",
+          "description": "Rule 21: damage a completed cast by `caster` with `elements` does to this creature with its canonical stats (its high stat shrugs those elements off).",
+          "target": "caster",
+          "unit": "damage",
+          "value": {
+            "rule": [
+              "rule_21_delta_damage",
+              {
+                "caster": {
+                  "root": "caster"
+                },
+                "defender": {
+                  "root": "entry.data"
+                },
+                "elements": {
+                  "root": "elements"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "regeneration",
+          "description": "Rule 3: with no enemy in contact the monster regenerates to full — life restored this turn; 0 while engaged.",
+          "target": "caster",
+          "unit": "life",
+          "value": {
+            "if": [
+              {
+                "rule": [
+                  "in_contact",
+                  {
+                    "dist": {
+                      "var": "dist"
+                    }
+                  }
+                ]
+              },
+              0,
+              {
+                "max0": [
+                  {
+                    "-": [
+                      {
+                        "var": "unit.life_max"
+                      },
+                      {
+                        "var": "unit.life"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "deck_effect_cards",
+          "description": "Effect cards in a monster deck of this creature: its deck_effects plus the random ones (rule_monster_deck_effects data.monster_deck.random).",
+          "target": "caster",
+          "unit": "cards",
+          "value": {
+            "+": [
+              {
+                "len": [
+                  {
+                    "var": "entry.data.deck_effects"
+                  }
+                ]
+              },
+              {
+                "entry": [
+                  "rule_monster_deck_effects",
+                  "monster_deck.random"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "validation": [
+        {
+          "id": "stats_within_5_each",
+          "description": "Each of the four stats may move at most ±5 from the canonical value.",
+          "assert": {
+            "and": [
+              {
+                "<=": [
+                  {
+                    "abs": [
+                      {
+                        "-": [
+                          {
+                            "var": "proposal.data.stats.vitality"
+                          },
+                          {
+                            "var": "entry.data.stats.vitality"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  5
+                ]
+              },
+              {
+                "<=": [
+                  {
+                    "abs": [
+                      {
+                        "-": [
+                          {
+                            "var": "proposal.data.stats.world"
+                          },
+                          {
+                            "var": "entry.data.stats.world"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  5
+                ]
+              },
+              {
+                "<=": [
+                  {
+                    "abs": [
+                      {
+                        "-": [
+                          {
+                            "var": "proposal.data.stats.matter"
+                          },
+                          {
+                            "var": "entry.data.stats.matter"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  5
+                ]
+              },
+              {
+                "<=": [
+                  {
+                    "abs": [
+                      {
+                        "-": [
+                          {
+                            "var": "proposal.data.stats.will"
+                          },
+                          {
+                            "var": "entry.data.stats.will"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  5
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "life_matches_proposal_stats",
+          "description": "life equals round_half_up(Σ proposal stats / 10).",
+          "assert": {
+            "==": [
+              {
+                "var": "proposal.data.life"
+              },
+              {
+                "rule": [
+                  "life_from_stats",
+                  {
+                    "stats": {
+                      "var": "proposal.data.stats"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "actions_per_round_unchanged_1_4",
+          "description": "actions_per_round stays 1..4 and is not changed by a rebalance.",
+          "assert": {
+            "and": [
+              {
+                ">=": [
+                  {
+                    "var": "proposal.data.actions_per_round"
+                  },
+                  1
+                ]
+              },
+              {
+                "<=": [
+                  {
+                    "var": "proposal.data.actions_per_round"
+                  },
+                  4
+                ]
+              },
+              {
+                "==": [
+                  {
+                    "var": "proposal.data.actions_per_round"
+                  },
+                  {
+                    "var": "entry.data.actions_per_round"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "dice_pattern_valid",
+          "description": "dice_pattern is null (default BMAP) or 3–6 face letters out of A B M P.",
+          "assert": {
+            "or": [
+              {
+                "==": [
+                  {
+                    "var": "proposal.data.dice_pattern"
+                  },
+                  null
+                ]
+              },
+              {
+                "matches": [
+                  {
+                    "var": "proposal.data.dice_pattern"
+                  },
+                  "^[ABMP]{3,6}$"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "innate_effect_exists",
+          "description": "innate_effect is null or the id of an existing effect (catalog lookup of its element_cost).",
+          "assert": {
+            "or": [
+              {
+                "==": [
+                  {
+                    "var": "proposal.data.innate_effect"
+                  },
+                  null
+                ]
+              },
+              {
+                "!=": [
+                  {
+                    "entry": [
+                      {
+                        "var": "proposal.data.innate_effect"
+                      },
+                      "element_cost"
+                    ]
+                  },
+                  null
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "rider_shape_valid",
+          "description": "on_action_rider is null or { action ∈ action codes, bonus_damage 1..3 }.",
+          "assert": {
+            "or": [
+              {
+                "==": [
+                  {
+                    "var": "proposal.data.on_action_rider"
+                  },
+                  null
+                ]
+              },
+              {
+                "and": [
+                  {
+                    "in": [
+                      {
+                        "var": "proposal.data.on_action_rider.action"
+                      },
+                      {
+                        "rule": [
+                          "valid_action_codes",
+                          {}
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    ">=": [
+                      {
+                        "var": "proposal.data.on_action_rider.bonus_damage"
+                      },
+                      1
+                    ]
+                  },
+                  {
+                    "<=": [
+                      {
+                        "var": "proposal.data.on_action_rider.bonus_damage"
+                      },
+                      3
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "deck_effects_valid",
+          "description": "deck_effects is absent or exactly data.monster_deck.thematic distinct effect ids (monster_deck_effects_valid).",
+          "assert": {
+            "rule": [
+              "monster_deck_effects_valid",
+              {
+                "deck_effects": {
+                  "var": "proposal.data.deck_effects"
+                },
+                "count": {
+                  "entry": [
+                    "rule_monster_deck_effects",
+                    "monster_deck.thematic"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "deck_effects_affordable",
+          "description": "Every deck effect exists and is affordable for the proposal stats (monster_effect_affordable over the stat behind each element; delta = a damage effect without point_buy).",
+          "assert": {
+            "all": [
+              {
+                "if": [
+                  {
+                    "var": "proposal.data.deck_effects"
+                  },
+                  {
+                    "var": "proposal.data.deck_effects"
+                  },
+                  []
+                ]
+              },
+              {
+                "and": [
+                  {
+                    "!=": [
+                      {
+                        "entry": [
+                          {
+                            "var": ""
+                          },
+                          "element_cost"
+                        ]
+                      },
+                      null
+                    ]
+                  },
+                  {
+                    "rule": [
+                      "monster_effect_affordable",
+                      {
+                        "element_stats": {
+                          "map": [
+                            {
+                              "entry": [
+                                {
+                                  "var": ""
+                                },
+                                "element_cost"
+                              ]
+                            },
+                            {
+                              "stat_of": [
+                                {
+                                  "root": "proposal.data"
+                                },
+                                {
+                                  "var": ""
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "delta": {
+                          "and": [
+                            {
+                              "in": [
+                                "damage",
+                                {
+                                  "entry": [
+                                    {
+                                      "var": ""
+                                    },
+                                    "effect_types"
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "!": {
+                                "in": [
+                                  "point_buy",
+                                  {
+                                    "entry": [
+                                      {
+                                        "var": ""
+                                      },
+                                      "effect_types"
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        },
+                        "max_len": {
+                          "entry": [
+                            "rule_monster_deck_effects",
+                            "monster_deck.max_len"
+                          ]
+                        },
+                        "min_stat": {
+                          "entry": [
+                            "rule_monster_deck_effects",
+                            "monster_deck.min_stat"
+                          ]
+                        },
+                        "min_stat_delta": {
+                          "entry": [
+                            "rule_monster_deck_effects",
+                            "monster_deck.min_stat_delta"
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "references": [
+        "action_can_cast_non_instant",
+        "elements_not_disabled",
+        "in_contact",
+        "life_from_stats",
+        "monster_deck_effects_valid",
+        "monster_effect_affordable",
+        "rps_edge",
+        "rule_21_delta_damage",
+        "stat_sum_of",
+        "valid_action_codes"
+      ]
+    }
+  }
+}

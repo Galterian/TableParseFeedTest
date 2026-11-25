@@ -1,0 +1,154 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_high_elves_trader",
+  "name": "Barterer",
+  "version": "1.1.0",
+  "race": "race_high_elves",
+  "role": "trader",
+  "home": "bld_high_elves_merchant",
+  "persona": "A silver-tongued elf who trades in curiosities; prefers a good story to a good price, but takes both.",
+  "lines": {
+    "greet": [
+      "Curiosities, wonders, trinkets! Something for something, always.",
+      "Ah, a traveller. Travellers always carry something interesting."
+    ],
+    "quest": [
+      "{need} for {reward}? A fair exchange, I think."
+    ],
+    "thanks": [
+      "Done and done. {reward}"
+    ],
+    "warn": [
+      "I do not trade with thieves."
+    ]
+  },
+  "talk": [
+    {
+      "id": "rumours",
+      "ask": "Heard any rumours?",
+      "say": [
+        "The humans of the Empire build palisades of wood. Wood! Can you imagine?",
+        "Someone saw a unicorn by the lake at dawn. Someone always does."
+      ]
+    }
+  ],
+  "agenda": {
+    "uses": "villager",
+    "params": {
+      "beckon": 7,
+      "leash": 6
+    },
+    "rules": [
+      {
+        "id": "hawk",
+        "when": {
+          "and": [
+            {
+              "cond": "stranger_seen"
+            },
+            {
+              "!": {
+                "cond": "stranger_hostile"
+              }
+            },
+            {
+              "!": {
+                "cond": "foe_near"
+              }
+            },
+            {
+              "!": {
+                "cond": "far_from_home"
+              }
+            },
+            {
+              "<=": [
+                {
+                  "var": "stranger.dist"
+                },
+                {
+                  "var": "params.beckon"
+                }
+              ]
+            },
+            {
+              ">": [
+                {
+                  "var": "stranger.dist"
+                },
+                {
+                  "var": "params.talk"
+                }
+              ]
+            }
+          ]
+        },
+        "goal": {
+          "do": "approach",
+          "target": "stranger",
+          "stop": 2
+        }
+      }
+    ]
+  },
+  "quests": [
+    "quest_high_elves_trade_creature",
+    "quest_high_elves_trade_skill"
+  ],
+  "unit": {
+    "stats": {
+      "vitality": 10,
+      "world": 16,
+      "matter": 10,
+      "will": 14
+    },
+    "life": 5,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_vision",
+      "effect_shield"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Barterer",
+    "tags": [
+      "npc",
+      "trader"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Ice Maiden",
+      "wbc3_code": "AEOX",
+      "wbc3_race": "High Elves",
+      "match_reason": "Barterer of the High Elves",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/High Elves/Ice Maiden/Ice Maiden - attack [AEOXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/High Elves/Ice Maiden/Ice Maiden - death [AEOXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/High Elves/Ice Maiden/Ice Maiden - fidget [AEOXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/High Elves/Ice Maiden/Ice Maiden - idle [AEOX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/High Elves/Ice Maiden/Ice Maiden - info [AEOXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/High Elves/Ice Maiden/Ice Maiden - walk [AEOXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

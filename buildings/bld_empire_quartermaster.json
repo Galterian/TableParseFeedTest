@@ -1,0 +1,32 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_empire_quartermaster",
+  "name": "Quartermaster",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "shop",
+  "bank": {
+    "stat": "world",
+    "value": 35
+  },
+  "blocks": true,
+  "produces": null,
+  "text": "The quartermaster has supplies — and errands for strangers.",
+  "card": {
+    "name": "Quartermaster",
+    "tags": [
+      "building",
+      "shop"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Quartermaster",
+      "wbc3_race": "Empire",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/Empire/Quartermaster/Quartermaster - base [BPQM].png",
+        "construction": "assets/Sprites/Buildings/Empire/Quartermaster/Quartermaster - construction [BPQMz].png",
+        "info": "assets/Sprites/Buildings/Empire/Quartermaster/Quartermaster - info [BPQMi].png"
+      }
+    }
+  }
+}

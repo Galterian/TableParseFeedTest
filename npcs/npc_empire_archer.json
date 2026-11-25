@@ -1,0 +1,82 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_empire_archer",
+  "name": "Archer",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "guard",
+  "home": "bld_empire_blacksmith",
+  "persona": "An archer armed by the village smith.",
+  "lines": {
+    "greet": [
+      "Easy now."
+    ],
+    "warn": [
+      "I never miss twice."
+    ]
+  },
+  "agenda": {
+    "uses": "guard",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 12,
+      "world": 10,
+      "matter": 16,
+      "will": 8
+    },
+    "life": 5,
+    "actions_per_round": 3,
+    "deck_effects": [
+      "effect_lightning",
+      "effect_fireball",
+      "effect_shield",
+      "effect_haste"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Archer",
+    "tags": [
+      "npc",
+      "guard"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Archer",
+      "wbc3_code": "APMX",
+      "wbc3_race": "Empire",
+      "match_reason": "Archer of the Empire",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/Empire/Archer/Archer - attack [APMXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Empire/Archer/Archer - death [APMXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Empire/Archer/Archer - fidget [APMXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Empire/Archer/Archer - idle [APMX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Empire/Archer/Archer - info [APMXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Empire/Archer/Archer - walk [APMXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

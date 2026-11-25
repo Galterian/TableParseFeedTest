@@ -1,0 +1,35 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_high_elves_white_tower",
+  "name": "White Tower",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "keep",
+  "bank": {
+    "stat": "vitality",
+    "value": 60
+  },
+  "blocks": true,
+  "produces": {
+    "npc": "npc_high_elves_moonguard",
+    "every_turns": 40
+  },
+  "text": "The keep of the village; once in a long while a Moonguard steps out of it.",
+  "card": {
+    "name": "White Tower",
+    "tags": [
+      "building",
+      "keep"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "White Tower (level 1)",
+      "wbc3_race": "High Elves",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/High Elves/White Tower (level 1)/White Tower (level 1) - base [BKE0].png",
+        "construction": "assets/Sprites/Buildings/High Elves/White Tower (level 1)/White Tower (level 1) - construction [BKE0z].png",
+        "info": "assets/Sprites/Buildings/High Elves/White Tower (level 1)/White Tower (level 1) - info [BKE0i].png"
+      }
+    }
+  }
+}

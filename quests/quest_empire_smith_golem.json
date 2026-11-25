@@ -1,0 +1,48 @@
+{
+  "schema": "chaosd6.quest/1",
+  "id": "quest_empire_smith_golem",
+  "name": "Stone for the Forge",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "giver": "npc_empire_blacksmith",
+  "need_text": "the Earth Golems effect",
+  "need": {
+    "some": [
+      {
+        "var": "player.archive"
+      },
+      {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "kind"
+              },
+              "effect"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "id"
+              },
+              "effect_golems_earth"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "consume": false,
+  "rewards": [
+    {
+      "kind": "reputation",
+      "value": 5
+    },
+    {
+      "kind": "skill",
+      "id": "skill_force_shield"
+    }
+  ],
+  "repeatable": false
+}

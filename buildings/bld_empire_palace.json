@@ -1,0 +1,35 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_empire_palace",
+  "name": "Palace",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "keep",
+  "bank": {
+    "stat": "vitality",
+    "value": 60
+  },
+  "blocks": true,
+  "produces": {
+    "npc": "npc_empire_halberdier",
+    "every_turns": 40
+  },
+  "text": "The reeve's hall; a Halberdier of the guard is sworn in every 40 turns.",
+  "card": {
+    "name": "Palace",
+    "tags": [
+      "building",
+      "keep"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Palace (level 1)",
+      "wbc3_race": "Empire",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/Empire/Palace (level 1)/Palace (level 1) - base [BKP0].png",
+        "construction": "assets/Sprites/Buildings/Empire/Palace (level 1)/Palace (level 1) - construction [BKP0z].png",
+        "info": "assets/Sprites/Buildings/Empire/Palace (level 1)/Palace (level 1) - info [BKP0i].png"
+      }
+    }
+  }
+}

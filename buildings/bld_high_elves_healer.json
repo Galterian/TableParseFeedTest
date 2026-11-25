@@ -1,0 +1,32 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_high_elves_healer",
+  "name": "Healer",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "temple",
+  "bank": {
+    "stat": "vitality",
+    "value": 35
+  },
+  "blocks": true,
+  "produces": null,
+  "text": "Home of the village healer.",
+  "card": {
+    "name": "Healer",
+    "tags": [
+      "building",
+      "temple"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Healer",
+      "wbc3_race": "High Elves",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/High Elves/Healer/Healer - base [BPHE].png",
+        "construction": "assets/Sprites/Buildings/High Elves/Healer/Healer - construction [BPHEz].png",
+        "info": "assets/Sprites/Buildings/High Elves/Healer/Healer - info [BPHEi].png"
+      }
+    }
+  }
+}

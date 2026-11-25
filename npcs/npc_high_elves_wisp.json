@@ -1,0 +1,80 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_high_elves_wisp",
+  "name": "Wisp",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "builder",
+  "home": "bld_high_elves_dragon_shrine",
+  "persona": "A young wisp from the Dragon Shrine.",
+  "lines": {
+    "greet": [
+      "Hello! Hello!",
+      "Shiny traveller!"
+    ]
+  },
+  "agenda": {
+    "uses": "builder",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 9,
+      "world": 9,
+      "matter": 6,
+      "will": 6
+    },
+    "life": 3,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_creation",
+      "effect_vision",
+      "effect_mists",
+      "effect_shield"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Wisp",
+    "tags": [
+      "npc",
+      "builder"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Wisp",
+      "wbc3_code": "AEBX",
+      "wbc3_race": "High Elves",
+      "match_reason": "Wisp of the High Elves",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/High Elves/Wisp/Wisp - attack [AEBXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/High Elves/Wisp/Wisp - death [AEBXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/High Elves/Wisp/Wisp - fidget [AEBXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/High Elves/Wisp/Wisp - idle [AEBX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/High Elves/Wisp/Wisp - info [AEBXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/High Elves/Wisp/Wisp - walk [AEBXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

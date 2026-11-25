@@ -1,0 +1,35 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_high_elves_dragon_shrine",
+  "name": "Dragon Shrine",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "producer",
+  "bank": {
+    "stat": "world",
+    "value": 45
+  },
+  "blocks": true,
+  "produces": {
+    "npc": "npc_high_elves_wisp",
+    "every_turns": 25
+  },
+  "text": "Wisps gather at the shrine; one wakes every 25 turns to help with the building.",
+  "card": {
+    "name": "Dragon Shrine",
+    "tags": [
+      "building",
+      "producer"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Dragon Shrine",
+      "wbc3_race": "High Elves",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/High Elves/Dragon Shrine/Dragon Shrine - base [BPDS].png",
+        "construction": "assets/Sprites/Buildings/High Elves/Dragon Shrine/Dragon Shrine - construction [BPDSz].png",
+        "info": "assets/Sprites/Buildings/High Elves/Dragon Shrine/Dragon Shrine - info [BPDSi].png"
+      }
+    }
+  }
+}

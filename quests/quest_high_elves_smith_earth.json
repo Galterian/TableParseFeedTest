@@ -1,0 +1,48 @@
+{
+  "schema": "chaosd6.quest/1",
+  "id": "quest_high_elves_smith_earth",
+  "name": "Heart of the Mountain",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "giver": "npc_high_elves_blacksmith",
+  "need_text": "the Earth Elementals effect",
+  "need": {
+    "some": [
+      {
+        "var": "player.archive"
+      },
+      {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "kind"
+              },
+              "effect"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "id"
+              },
+              "effect_elementals_earth"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "consume": false,
+  "rewards": [
+    {
+      "kind": "reputation",
+      "value": 5
+    },
+    {
+      "kind": "skill",
+      "id": "skill_powerful_attack"
+    }
+  ],
+  "repeatable": false
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_empire_halberdier",
+  "name": "Halberdier",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "guard",
+  "home": "bld_empire_palace",
+  "persona": "A sworn guard of the reeve's hall.",
+  "lines": {
+    "greet": [
+      "Reeve's business only."
+    ],
+    "warn": [
+      "Not one step further."
+    ]
+  },
+  "agenda": {
+    "uses": "guard",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 16,
+      "world": 8,
+      "matter": 18,
+      "will": 8
+    },
+    "life": 5,
+    "actions_per_round": 3,
+    "deck_effects": [
+      "effect_super_force",
+      "effect_shield",
+      "effect_earthquake",
+      "effect_haste"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Halberdier",
+    "tags": [
+      "npc",
+      "guard"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Halberdier",
+      "wbc3_code": "Ahjx",
+      "wbc3_race": "Empire",
+      "match_reason": "Halberdier of the Empire",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/Empire/Halberdier/Halberdier - attack [Ahjxa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Empire/Halberdier/Halberdier - death [Ahjxd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Empire/Halberdier/Halberdier - fidget [Ahjxf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Empire/Halberdier/Halberdier - idle [Ahjx].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Empire/Halberdier/Halberdier - info [Ahjxi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Empire/Halberdier/Halberdier - walk [Ahjxw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

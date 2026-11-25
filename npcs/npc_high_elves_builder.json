@@ -1,0 +1,179 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_high_elves_builder",
+  "name": "Wisp Builder",
+  "version": "1.2.0",
+  "race": "race_high_elves",
+  "role": "builder",
+  "home": "bld_high_elves_dragon_shrine",
+  "persona": "A busy little wisp that weaves stone walls out of moonlight.",
+  "lines": {
+    "greet": [
+      "Mind the wall! It is still wet with moonlight.",
+      "One more stone, one more stone…"
+    ],
+    "quest": [
+      "Teach me {need} and my hands are yours to build with.",
+      "For {need} I shape the moonlit stone for you."
+    ],
+    "thanks": [
+      "Agreed. Where you stand, I build.",
+      "So be it — lead, and I raise what you ask."
+    ]
+  },
+  "agenda": {
+    "uses": "builder",
+    "params": {
+      "beckon": 6
+    },
+    "rules": [
+      {
+        "id": "offer",
+        "when": {
+          "and": [
+            {
+              "cond": "stranger_seen"
+            },
+            {
+              "!": {
+                "cond": "stranger_hostile"
+              }
+            },
+            {
+              "!": {
+                "cond": "foe_near"
+              }
+            },
+            {
+              "<=": [
+                {
+                  "var": "stranger.dist"
+                },
+                {
+                  "var": "params.beckon"
+                }
+              ]
+            },
+            {
+              ">": [
+                {
+                  "var": "stranger.dist"
+                },
+                2
+              ]
+            }
+          ]
+        },
+        "goal": {
+          "do": "approach",
+          "target": "stranger",
+          "stop": 2
+        }
+      }
+    ]
+  },
+  "quests": [
+    "quest_high_elves_hire_builder"
+  ],
+  "unit": {
+    "stats": {
+      "vitality": 10,
+      "world": 10,
+      "matter": 6,
+      "will": 6
+    },
+    "life": 3,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_creation",
+      "effect_shield",
+      "effect_vision",
+      "effect_mists"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Wisp Builder",
+    "tags": [
+      "npc",
+      "builder"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Wisp",
+      "wbc3_code": "AEBX",
+      "wbc3_race": "High Elves",
+      "match_reason": "Wisp Builder of the High Elves",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/High Elves/Wisp/Wisp - attack [AEBXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/High Elves/Wisp/Wisp - death [AEBXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/High Elves/Wisp/Wisp - fidget [AEBXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/High Elves/Wisp/Wisp - idle [AEBX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/High Elves/Wisp/Wisp - info [AEBXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/High Elves/Wisp/Wisp - walk [AEBXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  },
+  "builds": [
+    {
+      "id": "tower",
+      "building": "bld_high_elves_tower",
+      "ask": "Raise an Elven Spire here.",
+      "power": {
+        "kind": "stance",
+        "code": "B"
+      }
+    },
+    {
+      "id": "healer",
+      "building": "bld_high_elves_healer",
+      "ask": "Build a House of Healing here.",
+      "power": {
+        "kind": "mend"
+      }
+    },
+    {
+      "id": "dragonstone",
+      "building": "bld_high_elves_dragonstone",
+      "ask": "Set a Dragonstone here.",
+      "power": {
+        "kind": "draw"
+      }
+    },
+    {
+      "id": "barricade",
+      "wall": true,
+      "ask": "Raise a Barricade here."
+    }
+  ],
+  "build_max": 4,
+  "talk": [
+    {
+      "id": "craft",
+      "ask": "What can you build?",
+      "say": [
+        "Spires, houses of healing, dragonstones — and a wall when you need one.",
+        "Stand where you want it, and I will sing the stones into place beside you."
+      ]
+    }
+  ]
+}

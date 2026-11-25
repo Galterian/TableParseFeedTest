@@ -1,0 +1,52 @@
+{
+  "schema": "chaosd6.quest/1",
+  "id": "quest_high_elves_counterspell",
+  "name": "The Unwoven Spell",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "giver": "npc_high_elves_elder",
+  "need_text": "the Counter Spell skill",
+  "need": {
+    "some": [
+      {
+        "var": "player.archive"
+      },
+      {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "kind"
+              },
+              "skill"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "id"
+              },
+              "skill_counter_spell"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "consume": false,
+  "rewards": [
+    {
+      "kind": "reputation",
+      "value": 5
+    },
+    {
+      "kind": "allies",
+      "count": 2,
+      "units": [
+        "npc_high_elves_moonguard",
+        "npc_high_elves_longbow"
+      ]
+    }
+  ],
+  "repeatable": false
+}

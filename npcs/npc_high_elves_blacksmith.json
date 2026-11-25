@@ -1,0 +1,108 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_high_elves_blacksmith",
+  "name": "Moonsmith",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "smith",
+  "home": "bld_high_elves_shooting_range",
+  "persona": "Forges moonsteel by starlight alone; a patient elf who hums to the metal and despises haste.",
+  "lines": {
+    "greet": [
+      "Moonsteel does not like to be rushed. Neither do I.",
+      "Welcome, wanderer. Mind the cooling blades."
+    ],
+    "quest": [
+      "Bring me {need}; its strength will go into the steel.",
+      "The forge hungers for {need}. Find it for me."
+    ],
+    "thanks": [
+      "{need}. The steel sings again. {reward}",
+      "Well found. {reward}"
+    ],
+    "warn": [
+      "Leave the forge be."
+    ]
+  },
+  "talk": [
+    {
+      "id": "forge",
+      "ask": "What do you forge?",
+      "say": [
+        "Moonsteel arrowheads for the Longbows, and blades that cut what they are told to cut.",
+        "Silver-white steel, quenched in starlight. Nothing human-made is as light."
+      ]
+    },
+    {
+      "id": "moonsteel",
+      "ask": "What is moonsteel?",
+      "say": [
+        "Iron, patience and three nights of a full moon. The third ingredient is the hard one."
+      ]
+    }
+  ],
+  "agenda": {
+    "uses": "villager",
+    "params": {},
+    "rules": []
+  },
+  "quests": [
+    "quest_high_elves_smith_earth"
+  ],
+  "unit": {
+    "stats": {
+      "vitality": 14,
+      "world": 10,
+      "matter": 16,
+      "will": 10
+    },
+    "life": 5,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_shield",
+      "effect_super_force"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Moonsmith",
+    "tags": [
+      "npc",
+      "smith"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Iceguard",
+      "wbc3_code": "AEIX",
+      "wbc3_race": "High Elves",
+      "match_reason": "Moonsmith of the High Elves",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/High Elves/Iceguard/Iceguard - attack [AEIXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/High Elves/Iceguard/Iceguard - death [AEIXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/High Elves/Iceguard/Iceguard - fidget [AEIXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/High Elves/Iceguard/Iceguard - idle [AEIX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/High Elves/Iceguard/Iceguard - info [AEIXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/High Elves/Iceguard/Iceguard - walk [AEIXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

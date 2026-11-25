@@ -1,0 +1,93 @@
+{
+  "schema": "chaosd6.race/1",
+  "id": "race_high_elves",
+  "name": "High Elves",
+  "version": "1.3.0",
+  "alignment": "good",
+  "temper": "Proud, patient and old; they measure time in moons and trust short-lived folk only after a deed.",
+  "village": "vil_high_elves",
+  "village_names": {
+    "prefix": [
+      "Silver",
+      "Moon",
+      "Star",
+      "Dawn",
+      "Mist",
+      "Elder",
+      "Ivory",
+      "Gleam",
+      "Sun",
+      "Frost",
+      "Lumen",
+      "Aelin"
+    ],
+    "suffix": [
+      "leaf",
+      "glade",
+      "spire",
+      "mere",
+      "haven",
+      "hollow",
+      "bough",
+      "crest",
+      "vale",
+      "shade"
+    ]
+  },
+  "person_names": [
+    "Aelindra",
+    "Caelith",
+    "Ithriel",
+    "Lunessa",
+    "Thalion",
+    "Elandor",
+    "Sylvaine",
+    "Faelar",
+    "Mirael",
+    "Valandil",
+    "Orinel",
+    "Sereth",
+    "Nimeth",
+    "Arwel"
+  ],
+  "buildings": [
+    "bld_high_elves_tree_of_gold",
+    "bld_high_elves_white_tower",
+    "bld_high_elves_shooting_range",
+    "bld_high_elves_dragon_shrine",
+    "bld_high_elves_tower_of_the_moon",
+    "bld_high_elves_healer",
+    "bld_high_elves_merchant",
+    "bld_high_elves_dragonstone",
+    "bld_high_elves_tower"
+  ],
+  "npcs": [
+    "npc_high_elves_elder",
+    "npc_high_elves_merchant",
+    "npc_high_elves_lorekeeper",
+    "npc_high_elves_healer",
+    "npc_high_elves_builder",
+    "npc_high_elves_wisp",
+    "npc_high_elves_longbow",
+    "npc_high_elves_moonguard",
+    "npc_high_elves_iceguard",
+    "npc_high_elves_unicorn_rider",
+    "npc_high_elves_dragon_knight",
+    "npc_high_elves_blacksmith",
+    "npc_high_elves_wizard",
+    "npc_high_elves_mercenary",
+    "npc_high_elves_trader"
+  ],
+  "card": {
+    "name": "High Elves",
+    "tags": [
+      "race",
+      "good"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_race": "High Elves"
+    }
+  },
+  "wbc3_race": "High Elves"
+}

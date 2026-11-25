@@ -1,0 +1,35 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_empire_blacksmith",
+  "name": "Blacksmith",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "producer",
+  "bank": {
+    "stat": "matter",
+    "value": 40
+  },
+  "blocks": true,
+  "produces": {
+    "npc": "npc_empire_archer",
+    "every_turns": 30
+  },
+  "text": "The smith fletches and arms an Archer every 30 turns.",
+  "card": {
+    "name": "Blacksmith",
+    "tags": [
+      "building",
+      "producer"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Blacksmith",
+      "wbc3_race": "Empire",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/Empire/Blacksmith/Blacksmith - base [BPBS].png",
+        "construction": "assets/Sprites/Buildings/Empire/Blacksmith/Blacksmith - construction [BPBSz].png",
+        "info": "assets/Sprites/Buildings/Empire/Blacksmith/Blacksmith - info [BPBSi].png"
+      }
+    }
+  }
+}

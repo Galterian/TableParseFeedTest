@@ -1,0 +1,35 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_high_elves_tower_of_the_moon",
+  "name": "Tower of the Moon",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "producer",
+  "bank": {
+    "stat": "will",
+    "value": 50
+  },
+  "blocks": true,
+  "produces": {
+    "npc": "npc_high_elves_iceguard",
+    "every_turns": 30
+  },
+  "text": "The Iceguard keep vigil here; one is sent down every 30 turns.",
+  "card": {
+    "name": "Tower of the Moon",
+    "tags": [
+      "building",
+      "producer"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Tower of the Moon",
+      "wbc3_race": "High Elves",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/High Elves/Tower of the Moon/Tower of the Moon - base [BPMT].png",
+        "construction": "assets/Sprites/Buildings/High Elves/Tower of the Moon/Tower of the Moon - construction [BPMTz].png",
+        "info": "assets/Sprites/Buildings/High Elves/Tower of the Moon/Tower of the Moon - info [BPMTi].png"
+      }
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_high_elves_iceguard",
+  "name": "Iceguard",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "guard",
+  "home": "bld_high_elves_tower_of_the_moon",
+  "persona": "A frost-armoured warden from the Tower of the Moon.",
+  "lines": {
+    "greet": [
+      "Cold day. Colder steel."
+    ],
+    "warn": [
+      "Leave, or freeze."
+    ]
+  },
+  "agenda": {
+    "uses": "guard",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 16,
+      "world": 8,
+      "matter": 16,
+      "will": 10
+    },
+    "life": 5,
+    "actions_per_round": 3,
+    "deck_effects": [
+      "effect_ice_blast",
+      "effect_blizzard",
+      "effect_shield",
+      "effect_fossilization"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Iceguard",
+    "tags": [
+      "npc",
+      "guard"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Iceguard",
+      "wbc3_code": "AEIX",
+      "wbc3_race": "High Elves",
+      "match_reason": "Iceguard of the High Elves",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/High Elves/Iceguard/Iceguard - attack [AEIXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/High Elves/Iceguard/Iceguard - death [AEIXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/High Elves/Iceguard/Iceguard - fidget [AEIXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/High Elves/Iceguard/Iceguard - idle [AEIX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/High Elves/Iceguard/Iceguard - info [AEIXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/High Elves/Iceguard/Iceguard - walk [AEIXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

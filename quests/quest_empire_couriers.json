@@ -1,0 +1,48 @@
+{
+  "schema": "chaosd6.quest/1",
+  "id": "quest_empire_couriers",
+  "name": "Swift Couriers",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "giver": "npc_empire_quartermaster",
+  "need_text": "a Haste",
+  "need": {
+    "some": [
+      {
+        "var": "player.archive"
+      },
+      {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "kind"
+              },
+              "effect"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "id"
+              },
+              "effect_haste"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "consume": false,
+  "rewards": [
+    {
+      "kind": "reputation",
+      "value": 5
+    },
+    {
+      "kind": "effect",
+      "id": "effect_shield"
+    }
+  ],
+  "repeatable": false
+}

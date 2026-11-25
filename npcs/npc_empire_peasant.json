@@ -1,0 +1,80 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_empire_peasant",
+  "name": "Farmhand",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "builder",
+  "home": "bld_empire_barn",
+  "persona": "Works the fields and the walls alike.",
+  "lines": {
+    "greet": [
+      "Morning!",
+      "Fine weather for walls."
+    ]
+  },
+  "agenda": {
+    "uses": "builder",
+    "params": {},
+    "rules": []
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 10,
+      "world": 8,
+      "matter": 10,
+      "will": 4
+    },
+    "life": 3,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_creation",
+      "effect_throw",
+      "effect_shield",
+      "effect_artifice"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Farmhand",
+    "tags": [
+      "npc",
+      "builder"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Peasant",
+      "wbc3_code": "Ahbx",
+      "wbc3_race": "Knights",
+      "match_reason": "Farmhand of the Empire",
+      "confidence": "medium",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/Knights/Peasant/Peasant - attack [Ahbxa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Knights/Peasant/Peasant - death [Ahbxd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Knights/Peasant/Peasant - fidget [Ahbxf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Knights/Peasant/Peasant - idle [Ahbx].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Knights/Peasant/Peasant - info [Ahbxi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Knights/Peasant/Peasant - walk [Ahbxw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

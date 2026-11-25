@@ -1,0 +1,144 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_high_elves_mercenary",
+  "name": "Freeblade",
+  "version": "1.1.0",
+  "race": "race_high_elves",
+  "role": "mercenary",
+  "home": "bld_high_elves_dragon_shrine",
+  "persona": "An elven dragon-rider without a dragon, who sells a lance to the village's friends.",
+  "lines": {
+    "greet": [
+      "A lance for hire — for the right friend.",
+      "You look like someone who needs a second blade."
+    ],
+    "warn": [
+      "Move along."
+    ]
+  },
+  "talk": [
+    {
+      "id": "battles",
+      "ask": "Tell me of your battles.",
+      "say": [
+        "My dragon fell over the Ashfields. I walked home. Every step of it I fought something.",
+        "I have ridden against the Undead legions. I do not recommend it."
+      ]
+    },
+    {
+      "id": "price",
+      "ask": "What is your price?",
+      "say": [
+        "The village's trust. Win it, and I ride with you."
+      ]
+    }
+  ],
+  "agenda": {
+    "uses": "guard",
+    "params": {
+      "beckon": 7
+    },
+    "rules": [
+      {
+        "id": "offer",
+        "when": {
+          "and": [
+            {
+              "cond": "stranger_welcome"
+            },
+            {
+              "!": {
+                "cond": "foe_near"
+              }
+            },
+            {
+              "!": {
+                "cond": "far_from_home"
+              }
+            },
+            {
+              "<=": [
+                {
+                  "var": "stranger.dist"
+                },
+                {
+                  "var": "params.beckon"
+                }
+              ]
+            },
+            {
+              ">": [
+                {
+                  "var": "stranger.dist"
+                },
+                2
+              ]
+            }
+          ]
+        },
+        "goal": {
+          "do": "approach",
+          "target": "stranger",
+          "stop": 2
+        }
+      }
+    ]
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 16,
+      "world": 10,
+      "matter": 14,
+      "will": 10
+    },
+    "life": 5,
+    "actions_per_round": 3,
+    "deck_effects": [
+      "effect_super_force",
+      "effect_haste"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Freeblade",
+    "tags": [
+      "npc",
+      "mercenary"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Dragon Knight",
+      "wbc3_code": "AECX",
+      "wbc3_race": "High Elves",
+      "match_reason": "Freeblade of the High Elves",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/High Elves/Dragon Knight/Dragon Knight - attack [AECXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/High Elves/Dragon Knight/Dragon Knight - death [AECXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/High Elves/Dragon Knight/Dragon Knight - fidget [AECXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/High Elves/Dragon Knight/Dragon Knight - idle [AECX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/High Elves/Dragon Knight/Dragon Knight - info [Aecxi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/High Elves/Dragon Knight/Dragon Knight - walk [AECXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

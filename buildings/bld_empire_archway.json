@@ -1,0 +1,32 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_empire_archway",
+  "name": "Archway",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "centre",
+  "bank": {
+    "stat": "matter",
+    "value": 55
+  },
+  "blocks": true,
+  "produces": null,
+  "text": "The village gate and notice board: read your reputation, the open quests and who gives them here.",
+  "card": {
+    "name": "Archway",
+    "tags": [
+      "building",
+      "centre"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Archway",
+      "wbc3_race": "Empire",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/Empire/Archway/Archway - base [BPAC].png",
+        "construction": "assets/Sprites/Buildings/Empire/Archway/Archway - construction [BPACz].png",
+        "info": "assets/Sprites/Buildings/Empire/Archway/Archway - info [BPACi].png"
+      }
+    }
+  }
+}

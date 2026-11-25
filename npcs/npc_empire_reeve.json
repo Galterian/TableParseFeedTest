@@ -1,0 +1,112 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_empire_reeve",
+  "name": "Reeve",
+  "version": "1.1.0",
+  "race": "race_empire",
+  "role": "quest_giver",
+  "home": "bld_empire_archway",
+  "persona": "The village headman: blunt, busy, short of good walls.",
+  "lines": {
+    "greet": [
+      "Another wanderer. Well, make yourself useful.",
+      "In the name of the Lion Throne — welcome."
+    ],
+    "quest": [
+      "We need {need}. Bring it and {village} owes you.",
+      "Find {need} — out there on the map — and come back to me."
+    ],
+    "thanks": [
+      "{need}! Good work. {reward}",
+      "Word of a reeve: you are one of us now. {reward}"
+    ],
+    "warn": [
+      "Mind yourself in my village."
+    ]
+  },
+  "talk": [
+    {
+      "id": "village",
+      "ask": "Tell me about this village.",
+      "say": [
+        "{village} feeds three garrisons and pays its taxes on time. Mostly.",
+        "A palisade, a granary, a barracks and too few hands. That is {village}."
+      ]
+    }
+  ],
+  "agenda": {
+    "uses": "quest_giver",
+    "params": {},
+    "rules": []
+  },
+  "quests": [
+    "quest_empire_barricade",
+    "quest_empire_healing"
+  ],
+  "unit": {
+    "stats": {
+      "vitality": 14,
+      "world": 10,
+      "matter": 14,
+      "will": 12
+    },
+    "life": 5,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_shield",
+      "effect_super_force",
+      "effect_turn_life",
+      "effect_haste"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Reeve",
+    "tags": [
+      "npc",
+      "quest_giver"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Empire Hero",
+      "wbc3_code": "APHX",
+      "wbc3_race": "Empire",
+      "match_reason": "Reeve of the Empire",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/Empire/Empire Hero/Empire Hero - attack [APHXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "cast": {
+          "path": "assets/Sprites/Units/Empire/Empire Hero/Empire Hero - cast [APHXc].png",
+          "usage": "8-direction cast, play on Posture emissions"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Empire/Empire Hero/Empire Hero - death [APHXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Empire/Empire Hero/Empire Hero - fidget [APHXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Empire/Empire Hero/Empire Hero - idle [APHX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Empire/Empire Hero/Empire Hero - info [APHXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "special": {
+          "path": "assets/Sprites/Units/Empire/Empire Hero/Empire Hero - special [APHXs].png",
+          "usage": "special animation"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Empire/Empire Hero/Empire Hero - walk [APHXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

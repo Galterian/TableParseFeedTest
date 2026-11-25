@@ -1,0 +1,32 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_empire_library",
+  "name": "Library",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "lore",
+  "bank": {
+    "stat": "will",
+    "value": 40
+  },
+  "blocks": true,
+  "produces": null,
+  "text": "The chronicler keeps the Dimension's records here.",
+  "card": {
+    "name": "Library",
+    "tags": [
+      "building",
+      "lore"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Library",
+      "wbc3_race": "Empire",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/Empire/Library/Library - base [BPLI].png",
+        "construction": "assets/Sprites/Buildings/Empire/Library/Library - construction [BPLIz].png",
+        "info": "assets/Sprites/Buildings/Empire/Library/Library - info [BPLIi].png"
+      }
+    }
+  }
+}

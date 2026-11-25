@@ -1,0 +1,32 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_high_elves_tree_of_gold",
+  "name": "Tree of Gold",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "centre",
+  "bank": {
+    "stat": "will",
+    "value": 60
+  },
+  "blocks": true,
+  "produces": null,
+  "text": "The village heart. Its leaves turn the colour of your standing with the village: read your reputation, the open quests and who gives them here.",
+  "card": {
+    "name": "Tree of Gold",
+    "tags": [
+      "building",
+      "centre"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Tree of Gold",
+      "wbc3_race": "High Elves",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/High Elves/Tree of Gold/Tree of Gold - base [BATG].png",
+        "construction": "assets/Sprites/Buildings/High Elves/Tree of Gold/Tree of Gold - construction [BATGz].png",
+        "info": "assets/Sprites/Buildings/High Elves/Tree of Gold/Tree of Gold - info [BATGi].png"
+      }
+    }
+  }
+}

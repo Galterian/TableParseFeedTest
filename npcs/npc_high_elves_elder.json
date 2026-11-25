@@ -1,0 +1,112 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_high_elves_elder",
+  "name": "Elder",
+  "version": "1.1.0",
+  "race": "race_high_elves",
+  "role": "quest_giver",
+  "home": "bld_high_elves_tree_of_gold",
+  "persona": "An elf older than the village trees; speaks slowly, asks for old magic to be brought back.",
+  "lines": {
+    "greet": [
+      "Welcome, short-lived one. Walk softly here.",
+      "The trees told me you were coming."
+    ],
+    "quest": [
+      "Bring me {need}, and the village will remember your name.",
+      "We lack {need}. Find it — the map hides it somewhere — and return."
+    ],
+    "thanks": [
+      "{need}! The moon-wards wake again. Take our thanks.",
+      "You kept your word. {reward}"
+    ],
+    "warn": [
+      "Step back, stranger."
+    ]
+  },
+  "talk": [
+    {
+      "id": "village",
+      "ask": "Tell me about this village.",
+      "say": [
+        "{village} grew around the Tree of Gold before your kingdoms had names. Its leaves turn with our trust in you.",
+        "We are few, and we are old. We need hands like yours."
+      ]
+    }
+  ],
+  "agenda": {
+    "uses": "quest_giver",
+    "params": {},
+    "rules": []
+  },
+  "quests": [
+    "quest_high_elves_starfire",
+    "quest_high_elves_counterspell"
+  ],
+  "unit": {
+    "stats": {
+      "vitality": 14,
+      "world": 12,
+      "matter": 10,
+      "will": 16
+    },
+    "life": 5,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_shield",
+      "effect_vision",
+      "effect_turn_life",
+      "effect_lightning"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Elder",
+    "tags": [
+      "npc",
+      "quest_giver"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "High Elf Hero",
+      "wbc3_code": "AEHX",
+      "wbc3_race": "High Elves",
+      "match_reason": "Elder of the High Elves",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/High Elves/High Elf Hero/High Elf Hero - attack [AEHXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "cast": {
+          "path": "assets/Sprites/Units/High Elves/High Elf Hero/High Elf Hero - cast [AEHXc].png",
+          "usage": "8-direction cast, play on Posture emissions"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/High Elves/High Elf Hero/High Elf Hero - death [AEHXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/High Elves/High Elf Hero/High Elf Hero - fidget [AEHXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/High Elves/High Elf Hero/High Elf Hero - idle [AEHX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/High Elves/High Elf Hero/High Elf Hero - info [AEHXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "special": {
+          "path": "assets/Sprites/Units/High Elves/High Elf Hero/High Elf Hero - special [AEHXs].png",
+          "usage": "special animation"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/High Elves/High Elf Hero/High Elf Hero - walk [AEHXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

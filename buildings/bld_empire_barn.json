@@ -1,0 +1,35 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_empire_barn",
+  "name": "Barn",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "producer",
+  "bank": {
+    "stat": "vitality",
+    "value": 30
+  },
+  "blocks": true,
+  "produces": {
+    "npc": "npc_empire_peasant",
+    "every_turns": 20
+  },
+  "text": "Farmhands and builders come from the barn, one every 20 turns.",
+  "card": {
+    "name": "Barn",
+    "tags": [
+      "building",
+      "producer"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Barn",
+      "wbc3_race": "Empire",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/Empire/Barn/Barn - base [BABN].png",
+        "construction": "assets/Sprites/Buildings/Empire/Barn/Barn - construction [BABNz].png",
+        "info": "assets/Sprites/Buildings/Empire/Barn/Barn - info [BABNi].png"
+      }
+    }
+  }
+}

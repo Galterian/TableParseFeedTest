@@ -1,0 +1,146 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_empire_mercenary",
+  "name": "Sellsword",
+  "version": "1.1.0",
+  "race": "race_empire",
+  "role": "mercenary",
+  "home": "bld_empire_barracks",
+  "persona": "A scarred sword-for-hire who drinks at the barracks; loyal to friends of the village, and to nobody else.",
+  "lines": {
+    "greet": [
+      "Looking for a blade?",
+      "Hm. You have the look of trouble. I like trouble."
+    ],
+    "warn": [
+      "Walk on, stranger."
+    ]
+  },
+  "talk": [
+    {
+      "id": "battles",
+      "ask": "Tell me of your battles.",
+      "say": [
+        "Three winters on the orc border. I came back; most did not. That is the whole story.",
+        "I once held a bridge against a minotaur for an hour. The bridge did not survive. I did."
+      ]
+    },
+    {
+      "id": "price",
+      "ask": "What is your price?",
+      "say": [
+        "Gold? No. The village's trust. Earn it, and my sword is yours.",
+        "Win the village's trust and I follow you anywhere. Lose it and I will be the one hunting you."
+      ]
+    }
+  ],
+  "agenda": {
+    "uses": "guard",
+    "params": {
+      "beckon": 7
+    },
+    "rules": [
+      {
+        "id": "offer",
+        "when": {
+          "and": [
+            {
+              "cond": "stranger_welcome"
+            },
+            {
+              "!": {
+                "cond": "foe_near"
+              }
+            },
+            {
+              "!": {
+                "cond": "far_from_home"
+              }
+            },
+            {
+              "<=": [
+                {
+                  "var": "stranger.dist"
+                },
+                {
+                  "var": "params.beckon"
+                }
+              ]
+            },
+            {
+              ">": [
+                {
+                  "var": "stranger.dist"
+                },
+                2
+              ]
+            }
+          ]
+        },
+        "goal": {
+          "do": "approach",
+          "target": "stranger",
+          "stop": 2
+        }
+      }
+    ]
+  },
+  "quests": [],
+  "unit": {
+    "stats": {
+      "vitality": 16,
+      "world": 8,
+      "matter": 16,
+      "will": 10
+    },
+    "life": 5,
+    "actions_per_round": 3,
+    "deck_effects": [
+      "effect_super_force",
+      "effect_haste",
+      "effect_shield"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Sellsword",
+    "tags": [
+      "npc",
+      "mercenary"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Mercenary",
+      "wbc3_code": "Ahcx",
+      "wbc3_race": "Empire",
+      "match_reason": "Sellsword of the Empire",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/Empire/Mercenary/Mercenary - attack [Ahcxa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/Empire/Mercenary/Mercenary - death [Ahcxd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/Empire/Mercenary/Mercenary - fidget [Ahcxf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/Empire/Mercenary/Mercenary - idle [Ahcx].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/Empire/Mercenary/Mercenary - info [Ahcxi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/Empire/Mercenary/Mercenary - walk [Ahcxw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}

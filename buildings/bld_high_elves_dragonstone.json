@@ -1,0 +1,32 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_high_elves_dragonstone",
+  "name": "Dragonstone",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "lore",
+  "bank": {
+    "stat": "world",
+    "value": 40
+  },
+  "blocks": true,
+  "produces": null,
+  "text": "Old runes on the stone; the lorekeeper reads them to whoever listens.",
+  "card": {
+    "name": "Dragonstone",
+    "tags": [
+      "building",
+      "lore"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Dragonstone",
+      "wbc3_race": "High Elves",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/High Elves/Dragonstone/Dragonstone - base [BPDI].png",
+        "construction": "assets/Sprites/Buildings/High Elves/Dragonstone/Dragonstone - construction [BPDIz].png",
+        "info": "assets/Sprites/Buildings/High Elves/Dragonstone/Dragonstone - info [BPDIi].png"
+      }
+    }
+  }
+}

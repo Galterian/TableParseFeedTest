@@ -1,0 +1,32 @@
+{
+  "schema": "chaosd6.building/1",
+  "id": "bld_empire_granary",
+  "name": "Granary",
+  "version": "1.0.0",
+  "race": "race_empire",
+  "role": "house",
+  "bank": {
+    "stat": "vitality",
+    "value": 30
+  },
+  "blocks": true,
+  "produces": null,
+  "text": "The village stores; burn it and the village will not forget.",
+  "card": {
+    "name": "Granary",
+    "tags": [
+      "building",
+      "house"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Granary",
+      "wbc3_race": "Empire",
+      "sprites": {
+        "base": "assets/Sprites/Buildings/Empire/Granary/Granary - base [BPGR].png",
+        "construction": "assets/Sprites/Buildings/Empire/Granary/Granary - construction [BPGRz].png",
+        "info": "assets/Sprites/Buildings/Empire/Granary/Granary - info [BPGRi].png"
+      }
+    }
+  }
+}

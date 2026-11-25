@@ -1,0 +1,110 @@
+{
+  "schema": "chaosd6.npc/1",
+  "id": "npc_high_elves_wizard",
+  "name": "Archmage",
+  "version": "1.0.0",
+  "race": "race_high_elves",
+  "role": "wizard",
+  "home": "bld_high_elves_white_tower",
+  "persona": "Keeper of the White Tower's star charts; old even for an elf, and certain that every question has a spell for an answer.",
+  "lines": {
+    "greet": [
+      "The stars said a visitor would come. They rarely lie.",
+      "Speak, child of a short-lived race."
+    ],
+    "quest": [
+      "Find me {need}, and the Tower will open its charts to you.",
+      "I seek {need}. Bring it, and I will reward you as an Archmage does."
+    ],
+    "thanks": [
+      "{need} — the charts are complete. {reward}",
+      "Wisely done. {reward}"
+    ],
+    "warn": [
+      "Silence in the Tower."
+    ]
+  },
+  "talk": [
+    {
+      "id": "elements",
+      "ask": "How does magic work here?",
+      "say": [
+        "A spell is a chain of elements, one each action while you hold your Posture. Move, and the chain breaks.",
+        "Join spells: when one ends in the element the next begins with, they flow as one cast."
+      ]
+    },
+    {
+      "id": "stars",
+      "ask": "What do the stars say?",
+      "say": [
+        "That you will need a Counter Spell before the moon wanes. Do with that what you will.",
+        "That a Void Scar opens wherever Space is torn. Stand there and its power is yours — for a while."
+      ]
+    }
+  ],
+  "agenda": {
+    "uses": "villager",
+    "params": {},
+    "rules": []
+  },
+  "quests": [
+    "quest_high_elves_wizard_light"
+  ],
+  "unit": {
+    "stats": {
+      "vitality": 10,
+      "world": 16,
+      "matter": 6,
+      "will": 18
+    },
+    "life": 5,
+    "actions_per_round": 2,
+    "deck_effects": [
+      "effect_ice_blast",
+      "effect_vision",
+      "effect_shield"
+    ],
+    "innate_effect": null
+  },
+  "card": {
+    "name": "Archmage",
+    "tags": [
+      "npc",
+      "wizard"
+    ],
+    "resources": {
+      "source": "warlords3_battlecry",
+      "wbc3_name": "Mystic",
+      "wbc3_code": "AENX",
+      "wbc3_race": "High Elves",
+      "match_reason": "Archmage of the High Elves",
+      "confidence": "high",
+      "sprites": {
+        "attack": {
+          "path": "assets/Sprites/Units/High Elves/Mystic/Mystic - attack [AENXa].png",
+          "usage": "8-direction attack, play on action A / skill"
+        },
+        "death": {
+          "path": "assets/Sprites/Units/High Elves/Mystic/Mystic - death [AENXd].png",
+          "usage": "8-direction death, play once"
+        },
+        "fidget": {
+          "path": "assets/Sprites/Units/High Elves/Mystic/Mystic - fidget [AENXf].png",
+          "usage": "8-direction fidget (idle variation)"
+        },
+        "idle": {
+          "path": "assets/Sprites/Units/High Elves/Mystic/Mystic - idle [AENX].png",
+          "usage": "8-direction idle loop (rows = directions, cols = frames; grid in assets/frames.json)"
+        },
+        "info": {
+          "path": "assets/Sprites/Units/High Elves/Mystic/Mystic - info [AENXi].png",
+          "usage": "info panel image: portrait on top, team-coloured icons below"
+        },
+        "walk": {
+          "path": "assets/Sprites/Units/High Elves/Mystic/Mystic - walk [AENXw].png",
+          "usage": "8-direction walk cycle"
+        }
+      }
+    }
+  }
+}
