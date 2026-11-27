@@ -43,6 +43,8 @@
     <ProjectReference Include="..\ucpp-tableparse\Com.Dowjones.Ucpp.TableParse\Com.Dowjones.Ucpp.TableParse.csproj" />
     <!-- Direct reference wins over ucpp-tableparse's floating Com.Dowjones.Ucpp.Mesh.TableParserWrapper *-* package. -->
     <ProjectReference Include="..\ucpp-parser-table-parse\Com.Dowjones.Ucpp.Mesh.TableParserWrapper\Com.Dowjones.Ucpp.Mesh.TableParserWrapper.csproj" />
+    <!-- "engine managed": the C# port of libTableParser.so -->
+    <ProjectReference Include="../ucpp-parser-table-parse/Com.Dowjones.Ucpp.Mesh.TableParser.Managed/Com.Dowjones.Ucpp.Mesh.TableParser.Managed.csproj" />
   </ItemGroup>
 
   <ItemGroup>

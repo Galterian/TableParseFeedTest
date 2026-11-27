@@ -6,7 +6,7 @@ namespace TableParseFeedTest.Comparison;
 /// <summary>Intermediate results of each hop, for diffing a failure down to the tableparse call that caused it.</summary>
 public static class Artifacts
 {
-    public static void Write(string outputDirectory, PipelineResult result)
+    public static void Write(string outputDirectory, string inputFile, PipelineResult result)
     {
         File.WriteAllText(Path.Combine(outputDirectory, "normalized-data.json"),
             JsonConvert.SerializeObject(result.NormalizedData, Formatting.Indented));
@@ -37,6 +37,13 @@ public static class Artifacts
                 .Concat((call.Payload.TableParseCommandArguments ?? new()).Select(a => $"  {a.Key}={a.Value}"))
                 .Append("Native calls:")
                 .Concat(call.NativeCalls.Select(c => $"  {c}")));
+            // Replayable by ucpp-parser-table-parse's TableParser.Compare.
+            File.WriteAllText($"{prefix}.calls.json", JsonConvert.SerializeObject(new
+                {
+                    source = Path.GetFullPath(inputFile),
+                    call = i + 1,
+                    steps = call.Steps,
+                }, Formatting.Indented));
             foreach (var (key, value) in call.Response)
             {
                 File.WriteAllText($"{prefix}.{key}.txt", value);

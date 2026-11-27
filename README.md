@@ -137,7 +137,7 @@ ParseTableData isBody=False
 | Production | Here |
 |---|---|
 | `/usr/local/lib/libTableParser.so` (wrapper `DllImport`s) | `Native/TableParserLibrary.cs` loads `--lib` and a `DllImportResolver` on the wrapper assembly hands that handle to every import |
-| `ResetTableParse` re-opens `/usr/local/lib/libTableParser.so`, then calls `Reset()` | if that path is missing, `Pipeline/LocalParserTableParse.cs` calls `Reset()` of the library under test directly |
+| `ResetTableParse` re-opens `/usr/local/lib/libTableParser.so`, then calls `Reset()` | `sudo ln -sfn <--lib> /usr/local/lib/libTableParser.so` lets the wrapper's own reload run (`dlopen` returns the already loaded library). Without it, `Pipeline/LocalParserTableParse.cs` calls `Reset()` of the library under test directly. A link to any other file stops the run |
 | `/nss/rtns/v_running/database/PARSER_CONTAINERS/GLOBAL/BWX.ER_QUERY_SET` | `--database-path`; a missing query set fails the run (the wrapper itself ignores the result) |
 | `PARSER_CONFIG_PATH` set in the container | `--config-path`, set through libc `setenv` (`Environment.SetEnvironmentVariable` does not reach native `getenv`) |
 | ucpp-xmlprocessor pod (`normalize-xml`) | `Pipeline/XmlProcessorEmulator.cs`, a port of `XmlV2/XmlProcessorV2.cs` (unencoded XPath, `Encoding`, `EntireXml`); encoded/HtmlAgilityPack queries are rejected |

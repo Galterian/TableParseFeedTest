@@ -32,20 +32,22 @@ public class FeedPipeline
     private readonly List<object> _storyRules;
     private readonly IReadOnlyDictionary<string, JObject> _lookupTables;
     private readonly string _databasePath;
+    private readonly bool _managedEngine;
 
-    public FeedPipeline(UcppManifest manifest, List<object> storyRules, IReadOnlyDictionary<string, JObject> lookupTables, string databasePath)
+    public FeedPipeline(UcppManifest manifest, List<object> storyRules, IReadOnlyDictionary<string, JObject> lookupTables, string databasePath, bool managedEngine = false)
     {
         _manifest = manifest;
         _storyRules = storyRules;
         _lookupTables = lookupTables;
         _databasePath = databasePath;
+        _managedEngine = managedEngine;
     }
 
     public async Task<PipelineResult> RunAsync(byte[] contents, Metadata headers)
     {
         var result = new PipelineResult();
         var logging = LogProxy.Create<ILogging<EvaluateOperators>>();
-        var router = new InProcessRouter(new LocalParserTableParse(_databasePath), LogProxy.Create<IScopedLogging<TableParseUcppService>>());
+        var router = new InProcessRouter(new LocalParserTableParse(_databasePath, _managedEngine), LogProxy.Create<IScopedLogging<TableParseUcppService>>());
 
         var normalizerRoute = FindRoute(_manifest.Routes, "normalizer")
             ?? throw new InvalidOperationException($"Manifest '{_manifest.Id}' has no Normalizer route");

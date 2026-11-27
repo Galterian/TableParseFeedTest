@@ -13,7 +13,8 @@ using TableParseUcppService = Com.Dowjones.Ucpp.TableParse.GRPC.UcppService;
 
 namespace TableParseFeedTest.Pipeline;
 
-public record TableParseCall(TableParsePayload Payload, Dictionary<string, string> Response, IReadOnlyList<string> NativeCalls);
+public record TableParseCall(TableParsePayload Payload, Dictionary<string, string> Response, IReadOnlyList<string> NativeCalls,
+    IReadOnlyList<CapturedStep> Steps);
 
 /// <summary>
 /// Stands in for the gRPC router of the normalizer and the enricher. Instead of calling the
@@ -70,18 +71,21 @@ public class InProcessRouter : IBasicRouter
     {
         var response = new RoutingResponse(new(), new(), 0);
         var nativeCallsBefore = _parserTableParse.Calls.Count;
+        var stepsBefore = _parserTableParse.Steps.Count;
         try
         {
             // Same call ucpp-tableparse GRPC/UcppService.PerformProcessing makes.
             var result = await _htmlParser.TableParseUsed(_tableParseLogging, metadata, payload, new TableParseMetrics());
             response.Payload.Add(result);
-            TableParseCalls.Add(new(payload, result, _parserTableParse.Calls.Skip(nativeCallsBefore).ToList()));
+            TableParseCalls.Add(new(payload, result, _parserTableParse.Calls.Skip(nativeCallsBefore).ToList(),
+                _parserTableParse.Steps.Skip(stepsBefore).ToList()));
         }
         catch (Exception ex)
         {
             // BaseUcppService turns the exception into an Error on the reply.
             response.Errors.Add(new Error { Code = TableParseErrorCode, Message = ex.ToString() });
-            TableParseCalls.Add(new(payload, new() { ["error"] = ex.ToString() }, _parserTableParse.Calls.Skip(nativeCallsBefore).ToList()));
+            TableParseCalls.Add(new(payload, new() { ["error"] = ex.ToString() }, _parserTableParse.Calls.Skip(nativeCallsBefore).ToList(),
+                _parserTableParse.Steps.Skip(stepsBefore).ToList()));
         }
         return response;
     }

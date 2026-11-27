@@ -22,6 +22,8 @@ public static class Program
 
           --input <file>          feed file            (default: the BWF 20261108962633r1 regression input)
           --expected <file>       expected UCPP story  (default: its int regression output)
+          --engine <e>            native (libTableParser.so, default) or managed (the C# port in
+                                  ucpp-parser-table-parse/Com.Dowjones.Ucpp.Mesh.TableParser.Managed)
           --lib <file>            libTableParser.so    (default: newest ucpp-table-parse-lib/build*/LIBRARY/TABLE_PARSER/libTableParser.so)
           --config-path <dir>     PARSER_CONFIG_PATH, holds utf8-character-mappings.<UTFEXT>
                                   (default: ucpp-table-parse-lib/.regress_env/config-gbl)
@@ -69,7 +71,9 @@ public static class Program
 
         Console.WriteLine($"input      {options.Input}");
         Console.WriteLine($"expected   {options.Expected}");
-        Console.WriteLine($"library    {options.Library}  ({File.GetLastWriteTime(options.Library):yyyy-MM-dd HH:mm:ss})");
+        Console.WriteLine(options.Managed
+            ? "engine     managed (C# port of libTableParser.so)"
+            : $"library    {options.Library}  ({File.GetLastWriteTime(options.Library):yyyy-MM-dd HH:mm:ss})");
         Console.WriteLine($"config     {options.ConfigPath}");
         Console.WriteLine($"database   {options.DatabasePath}");
         Console.WriteLine($"manifest   {options.Manifest}");
@@ -77,7 +81,18 @@ public static class Program
         Console.WriteLine($"lookups    {options.Lookups}");
         Console.WriteLine();
 
-        TableParserLibrary.Load(options.Library, options.ConfigPath, options.DatabasePath);
+        try
+        {
+            if (options.Managed)
+                TableParserLibrary.SetEnvironment(options.ConfigPath, options.DatabasePath);
+            else
+                TableParserLibrary.Load(options.Library, options.ConfigPath, options.DatabasePath);
+        }
+        catch (InvalidOperationException ex)
+        {
+            Console.Error.WriteLine($"error: {ex.Message}");
+            return 2;
+        }
 
         var manifest = JsonConvert.DeserializeObject<UcppManifest>(await File.ReadAllTextAsync(options.Manifest))
             ?? throw new InvalidOperationException($"Cannot read manifest {options.Manifest}");
@@ -92,7 +107,7 @@ public static class Program
             ?? (expectedUcppId.Length > 0 ? expectedUcppId : Guid.NewGuid().ToString());
         var headers = CreateHeaders(options, transactionId, manifest.Id);
 
-        var pipeline = new FeedPipeline(manifest, storyRules, lookups, options.DatabasePath);
+        var pipeline = new FeedPipeline(manifest, storyRules, lookups, options.DatabasePath, options.Managed);
         PipelineResult result;
         try
         {
@@ -110,7 +125,7 @@ public static class Program
             return 3;
         }
 
-        Artifacts.Write(options.OutputDirectory, result);
+        Artifacts.Write(options.OutputDirectory, options.Input, result);
         foreach (var note in result.Notes.Distinct())
         {
             Console.WriteLine($"  note: {note}");
@@ -157,6 +172,7 @@ public class Options
 {
     public bool Help { get; private set; }
     public bool Verbose { get; private set; }
+    public bool Managed { get; private set; }
     public string Input { get; private set; } = string.Empty;
     public string Expected { get; private set; } = string.Empty;
     public string Library { get; private set; } = string.Empty;
@@ -200,6 +216,14 @@ public class Options
                 case "--verbose": o.Verbose = true; break;
                 case "--input": o.Input = Value(); break;
                 case "--expected": o.Expected = Value(); break;
+                case "--engine":
+                    o.Managed = Text() switch
+                    {
+                        "native" => false,
+                        "managed" => true,
+                        var e => throw new ArgumentException($"--engine: native or managed, not {e}"),
+                    };
+                    break;
                 case "--lib": library = Value(); break;
                 case "--config-path": o.ConfigPath = Value(); break;
                 case "--database-path": o.DatabasePath = Value(); break;
@@ -214,10 +238,10 @@ public class Options
             }
         }
 
-        o.Library = library ?? NewestLibrary(lib);
+        o.Library = library ?? (o.Managed ? string.Empty : NewestLibrary(lib));
         o.OutputDirectory = output ?? Path.Combine(tool, "out", Path.GetFileNameWithoutExtension(o.Input));
 
-        foreach (var (name, path) in new[] { ("--input", o.Input), ("--expected", o.Expected), ("--lib", o.Library), ("--manifest", o.Manifest), ("--story", o.Story), ("--lookups", o.Lookups) })
+        foreach (var (name, path) in new[] { ("--input", o.Input), ("--expected", o.Expected), ("--lib", o.Managed ? o.Input : o.Library), ("--manifest", o.Manifest), ("--story", o.Story), ("--lookups", o.Lookups) })
         {
             if (!File.Exists(path)) throw new ArgumentException($"{name}: file not found: {path}");
         }

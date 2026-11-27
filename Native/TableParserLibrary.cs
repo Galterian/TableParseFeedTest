@@ -19,12 +19,30 @@ public static class TableParserLibrary
 
     public static string LoadedPath { get; private set; } = string.Empty;
 
-    public static void Load(string libraryPath, string configPath, string databasePath)
+    /// <summary>
+    /// PARSER_CONFIG_PATH / PARSER_DATABASE_PATH for both engines. The native parser reads them with getenv().
+    /// Environment.SetEnvironmentVariable only changes .NET's own copy of the environment on Unix, so set them in libc too.
+    /// </summary>
+    public static void SetEnvironment(string configPath, string databasePath)
     {
-        // The native parser reads these with getenv(). Environment.SetEnvironmentVariable only changes
-        // .NET's own copy of the environment on Unix, so set them in libc.
         SetNativeEnvironment("PARSER_CONFIG_PATH", configPath);
         SetNativeEnvironment("PARSER_DATABASE_PATH", databasePath);
+    }
+
+    public static void Load(string libraryPath, string configPath, string databasePath)
+    {
+        SetEnvironment(configPath, databasePath);
+
+        // ParserTableParse.ResetTableParse dlopen()s WrapperLibraryPath itself, which no resolver can
+        // redirect. A symlink to the library under test makes dlopen return this same handle; anything
+        // else there would load a second, different library into the process.
+        if (File.Exists(WrapperLibraryPath) && RealPath(WrapperLibraryPath) != RealPath(libraryPath))
+        {
+            throw new InvalidOperationException(
+                $"{WrapperLibraryPath} resolves to {RealPath(WrapperLibraryPath)}, not the library under test " +
+                $"{RealPath(libraryPath)}. Point it at the library under test: " +
+                $"sudo ln -sfn {RealPath(libraryPath)} {WrapperLibraryPath}");
+        }
 
         _handle = NativeLibrary.Load(libraryPath);
         LoadedPath = libraryPath;
@@ -44,6 +62,9 @@ public static class TableParserLibrary
 
     private static IntPtr Resolve(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
         => libraryName == WrapperLibraryPath ? _handle : IntPtr.Zero;
+
+    private static string RealPath(string path)
+        => new FileInfo(path).ResolveLinkTarget(returnFinalTarget: true)?.FullName ?? Path.GetFullPath(path);
 
     private static void SetNativeEnvironment(string name, string value)
     {
